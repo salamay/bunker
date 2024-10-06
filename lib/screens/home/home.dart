@@ -36,21 +36,21 @@ class _HomeState extends State<Home> {
     super.initState();
     assetController=Provider.of<AssetController>(context,listen: false);
     homeController=Provider.of<HomeController>(context,listen: false);
-    // time_start=DateTime.fromMillisecondsSinceEpoch(DateTime.now().toUtc().millisecondsSinceEpoch-1000*60*60*24);
-    // time_end=DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch,isUtc: true);
-    // assetController.getMarketQuotesHistorical(MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
-    // _marketDataTimer=Timer.periodic(const Duration(minutes: 2), (timer)async{
-    //   try{
-    //     log("Market data history: ${timer.tick}");
-    //     time_start=DateTime.fromMillisecondsSinceEpoch(DateTime.now().toUtc().millisecondsSinceEpoch-1000*60*60*24);
-    //     time_end=DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch,isUtc: true);
-    //     assetController.getMarketQuotesHistorical(MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
-    //
-    //   }catch(e){
-    //     log(e.toString());
-    //     _marketDataTimer.cancel();
-    //   }
-    // });
+    time_start=DateTime.fromMillisecondsSinceEpoch(DateTime.now().toUtc().millisecondsSinceEpoch-1000*60*60*24);
+    time_end=DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch,isUtc: true);
+    assetController.getMarketQuotesHistorical(MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
+    _marketDataTimer=Timer.periodic(const Duration(minutes: 2), (timer)async{
+      try{
+        log("Market data history: ${timer.tick}");
+        time_start=DateTime.fromMillisecondsSinceEpoch(DateTime.now().toUtc().millisecondsSinceEpoch-1000*60*60*24);
+        time_end=DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch,isUtc: true);
+        assetController.getMarketQuotesHistorical(MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
+
+      }catch(e){
+        log(e.toString());
+        _marketDataTimer.cancel();
+      }
+    });
   }
   @override
   Widget build(BuildContext context) {

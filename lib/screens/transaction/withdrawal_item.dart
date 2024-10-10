@@ -14,7 +14,7 @@ class WithdrawalItem extends StatelessWidget {
       color: Colors.transparent,
       child: ListTile(
         hoverColor: action_button_color,
-        tileColor: secondary_color,
+        tileColor: secondary_color.withOpacity(0.3),
         contentPadding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 2.sp),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(cornerRadius),

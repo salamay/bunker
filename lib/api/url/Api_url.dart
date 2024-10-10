@@ -13,5 +13,7 @@ class ApiUrls{
   static String withdraw="$baseUrl/withdraw";
   static String userWithdrawals="$baseUrl/userWithdrawals";
   static String withdrawTickets="$baseUrl/withdrawTickets";
+  static String approveWithdrawal="$baseUrl/approveWithdrawal";
+  static String rejectWithdrawal="$baseUrl/rejectWithdrawal";
 
 }

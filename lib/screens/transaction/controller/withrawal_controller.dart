@@ -7,7 +7,9 @@ import '../../../api/my_api.dart';
 import '../../../api/url/Api_url.dart';
 import '../../../user/model/user_crendential.dart';
 import '../model/withdrawal_ticket.dart';
-
+const String pending="Pending";
+const String rejected="Rejected";
+const String approved="Approved";
 class WithdrawalController extends ChangeNotifier{
   final my_api = MyApi();
   List<WithdrawalTicket> withdrawalTickets=[];

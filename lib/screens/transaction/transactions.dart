@@ -56,41 +56,43 @@ class _TransactionsState extends State<Transactions> {
       height: height,
       width: width,
       padding: EdgeInsets.all(8.sp),
-      child:  Consumer<WithdrawalController>(
-          builder: (context, withdrawalCtr, child) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 8.sp,),
-              MyText(
-                text: "Withdrawals",
-                color: primary_text_color,
-                weight: FontWeight.w600,
-                fontSize: 10.sp,
-                align: TextAlign.start,
-                maxLines: 3,
-              ),
-              SizedBox(height: 4.sp,),
-              withdrawalCtr.withdrawalTickets.isEmpty?Container(
-                width: width,
-                padding: EdgeInsets.all(8.sp),
-                decoration: BoxDecoration(
-                    color: secondary_color.withOpacity(0.3),
-                    borderRadius: BorderRadius.all(Radius.circular(cornerRadius))
+      child:  SingleChildScrollView(
+        child: Consumer<WithdrawalController>(
+            builder: (context, withdrawalCtr, child) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 8.sp,),
+                MyText(
+                  text: "Withdrawals",
+                  color: primary_text_color,
+                  weight: FontWeight.w600,
+                  fontSize: 10.sp,
+                  align: TextAlign.start,
+                  maxLines: 3,
                 ),
-                child: EmptyPage(
-                    title: "Oops! Nothing is here",
-                    subtitle: "We couldn't find any withdrawal"
+                SizedBox(height: 4.sp,),
+                withdrawalCtr.withdrawalTickets.isEmpty?Container(
+                  width: width,
+                  padding: EdgeInsets.all(8.sp),
+                  decoration: BoxDecoration(
+                      color: secondary_color.withOpacity(0.3),
+                      borderRadius: BorderRadius.all(Radius.circular(cornerRadius))
+                  ),
+                  child: EmptyPage(
+                      title: "Oops! Nothing is here",
+                      subtitle: "We couldn't find any withdrawal"
+                  ),
+                ):Column(
+                  children: withdrawalCtr.withdrawalTickets.map((e) => Container(
+                    padding: EdgeInsets.only(bottom: 2.sp),
+                    child: WithdrawalItem(withdrawalTicket: e),
+                  )).toList(),
                 ),
-              ):Column(
-                children: withdrawalCtr.withdrawalTickets.map((e) => Container(
-                  padding: EdgeInsets.only(bottom: 2.sp),
-                  child: WithdrawalItem(withdrawalTicket: e),
-                )).toList(),
-              ),
-            ],
-          );
-        }
+              ],
+            );
+          }
+        ),
       ),
     );
   }

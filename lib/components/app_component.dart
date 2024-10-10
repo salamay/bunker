@@ -8,15 +8,15 @@ double height=1.sh;
 double width=1.sw;
 double pagePadding=8.sp;
 double buttonVerticalPadding=5.sp;
-double cornerRadius=4.sp;
+double cornerRadius=2.sp;
 double textFieldRadius=10.sp;
 Color primary_color= Color(0xFF0E131D);
 Color secondary_color= Color(0xff161B29);
 Color secondary_bg_color=Colors.grey[100]??Colors.grey;
 
 ////////////////////////////////////BUTTON////////////////////////////////////
-Color primary_color_button= Color(0xff16AAF7);
-Color secondary_color_button= Color(0xffEBF1FF);
+Color primary_color_button= Color(0xffFD6F23);
+Color secondary_color_button= primary_color_button;
 ////////////////////////////////////BUTTON////////////////////////////////////
 
 Color primary_text_color=Colors.white;

@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:bunker/components/app_component.dart';
 import 'package:bunker/screens/account/account_settings.dart';
 import 'package:bunker/screens/account/controller/account_setting_controller.dart';
+import 'package:bunker/screens/admin/admin.dart';
 import 'package:bunker/screens/home/components/profile_widget.dart';
 import 'package:bunker/screens/home/components/side_button.dart';
 import 'package:bunker/screens/home/components/top_row.dart';
@@ -192,6 +193,25 @@ class _HomeState extends State<Home> {
                         children: [
                           Expanded(
                             child: SideButton(
+                                text: "Admin",
+                                imageAsset: "assets/svgs/admin.svg"
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: (){
+                      homeController.changePage(5);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: SideButton(
                                 text: "Support",
                                 imageAsset: "assets/svgs/support.svg"
                             ),
@@ -220,6 +240,8 @@ class _HomeState extends State<Home> {
                       case 3:
                         return Transactions();
                       case 4:
+                        return Admin();
+                      case 5:
                         return Support();
                       default:
                         return OverView();

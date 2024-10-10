@@ -3,18 +3,26 @@ import 'dart:developer';
 
 import 'package:bunker/components/app_component.dart';
 import 'package:bunker/screens/account/account_settings.dart';
+import 'package:bunker/screens/account/controller/account_setting_controller.dart';
 import 'package:bunker/screens/home/components/profile_widget.dart';
 import 'package:bunker/screens/home/components/side_button.dart';
 import 'package:bunker/screens/home/components/top_row.dart';
 import 'package:bunker/screens/home/controller/home_controller.dart';
 import 'package:bunker/screens/overview/overview.dart';
+import 'package:bunker/screens/support/support.dart';
+import 'package:bunker/screens/transaction/transactions.dart';
+import 'package:bunker/screens/wallet/wallet_page.dart';
 import 'package:bunker/supported_assets/controller/asset_controller.dart';
+import 'package:bunker/user/controller/user_controller.dart';
+import 'package:bunker/user/model/user_crendential.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
 import '../../components/texts/MyText.dart';
 import '../../utils/date_utils.dart';
+
+
 class Home extends StatefulWidget {
   Home({super.key});
 
@@ -25,10 +33,13 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late AssetController assetController;
   late HomeController homeController;
+  late UserController userController;
+  late AccountSettingController accountSettingController;
   late DateTime time_start;
   late DateTime time_end;
   String interval="5m";
   late Timer _marketDataTimer;
+  ValueNotifier<bool> assetLoadingNotifier=ValueNotifier(true);
 
   @override
   void initState() {
@@ -36,21 +47,16 @@ class _HomeState extends State<Home> {
     super.initState();
     assetController=Provider.of<AssetController>(context,listen: false);
     homeController=Provider.of<HomeController>(context,listen: false);
-    time_start=DateTime.fromMillisecondsSinceEpoch(DateTime.now().toUtc().millisecondsSinceEpoch-1000*60*60*24);
-    time_end=DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch,isUtc: true);
-    assetController.getMarketQuotesHistorical(MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
-    _marketDataTimer=Timer.periodic(const Duration(minutes: 2), (timer)async{
-      try{
-        log("Market data history: ${timer.tick}");
-        time_start=DateTime.fromMillisecondsSinceEpoch(DateTime.now().toUtc().millisecondsSinceEpoch-1000*60*60*24);
-        time_end=DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch,isUtc: true);
-        assetController.getMarketQuotesHistorical(MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
+    userController=Provider.of<UserController>(context,listen: false);
+    accountSettingController=Provider.of<AccountSettingController>(context,listen: false);
+    getData(context: context);
+  }
 
-      }catch(e){
-        log(e.toString());
-        _marketDataTimer.cancel();
-      }
-    });
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _marketDataTimer.cancel();
   }
   @override
   Widget build(BuildContext context) {
@@ -123,60 +129,75 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: SideButton(
-                              text: "Payments",
-                              imageAsset: "assets/svgs/payment.svg"
+                  // Padding(
+                  //   padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.start,
+                  //     children: [
+                  //       Expanded(
+                  //         child: SideButton(
+                  //             text: "Payments",
+                  //             imageAsset: "assets/svgs/payment.svg"
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  GestureDetector(
+                    onTap: (){
+                      homeController.changePage(2);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: SideButton(
+                                text: "Wallets",
+                                imageAsset: "assets/svgs/wallet.svg"
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: SideButton(
-                              text: "Wallets",
-                              imageAsset: "assets/svgs/wallet.svg"
+                  GestureDetector(
+                    onTap: (){
+                      homeController.changePage(3);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: SideButton(
+                                text: "Withdrawals",
+                                imageAsset: "assets/svgs/transaction.svg"
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: SideButton(
-                              text: "Transactoins",
-                              imageAsset: "assets/svgs/transaction.svg"
+                  GestureDetector(
+                    onTap: (){
+                      homeController.changePage(4);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: SideButton(
+                                text: "Support",
+                                imageAsset: "assets/svgs/support.svg"
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: SideButton(
-                              text: "Support",
-                              imageAsset: "assets/svgs/support.svg"
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   )
                 ],
@@ -194,6 +215,12 @@ class _HomeState extends State<Home> {
                         return OverView();
                       case 1:
                         return AccountSettings();
+                      case 2:
+                        return WalletPage();
+                      case 3:
+                        return Transactions();
+                      case 4:
+                        return Support();
                       default:
                         return OverView();
                     }
@@ -205,5 +232,45 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+
+  void getData({required BuildContext context})async{
+    await getAssets(context: context);
+    time_start=DateTime.fromMillisecondsSinceEpoch(DateTime.now().toUtc().millisecondsSinceEpoch-1000*60*60*24);
+    time_end=DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch,isUtc: true);
+    assetController.getMarketQuotesHistorical(MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
+    _marketDataTimer=Timer.periodic(const Duration(minutes: 2), (timer)async{
+      try{
+        log("Market data history: ${timer.tick}");
+        time_start=DateTime.fromMillisecondsSinceEpoch(DateTime.now().toUtc().millisecondsSinceEpoch-1000*60*60*24);
+        time_end=DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch,isUtc: true);
+        assetController.getMarketQuotesHistorical(MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
+
+      }catch(e){
+        log(e.toString());
+        _marketDataTimer.cancel();
+      }
+    });
+    getProfile(context: context);
+  }
+  Future<void> getAssets({required BuildContext context})async{
+    UserCredential? credential=userController.userCredential;
+    if(credential!=null){
+      try{
+        await assetController.getAssets(credential: credential);
+      }catch(e){
+
+      }
+    }
+  }
+  Future<void> getProfile({required BuildContext context})async{
+    UserCredential? credential=userController.userCredential;
+    if(credential!=null){
+      try{
+        await accountSettingController.getProfile(credential: credential);
+      }catch(e){
+
+      }
+    }
   }
 }

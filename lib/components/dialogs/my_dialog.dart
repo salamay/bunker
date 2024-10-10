@@ -19,9 +19,9 @@ class MyDialog{
               backgroundColor: primary_color,
               content: Container(
                 clipBehavior: Clip.hardEdge,
-                padding: EdgeInsets.all(20.sp),
+                padding: EdgeInsets.all(10.sp),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10.sp))
+                    borderRadius: BorderRadius.all(Radius.circular(cornerRadius))
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,15 +30,15 @@ class MyDialog{
                   children: [
                     Icon(
                       icon,
-                      size: 24.sp,
+                      size: 8.sp,
                       color: iconColor,
                     ),
-                    SizedBox(height: 10.sp,),
+                    SizedBox(height: 4.sp,),
                     MyText(
                         text: message,
                         color: primary_text_color,
                         weight: FontWeight.w500,
-                        fontSize: 14.sp,
+                        fontSize: 6.sp,
                         maxLines: 3,
                         align: TextAlign.start
                     ),

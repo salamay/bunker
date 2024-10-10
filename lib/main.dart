@@ -1,10 +1,14 @@
 import 'package:bunker/routes/AppRoutes.dart';
 import 'package:bunker/screens/account/controller/account_setting_controller.dart';
 import 'package:bunker/screens/home/controller/home_controller.dart';
+import 'package:bunker/screens/transaction/controller/withrawal_controller.dart';
+import 'package:bunker/screens/wallet/controller/wallet_controller.dart';
 import 'package:bunker/supported_assets/controller/asset_controller.dart';
+import 'package:bunker/user/controller/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'balance/balance_controller.dart';
 import 'components/Apptheme.dart';
 import 'controller/theme_controller.dart';
 
@@ -25,6 +29,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => HomeController()),
         ChangeNotifierProvider(create: (_) => AssetController()),
         ChangeNotifierProvider(create: (_) => AccountSettingController()),
+        ChangeNotifierProvider(create: (_) => WalletController()),
+        ChangeNotifierProvider(create: (_) => UserController()),
+        ChangeNotifierProvider(create: (_) => BalanceController()),
+        ChangeNotifierProvider(create: (_) => WithdrawalController()),
       ],
       child: ScreenUtilInit(
           minTextAdapt: true,

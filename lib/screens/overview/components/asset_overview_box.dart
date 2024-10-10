@@ -1,4 +1,4 @@
-import 'package:bunker/supported_assets/model/supported_assets.dart';
+import 'package:bunker/supported_assets/model/assets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ import '../../../supported_assets/model/CryptoData.dart';
 import '../../chart/line_chart.dart';
 class AssetOverviewBox extends StatelessWidget {
   AssetOverviewBox({super.key,required this.asset, required this.h, required this.w, required this.color});
-  SupportedCoin asset;
+  AssetModel asset;
   double h;
   double w;
   Color color;
@@ -47,7 +47,7 @@ class AssetOverviewBox extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 2.sp),
                 child: MyText(
-                  text: asset.symbol,
+                  text: asset.symbol!,
                   color: primary_text_color.withOpacity(0.5),
                   weight: FontWeight.w600,
                   fontSize: 4.sp,
@@ -78,7 +78,7 @@ class AssetOverviewBox extends StatelessWidget {
                 width: 10.sp,
                 height: 10.sp,
                 child: CachedNetworkImage(
-                  imageUrl: asset.image,
+                  imageUrl: asset.image!,
                   imageBuilder: (context, imageProvider) => Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
@@ -106,7 +106,7 @@ class AssetOverviewBox extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 2.sp),
                 child: MyText(
-                  text: asset.symbol,
+                  text: asset.symbol!,
                   color: primary_text_color.withOpacity(0.8),
                   weight: FontWeight.w400,
                   fontSize: 4.sp,

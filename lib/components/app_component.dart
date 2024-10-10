@@ -39,8 +39,8 @@ Color divider_color=Color(0xFF0EAEA);
 
 
 ////////////////////////////////////ICON////////////////////////////////////
-Color primary_icon_color=Color(0xFF141729).withOpacity(0.5);
-Color secondary_icon_color=Colors.white;
+Color primary_icon_color=Colors.white;
+Color secondary_icon_color=Colors.orange;
 ////////////////////////////////////ICON////////////////////////////////////
 
 

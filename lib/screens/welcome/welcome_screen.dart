@@ -1,10 +1,14 @@
 import 'package:bunker/components/app_component.dart';
+import 'package:bunker/components/dialogs/my_dialog.dart';
+import 'package:bunker/components/snackbar/show_snack_bar.dart';
 import 'package:bunker/routes/AppRoutes.dart';
+import 'package:bunker/user/controller/user_controller.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 import '../../components/button/MyButton.dart';
 import '../../components/form/MyFormField.dart';
@@ -16,9 +20,10 @@ class WelcomeScreen extends StatelessWidget {
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
   ValueNotifier<bool> formValidation=ValueNotifier(false);
-
+  late UserController userController;
   @override
   Widget build(BuildContext context) {
+    userController=Provider.of<UserController>(context,listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SizedBox(
@@ -186,7 +191,12 @@ class WelcomeScreen extends StatelessWidget {
                                     if(_formKey.currentState!.validate()){
                                       String email=emailController.text.trim();
                                       String password=passwordController.text.trim();
-                                      context.push(AppRoutes.home);
+                                      if(_formKey.currentState!.validate()){
+                                        context.push(AppRoutes.loadingScreen, extra: {
+                                          'callBack':signIn,
+                                          'message': 'Restoring wallet'
+                                        });
+                                      }
                                       // SendPayload payload=widget.sendPayload.copyWith(recipient_address: address);
                                       // context.push(AppRoutes.reviewTransaction,extra: payload);
                                     }
@@ -204,5 +214,18 @@ class WelcomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> signIn(BuildContext context)async{
+    try{
+      String email=emailController.text.trim();
+      String password=passwordController.text.trim();
+      await userController.signIn(email: email,password: password);
+      context.push(AppRoutes.home);
+    }catch(e){
+      context.pop();
+      await MyDialog.showDialog(context: context, message: "Unable to sign in", icon: Icons.info_outline, iconColor: Colors.red);
+      throw Exception(e);
+    }
   }
 }

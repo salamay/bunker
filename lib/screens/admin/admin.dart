@@ -37,11 +37,16 @@ class Admin extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.all(2.sp),
-                child: AdminItem(
-                    title: "Deposit",
-                    imageAsset: "assets/svgs/deposit.svg"
+              GestureDetector(
+                onTap: (){
+                  context.push(AppRoutes.userEmailScreen);
+                },
+                child: Container(
+                  margin: EdgeInsets.all(2.sp),
+                  child: AdminItem(
+                      title: "Deposit",
+                      imageAsset: "assets/svgs/deposit.svg"
+                  ),
                 ),
               )
             ],

@@ -5,13 +5,16 @@ import 'package:bunker/screens/transaction/model/withdrawal_ticket.dart';
 import 'package:bunker/supported_assets/model/assets.dart';
 import 'package:bunker/user/model/user_crendential.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../api/my_api.dart';
 import '../../api/url/Api_url.dart';
 import '../../balance/model/CoinBalance.dart';
+import '../../components/app_component.dart';
 import '../crypto_constants.dart';
 import '../model/CryptoData.dart';
 import '../network_constants.dart';
+import 'dart:math' as math;
 
 class AssetController extends ChangeNotifier{
   final my_api = MyApi();
@@ -19,6 +22,7 @@ class AssetController extends ChangeNotifier{
   Map<String, CoinBalance> balances = {};
   double overallBalance = 0;
   List<AssetModel> supportedCoin=[];
+  List<Color> colors = [];
 
 
   void calculateTotalBalance() {
@@ -83,10 +87,15 @@ class AssetController extends ChangeNotifier{
       if(response.statusCode==200){
         final assets=assetModelFromJson(response.body);
         supportedCoin=assets;
+        colors=[];
         supportedCoin.map((e){
           CoinBalance coinBalance = CoinBalance(balanceInCrypto: e.balance!, balanceInFiat: e.balance!);
           balances[e.id!]=coinBalance;
           calculateTotalBalance();
+          List<Color> c = [Colors.red, primary_color_button, Colors.blue, Colors.purple, Colors.green, Colors.orange,  Colors.greenAccent, Colors.blueAccent,Colors.amberAccent, Colors.cyanAccent, Colors.deepPurpleAccent, Colors.deepOrangeAccent, Colors.limeAccent, Colors.lightBlueAccent, Colors.lightGreenAccent, Colors.brown, Colors.grey, Colors.blueGrey, Colors.cyanAccent, Colors.deepPurpleAccent, Colors.deepOrangeAccent, Colors.limeAccent,];
+          math.Random random = math.Random();
+          Color randomColor = c[random.nextInt(c.length)];
+          colors.add(randomColor);
         }).toList();
         notifyListeners();
       }

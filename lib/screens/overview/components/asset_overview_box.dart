@@ -22,12 +22,18 @@ class AssetOverviewBox extends StatelessWidget {
   Widget build(BuildContext context) {
     quotes=asset.quotes??[];
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 4.sp, horizontal: 2.sp),
+      padding: EdgeInsets.symmetric(vertical: 3.sp, horizontal: 4.sp),
       width: w,
       height: h,
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(4.sp),
+        boxShadow: [
+        BoxShadow(
+        color: primary_color,
+        spreadRadius: 5,
+        ),
+        ]
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +43,7 @@ class AssetOverviewBox extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               MyText(
-                text: "0.0000",
+                text: asset.balance!=null?"\$${asset.balance!.toStringAsFixed(2)}":"\$0.00",
                 color: primary_text_color,
                 weight: FontWeight.w600,
                 fontSize: 4.sp,

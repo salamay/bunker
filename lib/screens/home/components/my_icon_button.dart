@@ -16,17 +16,17 @@ class MyIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: w,
-      padding: EdgeInsets.symmetric(horizontal: 4.sp, vertical: 2.sp),
+      padding: EdgeInsets.symmetric(horizontal: 2.sp, vertical: 1.sp),
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(4.sp),
+        borderRadius: BorderRadius.circular(cornerRadius),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
             imageAsset,
-            width: iconSize??8.sp,
+            width: iconSize??6.sp,
             fit: BoxFit.contain,
           ),
           Padding(

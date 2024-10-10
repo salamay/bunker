@@ -67,7 +67,7 @@ class _TransactionsState extends State<Transactions> {
                   text: "Withdrawals",
                   color: primary_text_color,
                   weight: FontWeight.w600,
-                  fontSize: 10.sp,
+                  fontSize: 8.sp,
                   align: TextAlign.start,
                   maxLines: 3,
                 ),

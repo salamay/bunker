@@ -44,6 +44,12 @@ class GeneralSettings extends StatelessWidget {
         decoration: BoxDecoration(
           color: secondary_color,
           borderRadius: BorderRadius.circular(cornerRadius),
+            boxShadow: [
+              BoxShadow(
+                color: primary_color,
+                spreadRadius: 5,
+              ),
+            ]
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

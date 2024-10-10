@@ -6,12 +6,14 @@ import 'package:bunker/screens/admin/components/ticket_item.dart';
 import 'package:bunker/screens/admin/controller/admin_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/texts/MyText.dart';
 import '../../user/controller/user_controller.dart';
 import '../../user/model/user_crendential.dart';
 import '../home/components/my_icon_button.dart';
+import '../home/components/top_row.dart';
 
 class Tickets extends StatefulWidget {
   Tickets({super.key});
@@ -49,21 +51,38 @@ class _TicketsState extends State<Tickets> {
   }
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: width,
-        height: height,
-        color: primary_color,
-        padding: EdgeInsets.all(8.sp),
-        child: SingleChildScrollView(
-          child: Consumer<AdminController>(
-            builder: (context, adminCtr, child) {
-              return Column(
-                children: [
-                  SizedBox(height: 8.sp,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      MyText(
+    return Scaffold(
+      appBar: AppBar(
+          backgroundColor: secondary_color,
+          elevation: 10.sp,
+          centerTitle: false,
+          title: Row(
+            children: [
+              TopRow(),
+              const Spacer(),
+              GestureDetector(
+                  onTap: (){
+                    context.pop();
+                  },
+                  child: MyIconButton(text: "Back", imageAsset: "assets/svgs/back.svg",color: primary_color_button,)
+              ),
+            ],
+          )
+      ),
+      body: Container(
+          width: width,
+          height: height,
+          color: primary_color,
+          padding: EdgeInsets.all(8.sp),
+          child: SingleChildScrollView(
+            child: Consumer<AdminController>(
+              builder: (context, adminCtr, child) {
+                return Column(
+                  children: [
+                    SizedBox(height: 8.sp,),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: MyText(
                         text: "Tickets",
                         color: primary_text_color,
                         weight: FontWeight.w600,
@@ -71,20 +90,19 @@ class _TicketsState extends State<Tickets> {
                         align: TextAlign.start,
                         maxLines: 3,
                       ),
-                      MyIconButton(text: "Back", imageAsset: "assets/svgs/back.svg",color: primary_color_button,),
-                    ],
-                  ),
-                  SizedBox(height: 4.sp,),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: adminCtr.withdrawalTickets.map((e)=>TicketItem(ticket: e)).toList(),
-                  ),
-                ],
-              );
-            },
-          ),
-        )
+                    ),
+                    SizedBox(height: 4.sp,),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: adminCtr.withdrawalTickets.map((e)=>TicketItem(ticket: e)).toList(),
+                    ),
+                  ],
+                );
+              },
+            ),
+          )
+      ),
     );
   }
   void getTickets({required context})async{

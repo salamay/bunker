@@ -14,7 +14,7 @@ class WithdrawalItem extends StatelessWidget {
       color: Colors.transparent,
       child: ListTile(
         hoverColor: action_button_color,
-        tileColor: secondary_color.withOpacity(0.3),
+        tileColor: action_button_color.withOpacity(0.3),
         contentPadding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 2.sp),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(cornerRadius),
@@ -50,11 +50,11 @@ class WithdrawalItem extends StatelessWidget {
           padding: EdgeInsets.all(2.sp),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(cornerRadius),
-            color: Colors.orange.withOpacity(0.3),
+            color: Colors.orange,
           ),
           child: MyText(
             text: "Pending",
-            color: Colors.white60,
+            color: Colors.white,
             weight: FontWeight.w400,
             fontSize: 3.sp,
             align: TextAlign.start,
@@ -66,11 +66,11 @@ class WithdrawalItem extends StatelessWidget {
           padding: EdgeInsets.all(2.sp),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(cornerRadius),
-            color: Colors.greenAccent.withOpacity(0.3),
+            color: Colors.green,
           ),
           child: MyText(
             text: "Approved",
-            color: Colors.white60,
+            color: Colors.white,
             weight: FontWeight.w400,
             fontSize: 4.sp,
             align: TextAlign.start,
@@ -82,11 +82,11 @@ class WithdrawalItem extends StatelessWidget {
           padding: EdgeInsets.all(2.sp),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(cornerRadius),
-            color: Colors.redAccent.withOpacity(0.3),
+            color: Colors.redAccent,
           ),
           child: MyText(
             text: "Rejected",
-            color: Colors.white60,
+            color: Colors.white,
             weight: FontWeight.w400,
             fontSize: 3.sp,
             align: TextAlign.start,

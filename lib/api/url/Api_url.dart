@@ -6,11 +6,13 @@ class ApiUrls{
 
   static String baseUrl="http://localhost:2784";
   static String wallets="$baseUrl/wallets";
+  static String walletsByEmail="$baseUrl/walletsByEmail";
   static String signIn="$baseUrl/signIn";
   static String profile="$baseUrl/profile";
   static String balance="$baseUrl/balance";
   static String updateProfile="$baseUrl/updateProfile";
   static String withdraw="$baseUrl/withdraw";
+  static String deposit="$baseUrl/deposit";
   static String userWithdrawals="$baseUrl/userWithdrawals";
   static String withdrawTickets="$baseUrl/withdrawTickets";
   static String approveWithdrawal="$baseUrl/approveWithdrawal";

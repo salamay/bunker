@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:bunker/screens/transaction/controller/withrawal_controller.dart';
 import 'package:bunker/screens/transaction/model/withrawal.dart';
+import 'package:bunker/supported_assets/model/assets.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../api/my_api.dart';
@@ -85,6 +86,42 @@ class AdminController extends ChangeNotifier{
       log(e.toString());
       notifyListeners();
       throw Exception("(Admin) Unable to reject ticket");
+    }
+  }
+
+
+  Future<List<AssetModel>> getUserWallet({required UserCredential credential,required String email})async{
+    log("(Admin) Getting user wallet");
+    try{
+      var response = await my_api.get("${ApiUrls.walletsByEmail}?email=$email", {"Content-Type": "application/json","Authorization":"Bearer ${credential.token}"});
+      log("(Admin) Getting user wallet: Response code ${response!.statusCode}");
+      if(response.statusCode==200){
+        final assets=assetModelFromJson(response.body);
+        return assets;
+      }else{
+        throw Exception();
+      }
+    }catch(e){
+      log(e.toString());
+      notifyListeners();
+      throw Exception("(Admin) Unable to get user wallet");
+    }
+  }
+
+  Future<void> deposit({required UserCredential credential,required String walletId,required String amount})async{
+    log("(Admin) Depositing to user wallet");
+    try{
+      var response = await my_api.get("${ApiUrls.deposit}?walletId=$walletId&amount=$amount", {"Content-Type": "application/json","Authorization":"Bearer ${credential.token}"});
+      log("(Admin) Depositing to user wallet: Response code ${response!.statusCode}");
+      if(response.statusCode==200){
+
+      }else{
+        throw Exception();
+      }
+    }catch(e){
+      log(e.toString());
+      notifyListeners();
+      throw Exception("(Admin) Unable to deposit to user wallet");
     }
   }
 }

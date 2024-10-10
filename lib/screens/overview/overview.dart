@@ -2,6 +2,7 @@ import 'package:bunker/components/app_component.dart';
 import 'package:bunker/components/divider.dart';
 import 'package:bunker/screens/overview/components/asset_overview_box.dart';
 import 'package:bunker/screens/home/components/my_icon_button.dart';
+import 'package:bunker/screens/overview/components/pie_chart.dart';
 import 'package:bunker/supported_assets/controller/asset_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,7 +31,7 @@ class OverView extends StatelessWidget {
                   text: "Overview",
                   color: primary_text_color,
                   weight: FontWeight.w600,
-                  fontSize: 10.sp,
+                  fontSize: 8.sp,
                   align: TextAlign.start,
                   maxLines: 3,
                 ),
@@ -87,62 +88,81 @@ class OverView extends StatelessWidget {
               decoration: BoxDecoration(
                 color: action_button_color.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(4.sp),
+                  boxShadow: [
+                    BoxShadow(
+                      color: primary_color,
+                      spreadRadius: 5,
+                    ),
+                  ]
               ),
-              child: Column(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  MyText(
-                    text: "Account balance",
-                    color: primary_text_color,
-                    weight: FontWeight.w600,
-                    fontSize: 6.sp,
-                    align: TextAlign.start,
-                    maxLines: 3,
+                  Flexible(
+                    flex: 2,
+                      child: PieChartSample2()
                   ),
-                  SizedBox(height: 1.sp,),
-                  MyText(
-                    text: "Your total balance across your account",
-                    color: primary_text_color.withOpacity(0.6),
-                    weight: FontWeight.w300,
-                    fontSize: 4.sp,
-                    align: TextAlign.start,
-                    maxLines: 3,
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        MyText(
+                          text: "Account balance",
+                          color: primary_text_color,
+                          weight: FontWeight.w600,
+                          fontSize: 6.sp,
+                          align: TextAlign.start,
+                          maxLines: 3,
+                        ),
+                        SizedBox(height: 1.sp,),
+                        MyText(
+                          text: "Your total balance across your account",
+                          color: primary_text_color.withOpacity(0.6),
+                          weight: FontWeight.w300,
+                          fontSize: 4.sp,
+                          align: TextAlign.start,
+                          maxLines: 3,
+                        ),
+                        SizedBox(height: 4.sp,),
+                        Consumer<AssetController>(
+                          builder: (context, assetCtr, child) {
+                            return MyText(
+                              text: "\$${assetCtr.overallBalance.toStringAsFixed(2)}",
+                              color: primary_text_color,
+                              weight: FontWeight.w700,
+                              fontSize: 10.sp,
+                              align: TextAlign.start,
+                              maxLines: 3,
+                            );
+                          },
+                        ),
+                        SizedBox(height: 1.sp,),
+                        MyText(
+                          text: "Available balance",
+                          color: primary_text_color.withOpacity(0.6),
+                          weight: FontWeight.w300,
+                          fontSize: 3.sp,
+                          align: TextAlign.start,
+                          maxLines: 3,
+                        ),
+                        MyDivider(),
+                        SizedBox(height: 2.sp,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            MyIconButton(text: "Send", imageAsset: "assets/svgs/send.svg",color: primary_color_button,fontSize: 4.sp,iconSize: 4.sp,w: 50.sp,),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 2.sp),
+                              child: MyIconButton(text: "Receive", imageAsset: "assets/svgs/receive.svg",color: primary_color_button,fontSize: 4.sp,iconSize: 4.sp,w: 50.sp),
+                            ),
+                          ],
+                        ),
+                    
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 4.sp,),
-                  Consumer<AssetController>(
-                    builder: (context, assetCtr, child) {
-                      return MyText(
-                        text: "\$${assetCtr.overallBalance.toStringAsFixed(2)}",
-                        color: primary_text_color,
-                        weight: FontWeight.w700,
-                        fontSize: 10.sp,
-                        align: TextAlign.start,
-                        maxLines: 3,
-                      );
-                    },
-                  ),
-                  SizedBox(height: 1.sp,),
-                  MyText(
-                    text: "Available balance",
-                    color: primary_text_color.withOpacity(0.6),
-                    weight: FontWeight.w300,
-                    fontSize: 3.sp,
-                    align: TextAlign.start,
-                    maxLines: 3,
-                  ),
-                  MyDivider(),
-                  SizedBox(height: 2.sp,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      MyIconButton(text: "Send", imageAsset: "assets/svgs/send.svg",color: primary_color_button.withOpacity(0.1),fontSize: 4.sp,iconSize: 4.sp,w: 50.sp,),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 2.sp),
-                        child: MyIconButton(text: "Receive", imageAsset: "assets/svgs/receive.svg",color: primary_color_button.withOpacity(0.1),fontSize: 4.sp,iconSize: 4.sp,w: 50.sp),
-                      ),
-                    ],
-                  ),
-            
+
                 ],
               ),
             )

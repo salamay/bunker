@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:bunker/components/app_component.dart';
 import 'package:bunker/screens/account/account_settings.dart';
 import 'package:bunker/screens/account/controller/account_setting_controller.dart';
+import 'package:bunker/screens/account/model/profile_model.dart';
 import 'package:bunker/screens/admin/admin.dart';
 import 'package:bunker/screens/home/components/profile_widget.dart';
 import 'package:bunker/screens/home/components/side_button.dart';
@@ -64,6 +65,12 @@ class _HomeState extends State<Home> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: primary_color,
+      appBar: AppBar(
+        backgroundColor: secondary_color,
+        elevation: 10.sp,
+        centerTitle: false,
+        title: TopRow()
+      ),
       body: Container(
         height: height,
         width: width,
@@ -76,151 +83,136 @@ class _HomeState extends State<Home> {
               width: width*0.25,
               color: secondary_color,
               padding: EdgeInsets.all(6.sp),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TopRow(),
-                  SizedBox(height: 4.sp,),
-                  ProfileWidget(email: "ayotundesalam16@gmail.com"),
-                  SizedBox(height: 4.sp,),
-                  MyText(
-                    text: "GENERAL",
-                    color: primary_text_color.withOpacity(0.4),
-                    weight: FontWeight.w600,
-                    fontSize: 4.sp,
-                    align: TextAlign.start,
-                    maxLines: 3,
-                  ),
-                  SizedBox(height: 2.sp,),
-                  GestureDetector(
-                    onTap: (){
-                      homeController.changePage(0);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: SideButton(
-                                text: "Overview",
-                                imageAsset: "assets/svgs/home.svg"
-                            ),
-                          ),
-                        ],
+              child: Consumer<AccountSettingController>(
+                builder: (context, accountCtr, child) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 4.sp,),
+                      ProfileWidget(email: "ayotundesalam16@gmail.com"),
+                      SizedBox(height: 4.sp,),
+                      MyText(
+                        text: "GENERAL",
+                        color: primary_text_color.withOpacity(0.4),
+                        weight: FontWeight.w600,
+                        fontSize: 4.sp,
+                        align: TextAlign.start,
+                        maxLines: 3,
                       ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: (){
-                      homeController.changePage(1);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: SideButton(
-                                text: "Account",
-                                imageAsset: "assets/svgs/account.svg"
-                            ),
+                      SizedBox(height: 2.sp,),
+                      GestureDetector(
+                        onTap: (){
+                          homeController.changePage(0);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: SideButton(
+                                    text: "Overview",
+                                    imageAsset: "assets/svgs/home.svg"
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                  // Padding(
-                  //   padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.start,
-                  //     children: [
-                  //       Expanded(
-                  //         child: SideButton(
-                  //             text: "Payments",
-                  //             imageAsset: "assets/svgs/payment.svg"
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  GestureDetector(
-                    onTap: (){
-                      homeController.changePage(2);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: SideButton(
-                                text: "Wallets",
-                                imageAsset: "assets/svgs/wallet.svg"
-                            ),
+                      GestureDetector(
+                        onTap: (){
+                          homeController.changePage(1);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: SideButton(
+                                    text: "Account",
+                                    imageAsset: "assets/svgs/account.svg"
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: (){
-                      homeController.changePage(3);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: SideButton(
-                                text: "Withdrawals",
-                                imageAsset: "assets/svgs/transaction.svg"
-                            ),
+                      // Padding(
+                      //   padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.start,
+                      //     children: [
+                      //       Expanded(
+                      //         child: SideButton(
+                      //             text: "Payments",
+                      //             imageAsset: "assets/svgs/payment.svg"
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      GestureDetector(
+                        onTap: (){
+                          homeController.changePage(2);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: SideButton(
+                                    text: "Wallets",
+                                    imageAsset: "assets/svgs/wallet.svg"
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: (){
-                      homeController.changePage(4);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: SideButton(
-                                text: "Admin",
-                                imageAsset: "assets/svgs/admin.svg"
-                            ),
+                      GestureDetector(
+                        onTap: (){
+                          homeController.changePage(3);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: SideButton(
+                                    text: "Withdrawals",
+                                    imageAsset: "assets/svgs/transaction.svg"
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: (){
-                      homeController.changePage(5);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: SideButton(
-                                text: "Support",
-                                imageAsset: "assets/svgs/support.svg"
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
+                      adminButton(accountCtr)
+                      // GestureDetector(
+                      //   onTap: (){
+                      //     homeController.changePage(5);
+                      //   },
+                      //   child: Padding(
+                      //     padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+                      //     child: Row(
+                      //       mainAxisAlignment: MainAxisAlignment.start,
+                      //       children: [
+                      //         Expanded(
+                      //           child: SideButton(
+                      //               text: "Support",
+                      //               imageAsset: "assets/svgs/support.svg"
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // )
+                    ],
+                  );
+                },
               ),
             ),
             Expanded(
@@ -293,6 +285,37 @@ class _HomeState extends State<Home> {
       }catch(e){
 
       }
+    }
+  }
+
+  Widget adminButton(AccountSettingController accountCtr){
+    ProfileModel? profileModel=accountCtr.profileModel;
+    if(profileModel!=null){
+      if(profileModel.roles!.contains("ROLE_ADMIN")){
+        return GestureDetector(
+          onTap: (){
+            homeController.changePage(4);
+          },
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: SideButton(
+                      text: "Admin",
+                      imageAsset: "assets/svgs/admin.svg"
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      }else{
+        return const SizedBox();
+      }
+    }else{
+      return const SizedBox();
     }
   }
 }

@@ -48,18 +48,18 @@ Color secondary_icon_color=Colors.orange;
 final InputDecoration textFieldDecoration=InputDecoration(
   fillColor: primary_color,
   filled: true,
-  hoverColor: secondary_color,
+  hoverColor: action_button_color.withOpacity(0.3),
   hintStyle: GoogleFonts.roboto(
     fontWeight: FontWeight.normal,
     color: primary_text_color.withOpacity(0.4),
     fontSize: 3.sp
   ),
 
-  contentPadding: EdgeInsets.all(2.sp),
+  contentPadding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 0.sp),
   focusedBorder:  OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(2.sp)),
     borderSide: BorderSide(
-        color: action_button_color,
+        color: primary_color_button,
       width: 0.2,
     ),
   ),
@@ -90,55 +90,6 @@ final InputDecoration textFieldDecoration=InputDecoration(
       fontSize: 3.sp
   ),
   prefixStyle: GoogleFonts.poppins(
-    fontWeight: FontWeight.bold,
-    color: secondary_text_color,
-  ),
-);
-
-final InputDecoration amountField=InputDecoration(
-  fillColor: primary_color,
-  filled: true,
-  hoverColor: Colors.white60,
-  hintStyle: GoogleFonts.roboto(
-    fontWeight: FontWeight.normal,
-    color: primary_text_color.withOpacity(0.4),
-      fontSize: 3.sp
-  ),
-  errorBorder: OutlineInputBorder(
-    borderSide: BorderSide(
-        color: Colors.orangeAccent.withOpacity(0.6),
-        width: 0.1
-    ),
-  ),
-  contentPadding: EdgeInsets.all(8.sp),
-  focusedBorder:  OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(2.sp)),
-    borderSide: const BorderSide(
-        color: Colors.transparent,
-        width: 0.2
-    ),
-  ),
-
-  enabledBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(2.sp)),
-    borderSide: const BorderSide(
-        color: Colors.transparent,
-        width: 0.2
-    ),
-  ),
-  disabledBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(2.sp)),
-    borderSide: const BorderSide(
-        color: Colors.transparent,
-        width: 0.2
-    ),
-  ),
-  errorStyle: GoogleFonts.roboto(
-      fontWeight: FontWeight.normal,
-      color: Colors.orangeAccent.withOpacity(0.6),
-      fontSize: 4.sp
-  ),
-  prefixStyle: GoogleFonts.roboto(
     fontWeight: FontWeight.bold,
     color: secondary_text_color,
   ),

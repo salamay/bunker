@@ -21,6 +21,8 @@ class WelcomeScreen extends StatelessWidget {
   TextEditingController passwordController=TextEditingController();
   ValueNotifier<bool> formValidation=ValueNotifier(false);
   late UserController userController;
+
+
   @override
   Widget build(BuildContext context) {
     userController=Provider.of<UserController>(context,listen: false);
@@ -220,6 +222,7 @@ class WelcomeScreen extends StatelessWidget {
     try{
       String email=emailController.text.trim();
       String password=passwordController.text.trim();
+
       await userController.signIn(email: email,password: password);
       context.push(AppRoutes.home);
     }catch(e){

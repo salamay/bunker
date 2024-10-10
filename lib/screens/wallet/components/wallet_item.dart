@@ -23,7 +23,7 @@ class WalletItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(cornerRadius),
           color: Colors.transparent,
           child: ListTile(
-            hoverColor: action_button_color.withOpacity(0.1),
+            hoverColor: action_button_color.withOpacity(0.3),
             tileColor: walletCtr.selectedIndex==assetController.supportedCoin.indexOf(asset)?secondary_color.withOpacity(0.8):Colors.transparent,
             contentPadding: EdgeInsets.symmetric(vertical: 1.sp,horizontal: 4.sp),
             onTap: (){

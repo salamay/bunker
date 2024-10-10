@@ -24,32 +24,47 @@ class WalletPage extends StatelessWidget {
       padding: EdgeInsets.all(8.sp),
       child: Row(
         children: [
-          SizedBox(
+          Container(
             width: width * 0.3,
+            decoration: BoxDecoration(
+                color: secondary_color,
+                boxShadow: [
+                  BoxShadow(
+                    color: primary_color,
+                    spreadRadius: 5,
+                  ),
+                ]
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 8.sp,),
-                MyText(
-                  text: "Wallet",
-                  color: primary_text_color,
-                  weight: FontWeight.w600,
-                  fontSize: 10.sp,
-                  align: TextAlign.start,
-                  maxLines: 3,
+                Align(
+                  alignment: Alignment.center,
+                  child: MyText(
+                    text: "Wallet",
+                    color: primary_text_color,
+                    weight: FontWeight.w600,
+                    fontSize: 10.sp,
+                    align: TextAlign.start,
+                    maxLines: 3,
+                  ),
                 ),
                 SizedBox(height: 4.sp,),
-                Consumer<AssetController>(
-                  builder: (context, assetCtr, child) {
-                    return MyText(
-                      text: "\$${assetCtr.overallBalance.toStringAsFixed(2)}",
-                      color: primary_text_color,
-                      weight: FontWeight.w700,
-                      fontSize: 10.sp,
-                      align: TextAlign.start,
-                      maxLines: 3,
-                    );
-                  },
+                Align(
+                  alignment: Alignment.center,
+                  child: Consumer<AssetController>(
+                    builder: (context, assetCtr, child) {
+                      return MyText(
+                        text: "\$${assetCtr.overallBalance.toStringAsFixed(2)}",
+                        color: primary_text_color,
+                        weight: FontWeight.w700,
+                        fontSize: 10.sp,
+                        align: TextAlign.start,
+                        maxLines: 3,
+                      );
+                    },
+                  ),
                 ),
                 SizedBox(height: 1.sp,),
                 Align(

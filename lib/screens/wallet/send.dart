@@ -60,7 +60,7 @@ class Send extends StatelessWidget {
                   fontSize: 3.sp,
                   align: TextAlign.start
               ),
-              SizedBox(height: 1.sp),
+              SizedBox(height: 2.sp),
               TextFormField(
                 controller: amountController,
                 style: GoogleFonts.poppins(
@@ -92,7 +92,14 @@ class Send extends StatelessWidget {
                     // )
                 ),
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                validator: (val)=>val!.isEmpty?"Invalid amount":null,
+                validator: (val) {
+                  if(val!.isEmpty) {
+                    return "Invalid amount";
+                  } else if(double.tryParse(val) == null) {
+                    return "Please enter a valid number";
+                  }
+                  return null;
+                },
               ),
               const Spacer(),
               ValueListenableBuilder(

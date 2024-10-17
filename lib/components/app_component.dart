@@ -55,7 +55,7 @@ final InputDecoration textFieldDecoration=InputDecoration(
     fontSize: 3.sp
   ),
 
-  contentPadding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 0.sp),
+  contentPadding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 2.sp),
   focusedBorder:  OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(2.sp)),
     borderSide: BorderSide(

@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:bunker/screens/account/payment_methods/add_payment_method.dart';
 import 'package:bunker/screens/account/payment_methods/model/payment_method_model.dart';
 import 'package:bunker/screens/empty/empty_page.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../components/app_component.dart';
+import '../../../components/button/MyButton.dart';
 import '../../../components/texts/MyText.dart';
 import '../../../user/controller/user_controller.dart';
 import '../../../user/model/user_crendential.dart';
@@ -52,13 +56,50 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      MyText(
-                        text: "Payment Methods",
-                        color: primary_text_color,
-                        weight: FontWeight.w600,
-                        fontSize: SizeUtils.getSize(context, 6.sp),
-                        align: TextAlign.start,
-                        maxLines: 1,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          MyText(
+                            text: "Payment Methods",
+                            color: primary_text_color,
+                            weight: FontWeight.w600,
+                            fontSize: SizeUtils.getSize(context, 6.sp),
+                            align: TextAlign.start,
+                            maxLines: 1,
+                          ),
+                          MyButton(
+                            text: "+ Add",
+                            borderColor: primary_color_button,
+                            bgColor: primary_color_button,
+                            txtColor: primary_text_color,
+                            verticalPadding: buttonVerticalPadding,
+                            bgRadius: 2.sp,
+                            width: width*0.1,
+                            onPressed: ()async{
+                              showAdaptiveDialog(
+                                  context: context,
+                                  barrierDismissible: true,
+                                  builder: (context){
+                                    return BackdropFilter(
+                                      filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                                      child: AlertDialog(
+                                        backgroundColor: primary_color,
+                                        content: Container(
+                                          width: width*0.3,
+                                          clipBehavior: Clip.hardEdge,
+                                          padding: EdgeInsets.symmetric(horizontal: 4.sp,vertical: 6.sp),
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(Radius.circular(cornerRadius))
+                                          ),
+                                          child: AddPaymentMethod(),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                              );
+                            },
+                          )
+                        ],
                       ),
                       SizedBox(height: SizeUtils.getSize(context, 2.sp),),
                       MyText(

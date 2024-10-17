@@ -25,7 +25,7 @@ class _AccountSettingsState extends State<AccountSettings> with SingleTickerProv
   void initState() {
     // TODO: implement initState
     super.initState();
-    pageController=TabController(length: 5, initialIndex: 4,vsync: this);
+    pageController=TabController(length: 5, initialIndex: 1,vsync: this);
   }
   @override
   Widget build(BuildContext context) {

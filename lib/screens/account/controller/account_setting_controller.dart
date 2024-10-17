@@ -94,6 +94,32 @@ class AccountSettingController extends ChangeNotifier{
       throw Exception("Unable to get payment methods");
     }
   }
+
+  Future<void> addPaymentMethod({required UserCredential credential,required PaymentMethodModel paymentMethod})async{
+    log("Adding payment method");
+    try{
+      var body= {
+          "bank_name":paymentMethod.bankName,
+          "account_name": paymentMethod.accountName,
+          "account_number":paymentMethod.accountNumber,
+          "routing_number":paymentMethod.routingNumber,
+          "swift_code": paymentMethod.swiftCode,
+          "note": paymentMethod.swiftCode
+      };
+      var response = await my_api.post(jsonEncode(body),ApiUrls.addPaymentMethod, {"Content-Type": "application/json","Authorization":"Bearer ${credential.token}"});
+      log("Adding method: Response code ${response!.statusCode}");
+      if(response.statusCode==200){
+        paymentMethods.add(paymentMethod);
+      }else{
+        throw Exception();
+      }
+      notifyListeners();
+    }catch(e){
+      log(e.toString());
+      throw Exception("Unable to get add payment method");
+    }
+  }
+
   Future<void> deletePaymentMethod({required UserCredential credential,required String id})async{
     log("Deleting payment method");
     try{

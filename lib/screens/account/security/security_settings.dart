@@ -112,7 +112,7 @@ class SecuritySettings extends StatelessWidget {
                       children: accountCtr.loginHistory.map((e){
                         return Container(
                           padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 4.sp),horizontal: SizeUtils.getSize(context, 2.sp)),
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: Colors.transparent,
                           ),
                           child: Row(

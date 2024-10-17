@@ -12,6 +12,7 @@ class ApiUrls{
   static String profile="$baseUrl/profile";
   static String authHistories="$baseUrl/authHistories";
   static String paymentMethods="$baseUrl/paymentMethods";
+  static String addPaymentMethod="$baseUrl/addPaymentMethod";
   static String deletePaymentMethod="$baseUrl/deletePaymentMethod";
   static String balance="$baseUrl/balance";
   static String updateProfile="$baseUrl/updateProfile";

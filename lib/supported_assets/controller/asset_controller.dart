@@ -67,8 +67,7 @@ class AssetController extends ChangeNotifier{
           supportedCoin[index]=newData;
           notifyListeners();
         } else {
-          String message = jsonDecode(response.body)['status']["error_message"];
-          log(message);
+          return[];
         }
       } catch (e) {
         log(e.toString());
@@ -88,7 +87,8 @@ class AssetController extends ChangeNotifier{
         final assets=assetModelFromJson(response.body);
         supportedCoin=assets;
         colors=[];
-        supportedCoin.map((e){
+        notifyListeners();
+        await Future.wait(supportedCoin.map((e)async{
           CoinBalance coinBalance = CoinBalance(balanceInCrypto: e.balance!, balanceInFiat: e.balance!);
           balances[e.id!]=coinBalance;
           calculateTotalBalance();
@@ -96,7 +96,8 @@ class AssetController extends ChangeNotifier{
           math.Random random = math.Random();
           Color randomColor = c[random.nextInt(c.length)];
           colors.add(randomColor);
-        }).toList();
+        }).toList());
+        assetLoading=false;
         notifyListeners();
       }
       assetLoading=false;

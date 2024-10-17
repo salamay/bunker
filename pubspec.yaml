@@ -61,6 +61,9 @@ dependencies:
   fl_chart: 0.68.0
   intl: 0.19.0
   csc_picker: 0.2.7
+  easy_stepper: ^0.8.5
+  otp: ^3.1.4
+  shared_preferences: ^2.3.2
 
 dev_dependencies:
   flutter_test:

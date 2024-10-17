@@ -11,7 +11,7 @@ double buttonVerticalPadding=5.sp;
 double cornerRadius=2.sp;
 double textFieldRadius=10.sp;
 Color primary_color= Color(0xFF0E131D);
-Color secondary_color= Color(0xff161B29);
+Color secondary_color= Color(0xff161B29).withOpacity(0.5);
 Color secondary_bg_color=Colors.grey[100]??Colors.grey;
 
 ////////////////////////////////////BUTTON////////////////////////////////////
@@ -26,7 +26,7 @@ Color action_button_color=Color(0xff1D293B);
 
 ////////////////////////////////////BORDER////////////////////////////////////
 Color primary_border_color=Color(0xff1C171F);
-Color secondary_border_color=Colors.white;
+Color secondary_border_color=Colors.white.withOpacity(0.4);
 Color divider_color=Color(0xFF0EAEA);
 ////////////////////////////////////BORDER////////////////////////////////////
 

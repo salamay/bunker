@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class HomeController extends ChangeNotifier{
 
-  int currentPage = 0;
+  int currentPage = 1;
 
   void changePage(int index){
     currentPage = index;

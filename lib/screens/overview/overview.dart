@@ -51,7 +51,7 @@ class OverView extends StatelessWidget {
                       effect: ShimmerEffect(
                           duration: const Duration(milliseconds: 1000),
                           baseColor: secondary_color.withOpacity(0.1),
-                          highlightColor: action_button_color.withOpacity(0.1)
+                          highlightColor: action_button_color.withOpacity(0.3)
                       ),
                       child: SizedBox(
                         width: width,
@@ -63,7 +63,7 @@ class OverView extends StatelessWidget {
                                 asset: e,
                                 h: 100.sp,
                                 w: 70.sp,
-                                color: action_button_color.withOpacity(0.2),
+                                color: action_button_color.withOpacity(0.3),
                               ),
                             );
                           }).toList()
@@ -71,7 +71,7 @@ class OverView extends StatelessWidget {
                           child: Container(
                             height: 100.sp,
                             width: 70.sp,
-                            color: action_button_color.withOpacity(0.1),
+                            color: action_button_color.withOpacity(0.3),
                           ),
                         ),
                       ),

@@ -51,7 +51,9 @@ class _HomeState extends State<Home> {
     homeController=Provider.of<HomeController>(context,listen: false);
     userController=Provider.of<UserController>(context,listen: false);
     accountSettingController=Provider.of<AccountSettingController>(context,listen: false);
-    getData(context: context);
+    Future.delayed(Duration(seconds: 2),(){
+      getData(context: context);
+    });
   }
 
   @override
@@ -252,13 +254,13 @@ class _HomeState extends State<Home> {
     await getAssets(context: context);
     time_start=DateTime.fromMillisecondsSinceEpoch(DateTime.now().toUtc().millisecondsSinceEpoch-1000*60*60*24);
     time_end=DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch,isUtc: true);
-    assetController.getMarketQuotesHistorical(MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
+    // assetController.getMarketQuotesHistorical(MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
     _marketDataTimer=Timer.periodic(const Duration(minutes: 2), (timer)async{
       try{
         log("Market data history: ${timer.tick}");
         time_start=DateTime.fromMillisecondsSinceEpoch(DateTime.now().toUtc().millisecondsSinceEpoch-1000*60*60*24);
         time_end=DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch,isUtc: true);
-        assetController.getMarketQuotesHistorical(MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
+        // assetController.getMarketQuotesHistorical(MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
 
       }catch(e){
         log(e.toString());
@@ -266,6 +268,7 @@ class _HomeState extends State<Home> {
       }
     });
     getProfile(context: context);
+    getAuthHistories(context: context);
   }
   Future<void> getAssets({required BuildContext context})async{
     UserCredential? credential=userController.userCredential;
@@ -282,6 +285,16 @@ class _HomeState extends State<Home> {
     if(credential!=null){
       try{
         await accountSettingController.getProfile(credential: credential);
+      }catch(e){
+
+      }
+    }
+  }
+  Future<void> getAuthHistories({required BuildContext context})async{
+    UserCredential? credential=userController.userCredential;
+    if(credential!=null){
+      try{
+        await accountSettingController.getAuthHistory(credential: credential);
       }catch(e){
 
       }

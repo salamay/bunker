@@ -9,8 +9,8 @@ import '../../api/url/Api_url.dart';
 
 class UserController extends ChangeNotifier{
   final my_api = MyApi();
-  // UserCredential? userCredential=UserCredential(token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheW90dW5kZXNhbGFtMTZAZ21haWwuY29tIiwiaWF0IjoxNzI4NTIyOTkzLCJleHAiOjE3NTk5NzI1OTMsImF1ZCI6ImF5b3R1bmRlc2FsYW0xNkBnbWFpbC5jb20iLCJqdGkiOiI3ODQxMjE1MyJ9.Ohv-ifa2F5ld9RJOWqP3ajYR6j2aLdE2DiN5SEZ4wc8");
-  UserCredential? userCredential;
+  UserCredential? userCredential=UserCredential(token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheW90dW5kZXNhbGFtMTZAZ21haWwuY29tIiwiaWF0IjoxNzI4NTIyOTkzLCJleHAiOjE3NTk5NzI1OTMsImF1ZCI6ImF5b3R1bmRlc2FsYW0xNkBnbWFpbC5jb20iLCJqdGkiOiI3ODQxMjE1MyJ9.Ohv-ifa2F5ld9RJOWqP3ajYR6j2aLdE2DiN5SEZ4wc8");
+  // UserCredential? userCredential;
 
   Future<UserCredential> signIn({required String email,required String password})async{
     log("Signing in");

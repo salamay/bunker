@@ -24,39 +24,37 @@ class PieChart2State extends State {
   @override
   Widget build(BuildContext context) {
     assetController = Provider.of<AssetController>(context,listen: false);
-    return Expanded(
-      child: AspectRatio(
-        aspectRatio: 1,
-        child: Consumer<AssetController>(
-          builder: (context, assetCtr, child) {
+    return AspectRatio(
+      aspectRatio: 1,
+      child: Consumer<AssetController>(
+        builder: (context, assetCtr, child) {
 
-            return PieChart(
-              PieChartData(
-                centerSpaceColor: action_button_color,
-                pieTouchData: PieTouchData(
-                  touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                    setState(() {
-                      if (!event.isInterestedForInteractions ||
-                          pieTouchResponse == null ||
-                          pieTouchResponse.touchedSection == null) {
-                        touchedIndex = -1;
-                        return;
-                      }
-                      touchedIndex = pieTouchResponse
-                          .touchedSection!.touchedSectionIndex;
-                    });
-                  },
-                ),
-                borderData: FlBorderData(
-                  show: false,
-                ),
-                sectionsSpace: 0,
-                centerSpaceRadius: 10.sp,
-                sections: showingSections(assets: assetCtr.supportedCoin),
+          return PieChart(
+            PieChartData(
+              centerSpaceColor: action_button_color,
+              pieTouchData: PieTouchData(
+                touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                  setState(() {
+                    if (!event.isInterestedForInteractions ||
+                        pieTouchResponse == null ||
+                        pieTouchResponse.touchedSection == null) {
+                      touchedIndex = -1;
+                      return;
+                    }
+                    touchedIndex = pieTouchResponse
+                        .touchedSection!.touchedSectionIndex;
+                  });
+                },
               ),
-            );
-          },
-        ),
+              borderData: FlBorderData(
+                show: false,
+              ),
+              sectionsSpace: 0,
+              centerSpaceRadius: 10.sp,
+              sections: showingSections(assets: assetCtr.supportedCoin),
+            ),
+          );
+        },
       ),
     );
   }

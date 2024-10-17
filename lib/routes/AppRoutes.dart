@@ -23,7 +23,7 @@ class AppRoutes {
 
 
   static final router = GoRouter(
-    initialLocation: landingPage.toString(),
+    initialLocation: home.toString(),
     routes: [
       GoRoute(
         path: landingPage,

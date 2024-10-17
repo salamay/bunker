@@ -13,12 +13,17 @@ class ProfileModel {
   String? email;
   DateTime? joinedAt;
   String? roles;
-  dynamic firstName;
-  dynamic lastName;
+  String? firstName;
+  String? lastName;
   dynamic dob;
-  dynamic country;
-  dynamic state;
-  dynamic city;
+  String? country;
+  String? state;
+  String? city;
+  bool? isTxSent;
+  bool? isTxReceived;
+  bool? is2FaEnabled;
+  bool? basicDetailsUpdated;
+  bool? kycEnabled;
 
   ProfileModel({
     this.userId,
@@ -31,6 +36,11 @@ class ProfileModel {
     this.country,
     this.state,
     this.city,
+    this.isTxSent,
+    this.isTxReceived,
+    this.is2FaEnabled,
+    this.basicDetailsUpdated,
+    this.kycEnabled,
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
@@ -44,6 +54,11 @@ class ProfileModel {
     country: json["country"],
     state: json["state"],
     city: json["city"],
+    isTxSent: json["is_tx_sent"],
+    isTxReceived: json["is_tx_received"],
+    is2FaEnabled: json["is2faEnabled"],
+    basicDetailsUpdated: json["basicDetailsUpdated"],
+    kycEnabled: json["kycEnabled"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -57,5 +72,10 @@ class ProfileModel {
     "country": country,
     "state": state,
     "city": city,
+    "is_tx_sent": isTxSent,
+    "is_tx_received": isTxReceived,
+    "is2faEnabled": is2FaEnabled,
+    "basicDetailsUpdated": basicDetailsUpdated,
+    "kycEnabled": kycEnabled,
   };
 }

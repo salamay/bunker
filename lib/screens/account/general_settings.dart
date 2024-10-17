@@ -233,26 +233,35 @@ class GeneralSettings extends StatelessWidget {
                                 onPressed: ()async{
                                   if(_formKey.currentState!.validate()){
                                     context.loaderOverlay.show();
-                                    String firstName=firstNameController.text.trim();
-                                    String lastName=lastNameController.text.trim();
-                                    String dob="";
-                                    String country=countryNotifier.value??"";
-                                    String state=stateNotifier.value??"";
-                                    String city=cityNotifier.value??"";
-                                    ProfileModel profile=ProfileModel(firstName: firstName,lastName: lastName,dob: dob,country: country,state: state,city: city);
-                                    UserCredential? credential=userController.userCredential;
-                                    if(credential!=null){
-                                      try{
-                                        await accountCtr.updateProfile(credential: credential, profile: profile);
-                                        context.loaderOverlay.hide();
-                                        await MyDialog.showDialog(context: context, message: "Saved", icon: Icons.save_as_sharp, iconColor: Colors.green);
+                                    ProfileModel? profile=accountCtr.profileModel;
+                                    if(profile!=null){
+                                      String firstName=firstNameController.text.trim();
+                                      String lastName=lastNameController.text.trim();
+                                      String dob="";
+                                      String country=countryNotifier.value??"";
+                                      String state=stateNotifier.value??"";
+                                      String city=cityNotifier.value??"";
+                                      profile.firstName=firstName;
+                                      profile.lastName=lastName;
+                                      profile.dob=dob;
+                                      profile.country=country;
+                                      profile.state=state;
+                                      profile.city=city;
+                                      profile.basicDetailsUpdated=true;
+                                      UserCredential? credential=userController.userCredential;
+                                      if(credential!=null){
+                                        try{
+                                          await accountCtr.updateProfile(credential: credential, profile: profile);
+                                          context.loaderOverlay.hide();
+                                          await MyDialog.showDialog(context: context, message: "Saved", icon: Icons.save_as_sharp, iconColor: Colors.green);
 
-                                      }catch(e){
-                                        log(e.toString());
+                                        }catch(e){
+                                          log(e.toString());
+                                          context.loaderOverlay.hide();
+                                        }
+                                      }else{
                                         context.loaderOverlay.hide();
                                       }
-                                    }else{
-                                      context.loaderOverlay.hide();
                                     }
                                   }
                                 },

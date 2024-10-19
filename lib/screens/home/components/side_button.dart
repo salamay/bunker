@@ -3,6 +3,7 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "../../../components/app_component.dart";
 import "../../../components/texts/MyText.dart";
+import "../../../utils/size_utils.dart";
 
 
 class SideButton extends StatefulWidget {
@@ -24,10 +25,10 @@ class _SideButtonState extends State<SideButton> {
       onEnter: (event) => setState(() => _buttonColor = action_button_color.withOpacity(0.3)),
       onExit: (event) => setState(() => _buttonColor = secondary_color),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 2.sp,horizontal: 4.sp),
+        padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 2.sp),horizontal: SizeUtils.getSize(context, 4.sp)),
         decoration: BoxDecoration(
           color: _buttonColor,
-          borderRadius: BorderRadius.circular(2.sp),
+          borderRadius: BorderRadius.circular(SizeUtils.getSize(context, 2.sp)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -37,18 +38,18 @@ class _SideButtonState extends State<SideButton> {
               children: [
                 SvgPicture.asset(
                   widget.imageAsset,
-                  width: 8.sp,
+                  width: SizeUtils.getSize(context, 8.sp),
                   fit: BoxFit.contain,
                 ),
               ],
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(SizeUtils.getSize(context, 8.sp)),
               child: MyText(
                 text: widget.text,
                 color: primary_text_color,
                 weight: FontWeight.w400,
-                fontSize: 3.sp,
+                fontSize: SizeUtils.getSize(context, 3.sp),
                 align: TextAlign.start,
                 maxLines: 1,
               ),

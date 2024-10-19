@@ -15,6 +15,7 @@ import '../../components/form/MyFormField.dart';
 import '../../components/texts/MyText.dart';
 import '../../routes/AppRoutes.dart';
 import '../../user/controller/user_controller.dart';
+import '../../utils/size_utils.dart';
 import '../home/components/my_icon_button.dart';
 import '../home/components/top_row.dart';
 class UserEmailScreen extends StatelessWidget {
@@ -36,7 +37,7 @@ class UserEmailScreen extends StatelessWidget {
       backgroundColor: primary_color,
       appBar: AppBar(
           backgroundColor: secondary_color,
-          elevation: 10.sp,
+          elevation: SizeUtils.getSize(context, 10.sp),
           centerTitle: false,
           title: Row(
             children: [
@@ -54,7 +55,7 @@ class UserEmailScreen extends StatelessWidget {
       body: Container(
         height: height,
         width: width,
-        padding: EdgeInsets.all(8.sp),
+        padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 6.sp),horizontal: SizeUtils.getSize(context, 4.sp)),
         child: Center(
 
           child: SizedBox(
@@ -74,12 +75,12 @@ class UserEmailScreen extends StatelessWidget {
                       text: "Enter user email",
                       color: primary_text_color.withOpacity(0.8),
                       weight: FontWeight.w400,
-                      fontSize: 3.sp,
+                      fontSize: SizeUtils.getSize(context, 3.sp),
                       align: TextAlign.start,
                       maxLines: 3,
                     ),
                   ),
-                  SizedBox(height: 2.sp,),
+                  SizedBox(height:SizeUtils.getSize(context, 2.sp),),
                   MyFormField(
                     controller: emailController,
                     textAlign: TextAlign.start,
@@ -95,7 +96,7 @@ class UserEmailScreen extends StatelessWidget {
                     onFieldSubmitted: null,
                     validator: (val)=>!EmailValidator.validate(val!)?"Enter valid email":null,
                   ),
-                  SizedBox(height: 4.sp,),
+                  SizedBox(height: SizeUtils.getSize(context, 4.sp),),
                   ValueListenableBuilder(
                       valueListenable: formValidation,
                       builder: (context,value,_) {

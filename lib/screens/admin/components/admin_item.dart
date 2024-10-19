@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../components/app_component.dart';
 import '../../../components/texts/MyText.dart';
+import '../../../utils/size_utils.dart';
 class AdminItem extends StatelessWidget {
   AdminItem({super.key,required this.title,required this.imageAsset});
   String title;
@@ -26,8 +27,8 @@ class AdminItem extends StatelessWidget {
           valueListenable: _buttonColor,
           builder: (context,color,_) {
             return Container(
-              padding: EdgeInsets.symmetric(horizontal: 8.sp,vertical: 10.sp),
-              width: 80.sp,
+              padding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 8.sp),vertical: SizeUtils.getSize(context, 10.sp)),
+              width: SizeUtils.getSize(context, 80.sp),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(cornerRadius),
                 color: color,
@@ -37,15 +38,15 @@ class AdminItem extends StatelessWidget {
                 children: [
                   SvgPicture.asset(
                     imageAsset,
-                    width: 15.sp,
+                    width: SizeUtils.getSize(context, 15.sp),
                     fit: BoxFit.cover,
                   ),
-                  SizedBox(height: 2.sp,),
+                  SizedBox(height: SizeUtils.getSize(context, 2.sp),),
                   MyText(
                     text: title,
                     color: Colors.white,
                     weight: FontWeight.w500,
-                    fontSize: 4.sp,
+                    fontSize: SizeUtils.getSize(context, 4.sp),
                     align: TextAlign.start,
                     maxLines: 1,
                   ),

@@ -14,6 +14,7 @@ import '../../../components/button/MyButton.dart';
 import '../../../components/dialogs/my_dialog.dart';
 import '../../../components/texts/MyText.dart';
 import '../../../user/controller/user_controller.dart';
+import '../../../utils/size_utils.dart';
 import '../../home/components/my_icon_button.dart';
 import '../controller/admin_controller.dart';
 class TicketItem extends StatelessWidget {
@@ -31,7 +32,7 @@ class TicketItem extends StatelessWidget {
       useDefaultLoading: false,
       overlayOpacity: 0.1,
       overlayWidget: Center(
-          child: Loading(size: 10.sp,)
+          child: Loading(size: SizeUtils.getSize(context, 10.sp),)
       ),
       child: Material(
         borderRadius: BorderRadius.circular(cornerRadius),
@@ -48,8 +49,8 @@ class TicketItem extends StatelessWidget {
               valueListenable: _buttonColor,
               builder: (context,color,_) {
               return Container(
-                padding: EdgeInsets.symmetric(vertical: 8.sp,horizontal: 4.sp),
-                margin: EdgeInsets.only(bottom: 2.sp),
+                padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 6.sp),horizontal: 4.sp),
+                margin: EdgeInsets.only(bottom: SizeUtils.getSize(context, 2.sp)),
                 width: width,
                 color: color,
                 child: Column(
@@ -59,7 +60,7 @@ class TicketItem extends StatelessWidget {
                       text: ticket.walletName.toString(),
                       color: Colors.green,
                       weight: FontWeight.w600,
-                      fontSize: 6.sp,
+                      fontSize: SizeUtils.getSize(context, 6.sp),
                       align: TextAlign.start,
                       maxLines: 1,
                     ),
@@ -67,20 +68,20 @@ class TicketItem extends StatelessWidget {
                       text: "\$${ticket.amount.toString()}",
                       color: primary_text_color.withOpacity(0.8),
                       weight: FontWeight.w500,
-                      fontSize: 8.sp,
+                      fontSize: SizeUtils.getSize(context, 8.sp),
                       align: TextAlign.start,
                       maxLines: 1,
                     ),
-                    SizedBox(height: 1.sp,),
+                    SizedBox(height: SizeUtils.getSize(context, 1.sp),),
                     MyText(
                       text: ticket.email.toString(),
                       color: primary_text_color,
                       weight: FontWeight.w400,
-                      fontSize: 4.sp,
+                      fontSize: SizeUtils.getSize(context, 4.sp),
                       align: TextAlign.start,
                       maxLines: 1,
                     ),
-                    SizedBox(height: 1.sp,),
+                    SizedBox(height: SizeUtils.getSize(context, 1.sp),),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -93,7 +94,7 @@ class TicketItem extends StatelessWidget {
                           bgColor: Colors.green,
                           txtColor: primary_text_color,
                           verticalPadding: buttonVerticalPadding,
-                          width: 30.sp,
+                          width: SizeUtils.getSize(context, 30.sp),
                           onPressed: ()async{
                             try{
                               UserCredential? credential=userController.userCredential;
@@ -108,14 +109,14 @@ class TicketItem extends StatelessWidget {
                             }
                           },
                         ): const SizedBox(),
-                        SizedBox(width: 2.sp,),
+                        SizedBox(width: SizeUtils.getSize(context, 2.sp),),
                         ticket.status!=rejected?MyButton(
                           text: "Reject",
                           borderColor: primary_color_button,
                           bgColor: Colors.redAccent,
                           txtColor: primary_text_color,
                           verticalPadding: buttonVerticalPadding,
-                          width: 20.sp,
+                          width:SizeUtils.getSize(context, 20.sp),
                           onPressed: ()async{
                             try{
                               UserCredential? credential=userController.userCredential;

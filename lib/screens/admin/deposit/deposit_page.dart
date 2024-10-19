@@ -21,6 +21,7 @@ import '../../../supported_assets/controller/asset_controller.dart';
 import '../../../supported_assets/model/assets.dart';
 import '../../../user/controller/user_controller.dart';
 import '../../../user/model/user_crendential.dart';
+import '../../../utils/size_utils.dart';
 import '../../home/components/my_icon_button.dart';
 import '../../home/components/top_row.dart';
 class DepositPage extends StatefulWidget {
@@ -55,7 +56,7 @@ class _DepositPageState extends State<DepositPage> {
       backgroundColor: primary_color,
         appBar: AppBar(
             backgroundColor: secondary_color,
-            elevation: 10.sp,
+            elevation: SizeUtils.getSize(context, 10.sp),
             centerTitle: false,
             title: Row(
               children: [
@@ -73,28 +74,28 @@ class _DepositPageState extends State<DepositPage> {
       body: Container(
         height: height,
         width: width,
-        padding: EdgeInsets.all(8.sp),
+        padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 6.sp),horizontal: SizeUtils.getSize(context, 4.sp)),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 1.sp,),
+              SizedBox(height: SizeUtils.getSize(context, 1.sp),),
               MyText(
                 text: "Deposit",
                 color: primary_text_color,
                 weight: FontWeight.w600,
-                fontSize: 8.sp,
+                fontSize: SizeUtils.getSize(context, 8.sp),
                 align: TextAlign.start,
                 maxLines: 3,
               ),
-              SizedBox(height: 4.sp,),
+              SizedBox(height: SizeUtils.getSize(context, 4.sp),),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     height: height,
                     width: width*0.5,
-                    padding: EdgeInsets.all(8.sp),
+                    padding: EdgeInsets.all(SizeUtils.getSize(context, 8.sp)),
                     decoration: BoxDecoration(
                       color: action_button_color.withOpacity(0.2),
                       boxShadow: [
@@ -115,15 +116,15 @@ class _DepositPageState extends State<DepositPage> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 4.sp,),
+                  SizedBox(width: SizeUtils.getSize(context, 4.sp),),
                   LoaderOverlay(
                     useDefaultLoading: true,
-                    overlayWidget: Loading(size: 10.sp,),
+                    overlayWidget: Loading(size: SizeUtils.getSize(context, 10.sp),),
                     overlayOpacity: 0.1,
                     child: Container(
                       height: height,
                       width: width*0.3,
-                      padding: EdgeInsets.all(8.sp),
+                      padding: EdgeInsets.all(SizeUtils.getSize(context, 8.sp)),
                       decoration: BoxDecoration(
                         color: action_button_color.withOpacity(0.2),
                         boxShadow: [
@@ -152,8 +153,8 @@ class _DepositPageState extends State<DepositPage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SizedBox(
-                                      width: 8.sp,
-                                      height: 8.sp,
+                                      width: SizeUtils.getSize(context, 8.sp),
+                                      height: SizeUtils.getSize(context, 8.sp),
                                       child: CachedNetworkImage(
                                         imageUrl: asset.image!,
                                         imageBuilder: (context, imageProvider) => Container(
@@ -166,27 +167,27 @@ class _DepositPageState extends State<DepositPage> {
                                         ),
                                         placeholder: (context, url) => Skeleton.replace(
                                           child: Container(
-                                            width: 8.sp,
-                                            height: 8.sp,
+                                            width: SizeUtils.getSize(context, 8.sp),
+                                            height: SizeUtils.getSize(context, 8.sp),
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.all(Radius.circular(8.sp)),
+                                              borderRadius: BorderRadius.all(Radius.circular(SizeUtils.getSize(context, cornerRadius))),
                                             ),
                                           ),
                                         ),
                                         errorWidget: (context, url, error) => SizedBox(
-                                            width: 8.sp,
-                                            height: 8.sp,
-                                            child: Icon(Icons.error,size: 10.sp,)
+                                            width: SizeUtils.getSize(context, 8.sp),
+                                            height: SizeUtils.getSize(context, 8.sp),
+                                            child: Icon(Icons.error,size: SizeUtils.getSize(context, 10.sp),)
                                         ),
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 2.sp),
+                                      padding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 2.sp)),
                                       child: MyText(
                                         text: asset.symbol!,
                                         color: primary_text_color.withOpacity(0.8),
                                         weight: FontWeight.w400,
-                                        fontSize: 4.sp,
+                                        fontSize: SizeUtils.getSize(context, 4.sp),
                                         align: TextAlign.start,
                                         maxLines: 3,
                                       ),
@@ -197,16 +198,16 @@ class _DepositPageState extends State<DepositPage> {
                                     text: "Amount",
                                     color: primary_text_color.withOpacity(0.8),
                                     weight: FontWeight.w400,
-                                    fontSize: 3.sp,
+                                    fontSize: SizeUtils.getSize(context, 3.sp),
                                     align: TextAlign.start
                                 ),
-                                SizedBox(height: 1.sp),
+                                SizedBox(height: SizeUtils.getSize(context, 1.sp)),
                                 TextFormField(
                                   controller: amountController,
                                   style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.normal,
                                     color: primary_text_color,
-                                    fontSize: 4.sp,
+                                    fontSize: SizeUtils.getSize(context, 4.sp),
                                   ),
                                   decoration: textFieldDecoration.copyWith(
                                     hintText: "Amount",
@@ -222,7 +223,7 @@ class _DepositPageState extends State<DepositPage> {
                                     return null;
                                   },
                                 ),
-                                SizedBox(height: 8.sp,),
+                                SizedBox(height: SizeUtils.getSize(context, 8.sp),),
                                 ValueListenableBuilder(
                                     valueListenable: formValidation,
                                     builder: (context,value,_) {

@@ -105,7 +105,7 @@ class AdminMessageView extends StatelessWidget {
                           children: messages.map((message) => MessageItem(message: message)).toList(),
                         ):Center(
                           child: Container(
-                            padding: EdgeInsets.all(8.sp),
+                            padding: EdgeInsets.all(SizeUtils.getSize(context, 8.sp)),
                             decoration: BoxDecoration(
                                 color: secondary_color.withOpacity(0.3),
                                 borderRadius: BorderRadius.all(Radius.circular(cornerRadius))
@@ -187,7 +187,7 @@ class AdminMessageView extends StatelessWidget {
                         bgColor: primary_color_button,
                         txtColor: primary_text_color,
                         verticalPadding: buttonVerticalPadding,
-                        bgRadius: 2.sp,
+                        bgRadius: SizeUtils.getSize(context, cornerRadius),
                         onPressed: ()async{
                           if(kIsWeb){
                             final XFile? image = await picker.pickImage(source: ImageSource.gallery);
@@ -205,7 +205,7 @@ class AdminMessageView extends StatelessWidget {
                         bgColor: primary_color_button,
                         txtColor: primary_text_color,
                         verticalPadding: buttonVerticalPadding,
-                        bgRadius: 2.sp,
+                        bgRadius: SizeUtils.getSize(context, cornerRadius),
                         onPressed: ()async{
                           if(_formKey.currentState!.validate()){
                             try{

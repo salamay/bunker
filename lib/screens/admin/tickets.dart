@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../../components/texts/MyText.dart';
 import '../../user/controller/user_controller.dart';
 import '../../user/model/user_crendential.dart';
+import '../../utils/size_utils.dart';
 import '../home/components/my_icon_button.dart';
 import '../home/components/top_row.dart';
 
@@ -54,7 +55,7 @@ class _TicketsState extends State<Tickets> {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: secondary_color,
-          elevation: 10.sp,
+          elevation: SizeUtils.getSize(context, 10.sp),
           centerTitle: false,
           title: Row(
             children: [
@@ -73,13 +74,13 @@ class _TicketsState extends State<Tickets> {
           width: width,
           height: height,
           color: primary_color,
-          padding: EdgeInsets.all(8.sp),
+          padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 6.sp),horizontal: SizeUtils.getSize(context, 4.sp)),
           child: SingleChildScrollView(
             child: Consumer<AdminController>(
               builder: (context, adminCtr, child) {
                 return Column(
                   children: [
-                    SizedBox(height: 8.sp,),
+                    SizedBox(height: SizeUtils.getSize(context, 4.sp),),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: MyText(
@@ -91,7 +92,7 @@ class _TicketsState extends State<Tickets> {
                         maxLines: 3,
                       ),
                     ),
-                    SizedBox(height: 4.sp,),
+                    SizedBox(height: SizeUtils.getSize(context, 4.sp),),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,

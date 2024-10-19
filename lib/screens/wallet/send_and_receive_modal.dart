@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../components/texts/MyText.dart';
+import '../../utils/size_utils.dart';
 import 'controller/wallet_controller.dart';
 class SendAndReceiveModal extends StatefulWidget {
   SendAndReceiveModal({super.key,required this.asset});
@@ -34,7 +35,7 @@ class _SendAndReceiveModalState extends State<SendAndReceiveModal> with SingleTi
     return Container(
       width: width,
       height: height,
-      padding: EdgeInsets.all(8.sp),
+      padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 6.sp),horizontal: SizeUtils.getSize(context, 4.sp)),
       decoration: BoxDecoration(
         color: secondary_color,
         borderRadius: BorderRadius.circular(cornerRadius),
@@ -58,7 +59,7 @@ class _SendAndReceiveModalState extends State<SendAndReceiveModal> with SingleTi
                     text: "Withdrawal",
                     color: primary_text_color.withOpacity(0.5),
                     weight: FontWeight.w400,
-                    fontSize: 4.sp,
+                    fontSize: SizeUtils.getSize(context, 4.sp),
                     align: TextAlign.center
                 ),
               ),
@@ -70,19 +71,19 @@ class _SendAndReceiveModalState extends State<SendAndReceiveModal> with SingleTi
                     text: "Receive",
                     color: primary_text_color.withOpacity(0.5),
                     weight: FontWeight.w400,
-                    fontSize: 4.sp,
+                    fontSize: SizeUtils.getSize(context, 4.sp),
                     align: TextAlign.center
                 ),
               ),
             ],
           ),
-          SizedBox(height: 8.sp,),
+          SizedBox(height: SizeUtils.getSize(context, 8.sp),),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                width: 8.sp,
-                height: 8.sp,
+                width: SizeUtils.getSize(context, 8.sp),
+                height: SizeUtils.getSize(context, 8.sp),
                 child: CachedNetworkImage(
                   imageUrl: widget.asset.image!,
                   imageBuilder: (context, imageProvider) => Container(
@@ -95,34 +96,34 @@ class _SendAndReceiveModalState extends State<SendAndReceiveModal> with SingleTi
                   ),
                   placeholder: (context, url) => Skeleton.replace(
                     child: Container(
-                      width: 8.sp,
-                      height: 8.sp,
+                      width: SizeUtils.getSize(context, 8.sp),
+                      height: SizeUtils.getSize(context, 8.sp),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8.sp)),
+                        borderRadius: BorderRadius.all(Radius.circular(SizeUtils.getSize(context, cornerRadius))),
                       ),
                     ),
                   ),
                   errorWidget: (context, url, error) => SizedBox(
-                      width: 8.sp,
-                      height: 8.sp,
-                      child: Icon(Icons.error,size: 10.sp,)
+                      width: SizeUtils.getSize(context, 8.sp),
+                      height: SizeUtils.getSize(context, 8.sp),
+                      child: Icon(Icons.error,size: SizeUtils.getSize(context, 10.sp),)
                   ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 2.sp),
+                padding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 2.sp)),
                 child: MyText(
                   text: widget.asset.symbol!,
                   color: primary_text_color.withOpacity(0.8),
                   weight: FontWeight.w400,
-                  fontSize: 4.sp,
+                  fontSize: SizeUtils.getSize(context, 4.sp),
                   align: TextAlign.start,
                   maxLines: 3,
                 ),
               ),
             ],
           ),
-          SizedBox(height: 4.sp,),
+          SizedBox(height: SizeUtils.getSize(context, 4.sp),),
           Expanded(
             child: TabBarView(
               controller: pageController,

@@ -60,7 +60,7 @@ class _VerificationState extends State<Verification> {
       body: Container(
         height: height,
         width: width,
-        padding: EdgeInsets.symmetric(vertical: 8.sp,horizontal: 4.sp),
+        padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 6.sp),horizontal: SizeUtils.getSize(context, 4.sp)),
         child: SingleChildScrollView(
           child: Consumer<AccountSettingController>(
             builder: (context,accountCtr,_) {

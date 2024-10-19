@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../utils/size_utils.dart';
 import '../app_component.dart';
 import '../texts/MyText.dart';
 
@@ -19,7 +20,7 @@ class MyDialog{
               backgroundColor: primary_color,
               content: Container(
                 clipBehavior: Clip.hardEdge,
-                padding: EdgeInsets.all(10.sp),
+                padding: EdgeInsets.all(SizeUtils.getSize(context, 10.sp)),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(cornerRadius))
                 ),
@@ -30,15 +31,15 @@ class MyDialog{
                   children: [
                     Icon(
                       icon,
-                      size: 8.sp,
+                      size: SizeUtils.getSize(context, 8.sp),
                       color: iconColor,
                     ),
-                    SizedBox(height: 4.sp,),
+                    SizedBox(height: SizeUtils.getSize(context, 4.sp),),
                     MyText(
                         text: message,
                         color: primary_text_color,
                         weight: FontWeight.w500,
-                        fontSize: 6.sp,
+                        fontSize: SizeUtils.getSize(context, 4.sp),
                         maxLines: 3,
                         align: TextAlign.start
                     ),

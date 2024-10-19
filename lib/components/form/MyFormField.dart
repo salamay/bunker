@@ -4,6 +4,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../utils/size_utils.dart';
 import '../app_component.dart';
 class MyFormField extends StatelessWidget {
 
@@ -56,7 +57,7 @@ class MyFormField extends StatelessWidget {
         maxLines: maxLines??1,
         obscureText: obscureText,
         style: style??GoogleFonts.roboto(
-          fontSize: 4.sp,
+          fontSize: SizeUtils.getSize(context, 4.sp),
           color: primary_text_color,
           fontWeight: FontWeight.w400,
         ),

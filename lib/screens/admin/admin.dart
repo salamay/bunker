@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../components/texts/MyText.dart';
+import '../../utils/size_utils.dart';
 class Admin extends StatelessWidget {
   Admin({super.key});
 
@@ -17,7 +18,7 @@ class Admin extends StatelessWidget {
       width: width,
       height: height,
       color: primary_color,
-      padding: EdgeInsets.all(8.sp),
+      padding: EdgeInsets.all(SizeUtils.getSize(context, 8.sp)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -30,7 +31,7 @@ class Admin extends StatelessWidget {
                   context.push(AppRoutes.adminWithdrawalTickets);
                 },
                 child: Container(
-                  margin: EdgeInsets.all(2.sp),
+                  margin: EdgeInsets.all(SizeUtils.getSize(context, 2.sp)),
                   child: AdminItem(
                       title: "Withdrawals",
                       imageAsset: "assets/svgs/withdrawal.svg"
@@ -42,7 +43,7 @@ class Admin extends StatelessWidget {
                   context.push(AppRoutes.userEmailScreen);
                 },
                 child: Container(
-                  margin: EdgeInsets.all(2.sp),
+                  margin: EdgeInsets.all(SizeUtils.getSize(context, 2.sp)),
                   child: AdminItem(
                       title: "Deposit",
                       imageAsset: "assets/svgs/deposit.svg"
@@ -54,7 +55,7 @@ class Admin extends StatelessWidget {
                   context.push(AppRoutes.supportTickets);
                 },
                 child: Container(
-                  margin: EdgeInsets.all(2.sp),
+                  margin: EdgeInsets.all(SizeUtils.getSize(context, 2.sp)),
                   child: AdminItem(
                       title: "Support tickets",
                       imageAsset: "assets/svgs/support_2.svg"

@@ -19,6 +19,7 @@ import '../../components/form/MyFormField.dart';
 import '../../components/texts/MyText.dart';
 import '../../user/controller/user_controller.dart';
 import '../../user/model/user_crendential.dart';
+import '../../utils/size_utils.dart';
 class GeneralSettings extends StatelessWidget {
   GeneralSettings({super.key});
   final _formKey= GlobalKey<FormState>();
@@ -37,9 +38,9 @@ class GeneralSettings extends StatelessWidget {
     return LoaderOverlay(
       useDefaultLoading: false,
       overlayOpacity: 0.3,
-      overlayWidget: Loading(size: 10.sp,),
+      overlayWidget: Loading(size: SizeUtils.getSize(context, 10.sp),),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 4.sp, vertical: 4.sp),
+        padding: EdgeInsets.symmetric(horizontal:SizeUtils.getSize(context, 6.sp), vertical: 4.sp),
         height: height,
         decoration: BoxDecoration(
           color: secondary_color,
@@ -79,16 +80,16 @@ class GeneralSettings extends StatelessWidget {
                           text: "Basic details",
                           color: primary_text_color,
                           weight: FontWeight.w600,
-                          fontSize: 4.sp,
+                          fontSize: SizeUtils.getSize(context, 4.sp),
                           align: TextAlign.start,
                           maxLines: 1,
                         ),
-                        SizedBox(height: 8.sp,),
+                        SizedBox(height: SizeUtils.getSize(context, 8.sp),),
                         MyFormField(
                           controller: emailController,
                           style: GoogleFonts.poppins(
                               color: primary_text_color.withOpacity(0.3),
-                              fontSize: 3.sp,
+                              fontSize: SizeUtils.getSize(context, 3.sp),
                               fontWeight: FontWeight.w300
                           ),
                           textAlign: TextAlign.start,
@@ -104,7 +105,7 @@ class GeneralSettings extends StatelessWidget {
                           onFieldSubmitted: null,
                           validator: (val)=>!EmailValidator.validate(val!)?"Please provide your email":null,
                         ),
-                        SizedBox(height: 2.sp,),
+                        SizedBox(height: SizeUtils.getSize(context, 2.sp),),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -125,7 +126,7 @@ class GeneralSettings extends StatelessWidget {
                                 validator: (val)=>val!.isEmpty?"Enter first name":null,
                               ),
                             ),
-                            SizedBox(width: 4.sp,),
+                            SizedBox(width: SizeUtils.getSize(context, 4.sp),),
                             Expanded(
                               child: MyFormField(
                                 controller: lastNameController,
@@ -145,7 +146,7 @@ class GeneralSettings extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 2.sp,),
+                        SizedBox(height: SizeUtils.getSize(context, 2.sp),),
                         CSCPicker(
                           ///Enable disable state dropdown [OPTIONAL PARAMETER]
                           showStates: true,
@@ -185,13 +186,13 @@ class GeneralSettings extends StatelessWidget {
                           ///DropdownDialog Heading style [OPTIONAL PARAMETER]
                           dropdownHeadingStyle: GoogleFonts.poppins(
                               color: primary_text_color,
-                              fontSize: 4.sp,
+                              fontSize: SizeUtils.getSize(context, 4.sp),
                               fontWeight: FontWeight.normal
                           ),
                           ///DropdownDialog Item style [OPTIONAL PARAMETER]
                           dropdownItemStyle: GoogleFonts.poppins(
                               color: primary_text_color,
-                              fontSize: 4.sp,
+                              fontSize: SizeUtils.getSize(context, 4.sp),
                               fontWeight: FontWeight.w300
                           ),
                           ///Dialog box radius [OPTIONAL PARAMETER]
@@ -218,7 +219,7 @@ class GeneralSettings extends StatelessWidget {
 
                           },
                         ),
-                        SizedBox(height: 4.sp,),
+                        SizedBox(height: SizeUtils.getSize(context, 4.sp),),
                         ValueListenableBuilder(
                             valueListenable: formValidation,
                             builder: (context,value,_) {
@@ -228,7 +229,7 @@ class GeneralSettings extends StatelessWidget {
                                 bgColor: value?primary_color_button:action_button_color,
                                 txtColor: value?primary_text_color:primary_color_button,
                                 verticalPadding: buttonVerticalPadding,
-                                bgRadius: 2.sp,
+                                bgRadius: SizeUtils.getSize(context, 2.sp),
                                 width: width,
                                 onPressed: ()async{
                                   if(_formKey.currentState!.validate()){

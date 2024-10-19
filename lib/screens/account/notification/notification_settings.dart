@@ -47,7 +47,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
     return Container(
       width: width,
       height: height,
-      padding: EdgeInsets.all(8.sp),
+      padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 6.sp), horizontal: SizeUtils.getSize(context, 4.sp)),
       decoration: BoxDecoration(
           color: secondary_color,
           borderRadius: BorderRadius.circular(cornerRadius)

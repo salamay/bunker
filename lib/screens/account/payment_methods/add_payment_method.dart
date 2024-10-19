@@ -174,7 +174,7 @@ class AddPaymentMethod extends StatelessWidget {
                         bgColor: primary_color_button,
                         txtColor: primary_text_color,
                         verticalPadding: buttonVerticalPadding,
-                        bgRadius: 2.sp,
+                        bgRadius: SizeUtils.getSize(context, 4.sp),
                         width: width,
                         onPressed: ()async{
                           if(_formKey.currentState!.validate()){

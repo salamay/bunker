@@ -73,7 +73,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                             bgColor: primary_color_button,
                             txtColor: primary_text_color,
                             verticalPadding: buttonVerticalPadding,
-                            bgRadius: 2.sp,
+                            bgRadius: SizeUtils.getSize(context, 2.sp),
                             width: width*0.1,
                             onPressed: ()async{
                               showAdaptiveDialog(

@@ -16,6 +16,7 @@ import '../../components/button/MyButton.dart';
 import '../../components/snackbar/show_snack_bar.dart';
 import '../../components/texts/MyText.dart';
 import '../../user/controller/user_controller.dart';
+import '../../utils/size_utils.dart';
 import '../transaction/controller/withrawal_controller.dart';
 class Send extends StatelessWidget {
   Send({super.key,required this.asset});
@@ -35,10 +36,10 @@ class Send extends StatelessWidget {
     assetController=Provider.of<AssetController>(context,listen: false);
     return LoaderOverlay(
       useDefaultLoading: true,
-      overlayWidget: Loading(size: 10.sp,),
+      overlayWidget: Loading(size: SizeUtils.getSize(context, 10.sp),),
       overlayOpacity: 0.1,
       child: Container(
-        padding: EdgeInsets.all(8.sp),
+        padding: EdgeInsets.all(SizeUtils.getSize(context, 8.sp)),
         width: width,
         height: height,
         child: Form(
@@ -57,16 +58,16 @@ class Send extends StatelessWidget {
                   text: "Amount",
                   color: primary_text_color.withOpacity(0.8),
                   weight: FontWeight.w400,
-                  fontSize: 3.sp,
+                  fontSize: SizeUtils.getSize(context, 3.sp),
                   align: TextAlign.start
               ),
-              SizedBox(height: 2.sp),
+              SizedBox(height: SizeUtils.getSize(context, 2.sp)),
               TextFormField(
                 controller: amountController,
                 style: GoogleFonts.poppins(
                   fontWeight: FontWeight.normal,
                   color: primary_text_color,
-                  fontSize: 4.sp,
+                  fontSize: SizeUtils.getSize(context, 4.sp),
                 ),
                 decoration: textFieldDecoration.copyWith(
                     hintText: "Amount",

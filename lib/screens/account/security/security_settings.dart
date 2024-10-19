@@ -21,7 +21,7 @@ class SecuritySettings extends StatelessWidget {
       body: Container(
         height: height,
         width: width,
-        padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 8.sp),horizontal: SizeUtils.getSize(context, 4.sp)),
+        padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 6.sp),horizontal: SizeUtils.getSize(context, 4.sp)),
         decoration: BoxDecoration(
           color: secondary_color,
           borderRadius: BorderRadius.circular(cornerRadius),

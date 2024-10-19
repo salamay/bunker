@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../components/texts/MyText.dart';
+import '../../../utils/size_utils.dart';
 class WalletItem extends StatelessWidget {
   WalletItem({super.key,required this.asset,required this.callback});
   AssetModel asset;
@@ -20,12 +21,12 @@ class WalletItem extends StatelessWidget {
     return Consumer<WalletController>(
       builder: (context, walletCtr, child) {
         return Material(
-          borderRadius: BorderRadius.circular(cornerRadius),
+          borderRadius: BorderRadius.circular(SizeUtils.getSize(context, cornerRadius)),
           color: Colors.transparent,
           child: ListTile(
             hoverColor: action_button_color.withOpacity(0.3),
             tileColor: walletCtr.selectedIndex==assetController.supportedCoin.indexOf(asset)?secondary_color.withOpacity(0.8):Colors.transparent,
-            contentPadding: EdgeInsets.symmetric(vertical: 1.sp,horizontal: 4.sp),
+            contentPadding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 1.sp),horizontal: SizeUtils.getSize(context, 4.sp)),
             onTap: (){
               callback.call();
             },
@@ -33,8 +34,8 @@ class WalletItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(cornerRadius),
             ),
             leading: SizedBox(
-              width: 10.sp,
-              height: 10.sp,
+              width: SizeUtils.getSize(context, 10.sp),
+              height: SizeUtils.getSize(context, 10.sp),
               child: CachedNetworkImage(
                 imageUrl: asset.image!,
                 imageBuilder: (context, imageProvider) => Container(
@@ -47,17 +48,17 @@ class WalletItem extends StatelessWidget {
                 ),
                 placeholder: (context, url) => Skeleton.replace(
                   child: Container(
-                    width: 10.sp,
-                    height: 10.sp,
+                    width: SizeUtils.getSize(context, 10.sp),
+                    height: SizeUtils.getSize(context, 10.sp),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8.sp)),
+                      borderRadius: BorderRadius.all(Radius.circular(SizeUtils.getSize(context, cornerRadius))),
                     ),
                   ),
                 ),
                 errorWidget: (context, url, error) => SizedBox(
-                    width: 10.sp,
-                    height: 10.sp,
-                    child: Icon(Icons.error,size: 10.sp,)
+                    width: SizeUtils.getSize(context, 10.sp),
+                    height: SizeUtils.getSize(context, 10.sp),
+                    child: Icon(Icons.error,size: SizeUtils.getSize(context, 10.sp),)
                 ),
               ),
             ),
@@ -65,7 +66,7 @@ class WalletItem extends StatelessWidget {
               text: asset.name!,
               color: primary_text_color.withOpacity(0.8),
               weight: FontWeight.w400,
-              fontSize: 4.sp,
+              fontSize: SizeUtils.getSize(context, 4.sp),
               align: TextAlign.start,
               maxLines: 3,
             ),
@@ -73,7 +74,7 @@ class WalletItem extends StatelessWidget {
               text: asset.symbol!,
               color: primary_text_color.withOpacity(0.6),
               weight: FontWeight.w300,
-              fontSize: 3.sp,
+              fontSize: SizeUtils.getSize(context, 3.sp),
               align: TextAlign.start,
               maxLines: 3,
             ),
@@ -81,7 +82,7 @@ class WalletItem extends StatelessWidget {
               text: assetController.balances[asset.id!]!=null?"\$${assetController.balances[asset.id!]!.balanceInFiat.toStringAsFixed(2)}":"\$0.00",
               color: primary_text_color.withOpacity(0.8),
               weight: FontWeight.w400,
-              fontSize: 4.sp,
+              fontSize: SizeUtils.getSize(context, 4.sp),
               align: TextAlign.start,
               maxLines: 3,
             ),

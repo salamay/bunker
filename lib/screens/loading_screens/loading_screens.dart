@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../components/app_component.dart';
 import '../../components/loading.dart';
 import '../../components/texts/MyText.dart';
+import '../../utils/size_utils.dart';
 
 
 class LoadingScreen extends StatefulWidget {
@@ -38,7 +39,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
         child: Container(
           height: height,
           width: width,
-          padding: EdgeInsets.all(8.sp),
+          padding: EdgeInsets.all(SizeUtils.getSize(context, 8.sp)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -47,12 +48,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
                 text: "${widget.message}...",
                 color: primary_text_color,
                 weight: FontWeight.w400,
-                fontSize: 4.sp,
+                fontSize: SizeUtils.getSize(context, 4.sp),
                 maxLines: 2,
                 align: TextAlign.start,
               ),
-              SizedBox(height: 2.sp,),
-              Loading(size: 15.sp,),
+              SizedBox(height: SizeUtils.getSize(context, 4.sp),),
+              Loading(size: SizeUtils.getSize(context, 15.sp),),
             ],
           ),
         ),

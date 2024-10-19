@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 
 import '../../components/divider.dart';
 import '../../components/texts/MyText.dart';
+import '../../utils/size_utils.dart';
 
 class WalletPage extends StatelessWidget {
   WalletPage({super.key});
@@ -21,7 +22,7 @@ class WalletPage extends StatelessWidget {
     return Container(
       height: height,
       width: width,
-      padding: EdgeInsets.all(8.sp),
+      padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 6.sp),horizontal: SizeUtils.getSize(context, 4.sp)),
       child: Row(
         children: [
           Container(
@@ -38,19 +39,19 @@ class WalletPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 8.sp,),
+                SizedBox(height: SizeUtils.getSize(context, 6.sp),),
                 Align(
                   alignment: Alignment.center,
                   child: MyText(
                     text: "Wallet",
                     color: primary_text_color,
                     weight: FontWeight.w600,
-                    fontSize: 10.sp,
+                    fontSize: SizeUtils.getSize(context, 10.sp),
                     align: TextAlign.start,
                     maxLines: 3,
                   ),
                 ),
-                SizedBox(height: 4.sp,),
+                SizedBox(height: SizeUtils.getSize(context, 4.sp),),
                 Align(
                   alignment: Alignment.center,
                   child: Consumer<AssetController>(
@@ -59,27 +60,27 @@ class WalletPage extends StatelessWidget {
                         text: "\$${assetCtr.overallBalance.toStringAsFixed(2)}",
                         color: primary_text_color,
                         weight: FontWeight.w700,
-                        fontSize: 10.sp,
+                        fontSize: SizeUtils.getSize(context, 10.sp),
                         align: TextAlign.start,
                         maxLines: 3,
                       );
                     },
                   ),
                 ),
-                SizedBox(height: 1.sp,),
+                SizedBox(height: SizeUtils.getSize(context, 1.sp),),
                 Align(
                   alignment: Alignment.center,
                   child: MyText(
                     text: "Total assets",
                     color: primary_text_color.withOpacity(0.6),
                     weight: FontWeight.w300,
-                    fontSize: 3.sp,
+                    fontSize: SizeUtils.getSize(context, 3.sp),
                     align: TextAlign.start,
                     maxLines: 3,
                   ),
                 ),
                 MyDivider(),
-                SizedBox(height: 2.sp,),
+                SizedBox(height: SizeUtils.getSize(context, 2.sp),),
                 Consumer<AssetController>(
                   builder: (context, assetCtr, child) {
                     return Column(
@@ -97,7 +98,7 @@ class WalletPage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(width: 8.sp,),
+          SizedBox(width: SizeUtils.getSize(context, 8.sp),),
           Expanded(
             child: Consumer<WalletController>(
               builder: (context, walletCtr, child) {

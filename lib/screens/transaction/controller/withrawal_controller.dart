@@ -2,30 +2,37 @@ import 'dart:developer';
 
 import 'package:bunker/screens/transaction/model/withrawal.dart';
 import 'package:flutter/cupertino.dart';
-
 import '../../../api/my_api.dart';
 import '../../../api/url/Api_url.dart';
 import '../../../user/model/user_crendential.dart';
 import '../model/withdrawal_ticket.dart';
+
+
 const String pending="Pending";
 const String rejected="Rejected";
 const String approved="Approved";
+
 class WithdrawalController extends ChangeNotifier{
   final my_api = MyApi();
   List<WithdrawalTicket> withdrawalTickets=[];
+  bool withdrawalLoading=true;
+
 
   Future<void> getWithdrawals({required UserCredential credential})async{
     log("Getting withdrawals");
     try{
+      withdrawalLoading=true;
       var response = await my_api.get(ApiUrls.userWithdrawals, {"Content-Type": "application/json","Authorization":"Bearer ${credential.token}"});
       log("Getting withdrawals: Response code ${response!.statusCode}");
       if(response.statusCode==200){
         final tickets=withdrawalTicketFromJson(response.body);
         withdrawalTickets=tickets;
       }
+      withdrawalLoading=false;
       notifyListeners();
     }catch(e){
       log(e.toString());
+      withdrawalLoading=false;
       notifyListeners();
       throw Exception("Unable to get withdrawals");
     }

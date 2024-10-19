@@ -3,6 +3,7 @@ import 'package:bunker/screens/account/controller/account_setting_controller.dar
 import 'package:bunker/screens/admin/controller/admin_controller.dart';
 import 'package:bunker/screens/home/controller/home_controller.dart';
 import 'package:bunker/screens/support/controller/support_controller.dart';
+import 'package:bunker/screens/transaction/controller/transaction_controller.dart';
 import 'package:bunker/screens/transaction/controller/withrawal_controller.dart';
 import 'package:bunker/screens/wallet/controller/wallet_controller.dart';
 import 'package:bunker/supported_assets/controller/asset_controller.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => WithdrawalController()),
         ChangeNotifierProvider(create: (_) => AdminController()),
         ChangeNotifierProvider(create: (_) => SupportController()),
+        ChangeNotifierProvider(create: (_) => TransactionController()),
       ],
       child: ScreenUtilInit(
           minTextAdapt: true,

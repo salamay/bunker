@@ -23,6 +23,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../components/texts/MyText.dart';
 import '../../utils/date_utils.dart';
+import '../../utils/size_utils.dart';
 
 
 class Home extends StatefulWidget {
@@ -69,7 +70,7 @@ class _HomeState extends State<Home> {
       backgroundColor: primary_color,
       appBar: AppBar(
         backgroundColor: secondary_color,
-        elevation: 10.sp,
+        elevation: SizeUtils.getSize(context, 10.sp),
         centerTitle: false,
         title: TopRow()
       ),
@@ -84,30 +85,30 @@ class _HomeState extends State<Home> {
               height: height,
               width: width*0.25,
               color: secondary_color,
-              padding: EdgeInsets.all(6.sp),
+              padding: EdgeInsets.all(SizeUtils.getSize(context, 6.sp)),
               child: Consumer<AccountSettingController>(
                 builder: (context, accountCtr, child) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 4.sp,),
+                      SizedBox(height: SizeUtils.getSize(context, 4.sp),),
                       ProfileWidget(email: "ayotundesalam16@gmail.com"),
-                      SizedBox(height: 4.sp,),
+                      SizedBox(height: SizeUtils.getSize(context, 4.sp),),
                       MyText(
                         text: "GENERAL",
                         color: primary_text_color.withOpacity(0.4),
                         weight: FontWeight.w600,
-                        fontSize: 4.sp,
+                        fontSize: SizeUtils.getSize(context, 4.sp),
                         align: TextAlign.start,
                         maxLines: 3,
                       ),
-                      SizedBox(height: 2.sp,),
+                      SizedBox(height: SizeUtils.getSize(context, 2.sp),),
                       GestureDetector(
                         onTap: (){
                           homeController.changePage(0);
                         },
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: SizeUtils.getSize(context, 2.sp)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -126,7 +127,7 @@ class _HomeState extends State<Home> {
                           homeController.changePage(1);
                         },
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: SizeUtils.getSize(context, 2.sp)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -159,7 +160,7 @@ class _HomeState extends State<Home> {
                           homeController.changePage(2);
                         },
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: SizeUtils.getSize(context, 2.sp)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -178,13 +179,13 @@ class _HomeState extends State<Home> {
                           homeController.changePage(3);
                         },
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: SizeUtils.getSize(context, 2.sp)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Expanded(
                                 child: SideButton(
-                                    text: "Withdrawals",
+                                    text: "Transactions",
                                     imageAsset: "assets/svgs/transaction.svg"
                                 ),
                               ),
@@ -197,7 +198,7 @@ class _HomeState extends State<Home> {
                           homeController.changePage(4);
                         },
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: SizeUtils.getSize(context, 2.sp)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -253,24 +254,35 @@ class _HomeState extends State<Home> {
 
   void getData({required BuildContext context})async{
     await getAssets(context: context);
-    time_start=DateTime.fromMillisecondsSinceEpoch(DateTime.now().toUtc().millisecondsSinceEpoch-1000*60*60*24);
-    time_end=DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch,isUtc: true);
-    // assetController.getMarketQuotesHistorical(MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
-    _marketDataTimer=Timer.periodic(const Duration(minutes: 2), (timer)async{
-      try{
-        log("Market data history: ${timer.tick}");
-        time_start=DateTime.fromMillisecondsSinceEpoch(DateTime.now().toUtc().millisecondsSinceEpoch-1000*60*60*24);
-        time_end=DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch,isUtc: true);
-        // assetController.getMarketQuotesHistorical(MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
-
-      }catch(e){
-        log(e.toString());
-        _marketDataTimer.cancel();
-      }
-    });
     getProfile(context: context);
+    getMarketData(context: context);
     getAuthHistories(context: context);
   }
+  Future<void> getMarketData({required BuildContext context})async{
+    UserCredential? credential=userController.userCredential;
+    if(credential!=null){
+      try{
+        time_start=DateTime.fromMillisecondsSinceEpoch(DateTime.now().toUtc().millisecondsSinceEpoch-1000*60*60*24);
+        time_end=DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch,isUtc: true);
+        assetController.getMarketQuotesHistorical(credential,MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
+        _marketDataTimer=Timer.periodic(const Duration(minutes: 2), (timer)async{
+          try{
+            log("Market data history: ${timer.tick}");
+            time_start=DateTime.fromMillisecondsSinceEpoch(DateTime.now().toUtc().millisecondsSinceEpoch-1000*60*60*24);
+            time_end=DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch,isUtc: true);
+            assetController.getMarketQuotesHistorical(credential,MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
+
+          }catch(e){
+            log(e.toString());
+            _marketDataTimer.cancel();
+          }
+        });
+      }catch(e){
+
+      }
+    }
+  }
+
   Future<void> getAssets({required BuildContext context})async{
     UserCredential? credential=userController.userCredential;
     if(credential!=null){
@@ -311,7 +323,7 @@ class _HomeState extends State<Home> {
             homeController.changePage(5);
           },
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+            padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: SizeUtils.getSize(context, 2.sp)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

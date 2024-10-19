@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:bunker/supported_assets/network_constants.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 class MyApi{
@@ -10,8 +11,8 @@ class MyApi{
   Dio dio = Dio();
 
 
-
   Future<http.Response?> post(var body,String urlLocation,var headers)async{
+
     try{
       var url = Uri.parse(urlLocation);
       log(url.toString());

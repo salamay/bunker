@@ -5,16 +5,22 @@ import 'package:bunker/components/app_component.dart';
 import 'package:bunker/routes/AppRoutes.dart';
 import 'package:bunker/screens/empty/empty_page.dart';
 import 'package:bunker/screens/transaction/controller/withrawal_controller.dart';
+import 'package:bunker/screens/transaction/transaction_modal.dart';
 import 'package:bunker/screens/transaction/withdrawal_item.dart';
+import 'package:bunker/screens/transaction/withdrawal_modal.dart';
 import 'package:bunker/user/controller/user_controller.dart';
 import 'package:bunker/user/model/user_crendential.dart';
+import 'package:bunker/utils/size_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/texts/MyText.dart';
 import '../home/components/my_icon_button.dart';
+import 'controller/transaction_controller.dart';
+
 class Transactions extends StatefulWidget {
   Transactions({super.key});
 
@@ -22,21 +28,30 @@ class Transactions extends StatefulWidget {
   State<Transactions> createState() => _TransactionsState();
 }
 
-class _TransactionsState extends State<Transactions> {
+class _TransactionsState extends State<Transactions> with SingleTickerProviderStateMixin{
   late UserController userController;
   late WithdrawalController withdrawalController;
+  late TransactionController transactionController;
   late Timer _timer;
+  late TabController pageController;
+  ValueNotifier<TxPage> txPageNotifier=ValueNotifier(TxPage.withdrawal);
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    pageController=TabController(length: 2,vsync: this);
     userController=Provider.of<UserController>(context,listen: false);
     withdrawalController=Provider.of<WithdrawalController>(context,listen: false);
-    getWithdrawals(context: context);
+    transactionController=Provider.of<TransactionController>(context,listen: false);
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      getWithdrawals(context: context);
+      getTransactions(context: context);
+    });
     _timer=Timer.periodic(const Duration(seconds: 30), (timer)async{
       try{
         getWithdrawals(context: context);
+        getTransactions(context: context);
       }catch(e){
         log(e.toString());
         _timer.cancel();
@@ -55,45 +70,68 @@ class _TransactionsState extends State<Transactions> {
     return Container(
       height: height,
       width: width,
-      padding: EdgeInsets.all(8.sp),
-      child:  SingleChildScrollView(
-        child: Consumer<WithdrawalController>(
-            builder: (context, withdrawalCtr, child) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ValueListenableBuilder(
+              valueListenable: txPageNotifier,
+              builder: (context,settingType,_) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    TabBar(
+                      controller: pageController,
+                      dividerHeight: 0.1.sp,
+                      tabAlignment: TabAlignment.start,
+                      isScrollable: true,
+                      indicatorColor: primary_color_button,
+                      dividerColor: divider_color.withOpacity(0.1),
+                      tabs: [
+                        GestureDetector(
+                          onTap:(){
+                            txPageNotifier.value=TxPage.withdrawal;
+                            pageController.animateTo(0);
+                          },
+                          child: MyText(
+                              text: "Withdrawals",
+                              color: primary_text_color.withOpacity(0.5),
+                              weight: FontWeight.w400,
+                              fontSize: 4.sp,
+                              align: TextAlign.center
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap:(){
+                            pageController.animateTo(1);
+                            txPageNotifier.value=TxPage.deposit;
+                          },
+                          child: MyText(
+                              text: "Deposit",
+                              color: primary_text_color.withOpacity(0.5),
+                              weight: FontWeight.w400,
+                              fontSize: 4.sp,
+                              align: TextAlign.center
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              }
+          ),
+          SizedBox(height: SizeUtils.getSize(context, 4.sp),),
+          Expanded(
+            child: TabBarView(
+              controller: pageController,
               children: [
-                SizedBox(height: 8.sp,),
-                MyText(
-                  text: "Withdrawals",
-                  color: primary_text_color,
-                  weight: FontWeight.w600,
-                  fontSize: 8.sp,
-                  align: TextAlign.start,
-                  maxLines: 3,
-                ),
-                SizedBox(height: 4.sp,),
-                withdrawalCtr.withdrawalTickets.isEmpty?Container(
-                  width: width,
-                  padding: EdgeInsets.all(8.sp),
-                  decoration: BoxDecoration(
-                      color: secondary_color.withOpacity(0.3),
-                      borderRadius: BorderRadius.all(Radius.circular(cornerRadius))
-                  ),
-                  child: EmptyPage(
-                      title: "Oops! Nothing is here",
-                      subtitle: "We couldn't find any withdrawal"
-                  ),
-                ):Column(
-                  children: withdrawalCtr.withdrawalTickets.map((e) => Container(
-                    padding: EdgeInsets.only(bottom: 2.sp),
-                    child: WithdrawalItem(withdrawalTicket: e),
-                  )).toList(),
-                ),
+                WithdrawalModal(),
+                TransactionModal()
+
               ],
-            );
-          }
-        ),
-      ),
+            ),
+          )
+        ],
+      ) ,
     );
   }
   void getWithdrawals({required context})async{
@@ -102,6 +140,16 @@ class _TransactionsState extends State<Transactions> {
       if(credential!=null){
         withdrawalController.getWithdrawals(credential: credential);
 
+      }
+    }catch(e){
+      log(e.toString());
+    }
+  }
+  void getTransactions({required context})async{
+    try{
+      UserCredential? credential=userController.userCredential;
+      if(credential!=null){
+        transactionController.getTransactions(credential: credential);
       }
     }catch(e){
       log(e.toString());

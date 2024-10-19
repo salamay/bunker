@@ -18,7 +18,8 @@ import 'dart:math' as math;
 
 class AssetController extends ChangeNotifier{
   final my_api = MyApi();
-  bool assetLoading=false;
+  bool assetLoading=true;
+  bool marketDataLoading=true;
   Map<String, CoinBalance> balances = {};
   double overallBalance = 0;
   List<AssetModel> supportedCoin=[];
@@ -41,38 +42,42 @@ class AssetController extends ChangeNotifier{
     calculateTotalBalance();
   }
 
-  Future<void> getMarketQuotesHistorical(String time_start,String time_end,String interval)async {
-    log("Getting historical market quotes");
-    await Future.wait(supportedCoin.map((e)async{
-      try {
-        Uri uri=Uri.parse(ApiUrls.quoteHistorical);
-        Uri finalUri=uri.replace(
-            queryParameters: {
-              "id":ids,
-              "time_start":time_start,
-              "time_end":time_end,
-              "interval":interval
-            });
-        var response = await my_api.get(finalUri.toString(), {
-          "Content-Type": "application/json",
-          "X-CMC_PRO_API_KEY":MyApi.coinMarketCapKey});
-        log("Historical market quotes: Response code ${response!.statusCode}");
-        if (response.statusCode == 200) {
-          final data=jsonDecode(response.body);
-          final marketQuote = marketQuoteFromJson(jsonEncode(data["data"][e.marketId]));
-          AssetModel asset=supportedCoin.where((element) => element.id==e.id).first;
-          int index=supportedCoin.indexWhere((element) => element.id==e.id);
-          asset.quotes=marketQuote.quotes!;
+  Future<void> getMarketQuotesHistorical(UserCredential credential,String time_start,String time_end,String interval)async {
+    try{
+      log("Getting historical market quotes");
+      marketDataLoading=true;
+      notifyListeners();
+      Uri uri=Uri.parse(ApiUrls.quoteHistorical);
+      String ids=supportedCoin.map((e) => e.marketId).join(",");
+      Uri finalUri=uri.replace(
+          queryParameters: {
+            "ids":ids,
+            "time_start":time_start,
+            "time_end":time_end,
+            "interval":interval
+          });
+      var response = await my_api.get(finalUri.toString(), {"Content-Type": "application/json","Authorization":"Bearer ${credential.token}"});
+      log("Historical market quotes: Response code ${response!.statusCode}");
+      if (response.statusCode == 200) {
+        final marketQuote = marketQuoteFromJson(response.body);
+        for (int i=0;i<marketQuote.length;i++) {
+          AssetModel asset=supportedCoin[i];
+          asset.quotes=marketQuote[i].quotes!;
           AssetModel newData=asset;
-          supportedCoin[index]=newData;
+          supportedCoin[i]=newData;
           notifyListeners();
-        } else {
-          return[];
         }
-      } catch (e) {
-        log(e.toString());
+      } else {
+
       }
-    }).toList());
+      marketDataLoading=false;
+      notifyListeners();
+    }catch(e){
+      log(e.toString());
+      marketDataLoading=false;
+      notifyListeners();
+      throw Exception("Unable to get market quotes");
+    }
   }
 
   Future<void> getAssets({required UserCredential credential})async{

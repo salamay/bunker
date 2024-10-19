@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../../supported_assets/model/assets.dart';
+import '../../../utils/size_utils.dart';
 
 class PieChartSample2 extends StatefulWidget {
   PieChartSample2({super.key});
@@ -24,38 +25,35 @@ class PieChart2State extends State {
   @override
   Widget build(BuildContext context) {
     assetController = Provider.of<AssetController>(context,listen: false);
-    return AspectRatio(
-      aspectRatio: 1,
-      child: Consumer<AssetController>(
-        builder: (context, assetCtr, child) {
+    return Consumer<AssetController>(
+      builder: (context, assetCtr, child) {
 
-          return PieChart(
-            PieChartData(
-              centerSpaceColor: action_button_color,
-              pieTouchData: PieTouchData(
-                touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                  setState(() {
-                    if (!event.isInterestedForInteractions ||
-                        pieTouchResponse == null ||
-                        pieTouchResponse.touchedSection == null) {
-                      touchedIndex = -1;
-                      return;
-                    }
-                    touchedIndex = pieTouchResponse
-                        .touchedSection!.touchedSectionIndex;
-                  });
-                },
-              ),
-              borderData: FlBorderData(
-                show: false,
-              ),
-              sectionsSpace: 0,
-              centerSpaceRadius: 10.sp,
-              sections: showingSections(assets: assetCtr.supportedCoin),
+        return PieChart(
+          PieChartData(
+            centerSpaceColor: action_button_color,
+            pieTouchData: PieTouchData(
+              touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                setState(() {
+                  if (!event.isInterestedForInteractions ||
+                      pieTouchResponse == null ||
+                      pieTouchResponse.touchedSection == null) {
+                    touchedIndex = -1;
+                    return;
+                  }
+                  touchedIndex = pieTouchResponse
+                      .touchedSection!.touchedSectionIndex;
+                });
+              },
             ),
-          );
-        },
-      ),
+            borderData: FlBorderData(
+              show: false,
+            ),
+            sectionsSpace: 0,
+            centerSpaceRadius: SizeUtils.getSize(context, 12.sp),
+            sections: showingSections(assets: assetCtr.supportedCoin),
+          ),
+        );
+      },
     );
   }
 
@@ -65,8 +63,8 @@ class PieChart2State extends State {
       double totalBalance = assets.fold(0, (previousValue, asset) => previousValue + asset.balance!);
 
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 4.sp : 2.sp;
-      final radius = isTouched ? 15.sp : 10.sp;
+      final fontSize = isTouched ? SizeUtils.getSize(context, 4.sp) : SizeUtils.getSize(context, 2.sp);
+      final radius = isTouched ? SizeUtils.getSize(context, 15.sp) : SizeUtils.getSize(context, 10.sp);
       double percentage = (assets[i].balance! / totalBalance) * 100;
       return PieChartSectionData(
         color: assetController.colors[i],

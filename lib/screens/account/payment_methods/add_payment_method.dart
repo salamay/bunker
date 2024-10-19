@@ -30,6 +30,8 @@ class AddPaymentMethod extends StatelessWidget {
   final TextEditingController notesController=TextEditingController();
   late UserController userController;
   late AccountSettingController accountSettingController;
+
+
   @override
   Widget build(BuildContext context) {
     userController=Provider.of<UserController>(context,listen: false);

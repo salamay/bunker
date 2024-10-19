@@ -107,9 +107,10 @@ class AccountSettingController extends ChangeNotifier{
           "note": paymentMethod.swiftCode
       };
       var response = await my_api.post(jsonEncode(body),ApiUrls.addPaymentMethod, {"Content-Type": "application/json","Authorization":"Bearer ${credential.token}"});
-      log("Adding method: Response code ${response!.statusCode}");
+      log("Adding payment method: Response code ${response!.statusCode}");
       if(response.statusCode==200){
-        paymentMethods.add(paymentMethod);
+        final method=PaymentMethodModel.fromJson(jsonDecode(response.body));
+        paymentMethods.add(method);
       }else{
         throw Exception();
       }

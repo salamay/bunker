@@ -1,3 +1,4 @@
+import 'package:bunker/utils/size_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,7 +40,7 @@ class MyButton extends StatelessWidget {
             },
           ),
           padding: MaterialStateProperty.resolveWith((states){
-            return EdgeInsets.only(top: verticalPadding,bottom: verticalPadding);
+            return EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, verticalPadding),horizontal: SizeUtils.getSize(context, verticalPadding));
 
           }),
           backgroundColor: MaterialStateProperty.resolveWith((states){
@@ -59,7 +60,7 @@ class MyButton extends StatelessWidget {
             text: text,
             color: txtColor,
             weight: FontWeight.w500,
-            fontSize: 4.sp,
+            fontSize: SizeUtils.getSize(context, 4.sp),
             maxLines: 1,
             align: TextAlign.center
         ),

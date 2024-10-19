@@ -48,6 +48,18 @@ class Admin extends StatelessWidget {
                       imageAsset: "assets/svgs/deposit.svg"
                   ),
                 ),
+              ) ,
+              GestureDetector(
+                onTap: (){
+                  context.push(AppRoutes.supportTickets);
+                },
+                child: Container(
+                  margin: EdgeInsets.all(2.sp),
+                  child: AdminItem(
+                      title: "Support tickets",
+                      imageAsset: "assets/svgs/support_2.svg"
+                  ),
+                ),
               )
             ],
           ),

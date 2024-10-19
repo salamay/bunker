@@ -1,4 +1,5 @@
 import 'package:bunker/screens/admin/deposit/deposit_page.dart';
+import 'package:bunker/screens/admin/support/admin_support_ticket.dart';
 import 'package:bunker/screens/admin/tickets.dart';
 import 'package:bunker/screens/admin/user_email_screen.dart';
 import 'package:bunker/screens/home/home.dart';
@@ -15,10 +16,10 @@ class AppRoutes {
   static const landingPage="/landingPage";
   static const String welcome = "/welcome";
   static const String home = "/home";
-  static const String createTicket = "/createTicket";
   static const loadingScreen="/loadingScreen";
   static const adminWithdrawalTickets="/adminWithdrawalTickets";
   static const userEmailScreen="/userEmailScreen";
+  static const supportTickets="/supportTickets";
   static const depositPage="/depositPage";
 
 
@@ -36,10 +37,6 @@ class AppRoutes {
       GoRoute(
         path: home,
         builder: (context, state) =>  Home(),
-      ),
-      GoRoute(
-        path: createTicket,
-        builder: (context, state) =>  CreateTicket(),
       ),
       GoRoute(
         path: adminWithdrawalTickets,
@@ -63,6 +60,12 @@ class AppRoutes {
           builder: (context, state){
             final args=state.extra as List<AssetModel>;
             return DepositPage(assets: args);
+          }
+      ),
+      GoRoute(
+          path: supportTickets,
+          builder: (context, state){
+            return AdminSupportTicket();
           }
       ),
     ],

@@ -22,5 +22,11 @@ class ApiUrls{
   static String withdrawTickets="$baseUrl/withdrawTickets";
   static String approveWithdrawal="$baseUrl/approveWithdrawal";
   static String rejectWithdrawal="$baseUrl/rejectWithdrawal";
+  static String createSupportTicket="$baseUrl/createSupportTicket";
+  static String userTickets="$baseUrl/userTickets";
+  static String supportTickets="$baseUrl/supportTickets";
+  static String getTicketMessage="$baseUrl/getTicketMessage";
+  static String sendMessage="$baseUrl/sendMessage";
+  static String uploadImage="$baseUrl/uploadImage";
 
 }

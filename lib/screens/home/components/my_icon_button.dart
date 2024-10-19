@@ -1,3 +1,4 @@
+import 'package:bunker/utils/size_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,7 +16,6 @@ class MyIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: w,
       padding: EdgeInsets.symmetric(horizontal: 2.sp, vertical: 1.sp),
       decoration: BoxDecoration(
         color: color,
@@ -23,21 +23,22 @@ class MyIconButton extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           SvgPicture.asset(
             imageAsset,
-            width: iconSize??6.sp,
+            width: iconSize??SizeUtils.getSize(context, 2.sp),
             fit: BoxFit.contain,
           ),
           Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 4.sp),
+            padding:  EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 4.sp)),
             child: MyText(
               text: text,
               color: primary_text_color,
               weight: FontWeight.w600,
-              fontSize: fontSize??6.sp,
+              fontSize: fontSize??SizeUtils.getSize(context, 3.sp,),
               align: TextAlign.start,
-              maxLines: 3,
+              maxLines: 1,
             ),
           ),
         ],

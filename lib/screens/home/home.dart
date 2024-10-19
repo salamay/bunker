@@ -192,26 +192,27 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
-                      adminButton(accountCtr)
-                      // GestureDetector(
-                      //   onTap: (){
-                      //     homeController.changePage(5);
-                      //   },
-                      //   child: Padding(
-                      //     padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
-                      //     child: Row(
-                      //       mainAxisAlignment: MainAxisAlignment.start,
-                      //       children: [
-                      //         Expanded(
-                      //           child: SideButton(
-                      //               text: "Support",
-                      //               imageAsset: "assets/svgs/support.svg"
-                      //           ),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // )
+                      GestureDetector(
+                        onTap: (){
+                          homeController.changePage(4);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: SideButton(
+                                    text: "Support",
+                                    imageAsset: "assets/svgs/support.svg"
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      adminButton(accountCtr),
+
                     ],
                   );
                 },
@@ -233,9 +234,9 @@ class _HomeState extends State<Home> {
                         return WalletPage();
                       case 3:
                         return Transactions();
-                      case 4:
-                        return Admin();
                       case 5:
+                        return Admin();
+                      case 4:
                         return Support();
                       default:
                         return OverView();
@@ -307,7 +308,7 @@ class _HomeState extends State<Home> {
       if(profileModel.roles!.contains("ROLE_ADMIN")){
         return GestureDetector(
           onTap: (){
-            homeController.changePage(4);
+            homeController.changePage(5);
           },
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),

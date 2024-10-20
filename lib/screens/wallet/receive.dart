@@ -21,10 +21,10 @@ class Receive extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 6.sp),horizontal: SizeUtils.getSize(context, 4.sp)),
       width: width,
-      height: height,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               padding: EdgeInsets.all(SizeUtils.getSize(context, 4.sp)),

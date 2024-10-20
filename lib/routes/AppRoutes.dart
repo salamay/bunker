@@ -22,9 +22,8 @@ class AppRoutes {
   static const supportTickets="/supportTickets";
   static const depositPage="/depositPage";
 
-
   static final router = GoRouter(
-    initialLocation: home.toString(),
+    initialLocation: welcome.toString(),
     routes: [
       GoRoute(
         path: landingPage,

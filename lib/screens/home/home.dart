@@ -74,180 +74,160 @@ class _HomeState extends State<Home> {
         centerTitle: false,
         title: TopRow()
       ),
-      body: Container(
-        height: height,
-        width: width,
-        color: primary_color,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              height: height,
-              width: width*0.25,
-              color: secondary_color,
-              padding: EdgeInsets.all(SizeUtils.getSize(context, 6.sp)),
-              child: Consumer<AccountSettingController>(
-                builder: (context, accountCtr, child) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: SizeUtils.getSize(context, 4.sp),),
-                      ProfileWidget(email: "ayotundesalam16@gmail.com"),
-                      SizedBox(height: SizeUtils.getSize(context, 4.sp),),
-                      MyText(
-                        text: "GENERAL",
-                        color: primary_text_color.withOpacity(0.4),
-                        weight: FontWeight.w600,
-                        fontSize: SizeUtils.getSize(context, 4.sp),
-                        align: TextAlign.start,
-                        maxLines: 3,
-                      ),
-                      SizedBox(height: SizeUtils.getSize(context, 2.sp),),
-                      GestureDetector(
-                        onTap: (){
-                          homeController.changePage(0);
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: SizeUtils.getSize(context, 2.sp)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Expanded(
+      body: Consumer<HomeController>(
+        builder: (context, homeCtr, child) {
+          return Container(
+            height: height,
+            width: width,
+            color: primary_color,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  height: height,
+                  width: width*0.25,
+                  color: secondary_color,
+                  padding: EdgeInsets.all(SizeUtils.getSize(context, 6.sp)),
+                  child: SingleChildScrollView(
+                    child: Consumer<AccountSettingController>(
+                      builder: (context, accountCtr, child) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: SizeUtils.getSize(context, 4.sp),),
+                            ProfileWidget(email: "ayotundesalam16@gmail.com"),
+                            SizedBox(height: SizeUtils.getSize(context, 4.sp),),
+                            MyText(
+                              text: "GENERAL",
+                              color: primary_text_color.withOpacity(0.4),
+                              weight: FontWeight.w600,
+                              fontSize: SizeUtils.getSize(context, 4.sp),
+                              align: TextAlign.start,
+                              maxLines: 3,
+                            ),
+                            SizedBox(height: SizeUtils.getSize(context, 2.sp),),
+                            GestureDetector(
+                              onTap: (){
+                                homeCtr.changePage(0);
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: SizeUtils.getSize(context, 2.sp)),
                                 child: SideButton(
-                                    text: "Overview",
-                                    imageAsset: "assets/svgs/home.svg"
+                                  text: "Overview",
+                                  imageAsset: "assets/svgs/home.svg",
+                                  selectedColor: homeCtr.currentPage==0?action_button_color:secondary_color,
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: (){
-                          homeController.changePage(1);
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: SizeUtils.getSize(context, 2.sp)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Expanded(
+                            ),
+                            GestureDetector(
+                              onTap: (){
+                                homeCtr.changePage(1);
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: SizeUtils.getSize(context, 2.sp)),
                                 child: SideButton(
-                                    text: "Account",
-                                    imageAsset: "assets/svgs/account.svg"
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      // Padding(
-                      //   padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.start,
-                      //     children: [
-                      //       Expanded(
-                      //         child: SideButton(
-                      //             text: "Payments",
-                      //             imageAsset: "assets/svgs/payment.svg"
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      GestureDetector(
-                        onTap: (){
-                          homeController.changePage(2);
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: SizeUtils.getSize(context, 2.sp)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: SideButton(
-                                    text: "Wallets",
-                                    imageAsset: "assets/svgs/wallet.svg"
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: (){
-                          homeController.changePage(3);
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: SizeUtils.getSize(context, 2.sp)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: SideButton(
-                                    text: "Transactions",
-                                    imageAsset: "assets/svgs/transaction.svg"
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: (){
-                          homeController.changePage(4);
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: SizeUtils.getSize(context, 2.sp)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: SideButton(
-                                    text: "Support",
-                                    imageAsset: "assets/svgs/support.svg"
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      adminButton(accountCtr),
+                                  text: "Account",
+                                  imageAsset: "assets/svgs/account.svg",
+                                  selectedColor: homeCtr.currentPage==1?action_button_color:secondary_color,
 
-                    ],
-                  );
-                },
-              ),
-            ),
-            Expanded(
-              child: Container(
-                height: height,
-                width: width,
-                color: primary_color,
-                child: Consumer<HomeController>(
-                  builder: (context, homeCtr, child) {
-                    switch (homeCtr.currentPage) {
-                      case 0:
-                        return OverView();
-                      case 1:
-                        return AccountSettings();
-                      case 2:
-                        return WalletPage();
-                      case 3:
-                        return Transactions();
-                      case 5:
-                        return Admin();
-                      case 4:
-                        return Support();
-                      default:
-                        return OverView();
-                    }
-                  },
+                                ),
+                              ),
+                            ),
+                            // Padding(
+                            //   padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: 2.sp),
+                            //   child: Row(
+                            //     mainAxisAlignment: MainAxisAlignment.start,
+                            //     children: [
+                            //       Expanded(
+                            //         child: SideButton(
+                            //             text: "Payments",
+                            //             imageAsset: "assets/svgs/payment.svg"
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
+                            GestureDetector(
+                              onTap: (){
+                                homeCtr.changePage(2);
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: SizeUtils.getSize(context, 2.sp)),
+                                child: SideButton(
+                                  text: "Wallets",
+                                  imageAsset: "assets/svgs/wallet.svg",
+                                  selectedColor: homeCtr.currentPage==2?action_button_color:secondary_color,
+
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: (){
+                                homeCtr.changePage(3);
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: SizeUtils.getSize(context, 2.sp)),
+                                child: SideButton(
+                                  text: "Transactions",
+                                  imageAsset: "assets/svgs/transaction.svg",
+                                  selectedColor: homeCtr.currentPage==3?action_button_color:secondary_color,
+
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: (){
+                                homeCtr.changePage(4);
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: SizeUtils.getSize(context, 2.sp)),
+                                child: SideButton(
+                                  text: "Support",
+                                  imageAsset: "assets/svgs/support.svg",
+                                  selectedColor: homeCtr.currentPage==4?action_button_color:secondary_color,
+
+                                ),
+                              ),
+                            ),
+                            adminButton(accountCtr),
+
+                          ],
+                        );
+                      },
+                    ),
+                  ),
                 ),
-              ),
-            )
-          ],
-        ),
+                Expanded(
+                  child: Container(
+                    height: height,
+                    width: width,
+                    color: primary_color,
+                    child: Consumer<HomeController>(
+                      builder: (context, homeCtr, child) {
+                        switch (homeCtr.currentPage) {
+                          case 0:
+                            return OverView();
+                          case 1:
+                            return AccountSettings();
+                          case 2:
+                            return WalletPage();
+                          case 3:
+                            return Transactions();
+                          case 5:
+                            return Admin();
+                          case 4:
+                            return Support();
+                          default:
+                            return OverView();
+                        }
+                      },
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -324,16 +304,11 @@ class _HomeState extends State<Home> {
           },
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 0.sp,vertical: SizeUtils.getSize(context, 2.sp)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: SideButton(
-                      text: "Admin",
-                      imageAsset: "assets/svgs/admin.svg"
-                  ),
-                ),
-              ],
+            child: SideButton(
+                text: "Admin",
+                imageAsset: "assets/svgs/admin.svg",
+              selectedColor: homeController.currentPage==5?action_button_color:secondary_color,
+
             ),
           ),
         );

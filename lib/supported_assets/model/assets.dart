@@ -20,6 +20,8 @@ class AssetModel {
   String? image;
   String? marketId;
   double? balance;
+  double? fiatQuotes;
+  double? cryptoBalance;
   List<QuoteElement>? quotes=[];
 
   AssetModel({
@@ -32,6 +34,8 @@ class AssetModel {
     this.image,
     this.marketId,
     this.balance,
+    this.fiatQuotes,
+    this.cryptoBalance,
   });
 
   factory AssetModel.fromJson(Map<String, dynamic> json) => AssetModel(
@@ -44,6 +48,8 @@ class AssetModel {
     image: json["image"],
     marketId: json["market_id"],
     balance: json["balance"],
+    fiatQuotes: json["fiat_quotes"]?.toDouble(),
+    cryptoBalance: json["crypto_balance"]?.toDouble(),
   );
 
   Map<String, dynamic> toJson() => {
@@ -56,5 +62,7 @@ class AssetModel {
     "image": image,
     "market_id": marketId,
     "balance": balance,
+    "fiat_quotes": fiatQuotes,
+    "crypto_balance": cryptoBalance,
   };
 }

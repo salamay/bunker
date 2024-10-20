@@ -63,7 +63,7 @@ class WalletItem extends StatelessWidget {
               ),
             ),
             title: MyText(
-              text: asset.name!,
+              text: asset.symbol!,
               color: primary_text_color.withOpacity(0.8),
               weight: FontWeight.w400,
               fontSize: SizeUtils.getSize(context, 4.sp),
@@ -71,20 +71,34 @@ class WalletItem extends StatelessWidget {
               maxLines: 3,
             ),
             subtitle: MyText(
-              text: asset.symbol!,
+              text: "\$${asset.fiatQuotes!.toStringAsFixed(2)}",
               color: primary_text_color.withOpacity(0.6),
               weight: FontWeight.w300,
               fontSize: SizeUtils.getSize(context, 3.sp),
               align: TextAlign.start,
               maxLines: 3,
             ),
-            trailing: MyText(
-              text: assetController.balances[asset.id!]!=null?"\$${assetController.balances[asset.id!]!.balanceInFiat.toStringAsFixed(2)}":"\$0.00",
-              color: primary_text_color.withOpacity(0.8),
-              weight: FontWeight.w400,
-              fontSize: SizeUtils.getSize(context, 4.sp),
-              align: TextAlign.start,
-              maxLines: 3,
+            trailing: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                MyText(
+                  text: assetController.balances[asset.id!]!=null?"\$${assetController.balances[asset.id!]!.balanceInFiat.toStringAsFixed(2)}":"\$0.00",
+                  color: primary_text_color.withOpacity(0.8),
+                  weight: FontWeight.w400,
+                  fontSize: SizeUtils.getSize(context, 4.sp),
+                  align: TextAlign.start,
+                  maxLines: 3,
+                ),
+                MyText(
+                  text: "${asset.cryptoBalance!.toStringAsFixed(5)} ${asset.symbol}",
+                  color: primary_text_color.withOpacity(0.6),
+                  weight: FontWeight.w300,
+                  fontSize: SizeUtils.getSize(context, 3.sp),
+                  align: TextAlign.start,
+                  maxLines: 3,
+                ),
+              ],
             ),
           ),
         );

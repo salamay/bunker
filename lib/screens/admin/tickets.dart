@@ -87,7 +87,7 @@ class _TicketsState extends State<Tickets> {
                         text: "Tickets",
                         color: primary_text_color,
                         weight: FontWeight.w600,
-                        fontSize: 10.sp,
+                        fontSize: SizeUtils.getSize(context, 8.sp),
                         align: TextAlign.start,
                         maxLines: 3,
                       ),

@@ -25,7 +25,7 @@ class _AccountSettingsState extends State<AccountSettings> with SingleTickerProv
   void initState() {
     // TODO: implement initState
     super.initState();
-    pageController=TabController(length: 5, initialIndex: 1,vsync: this);
+    pageController=TabController(length: 5,vsync: this);
   }
   @override
   Widget build(BuildContext context) {
@@ -42,11 +42,11 @@ class _AccountSettingsState extends State<AccountSettings> with SingleTickerProv
               text: "Account Settings",
               color: primary_text_color,
               weight: FontWeight.w600,
-              fontSize: 10.sp,
+              fontSize: 6.sp,
               align: TextAlign.start,
               maxLines: 3,
             ),
-            SizedBox(height: 10.sp,),
+            SizedBox(height: SizeUtils.getSize(context, 8.sp),),
             ValueListenableBuilder(
                 valueListenable: settingTypeNotifier,
                 builder: (context,settingType,_) {
@@ -58,73 +58,122 @@ class _AccountSettingsState extends State<AccountSettings> with SingleTickerProv
                         dividerHeight: 0.1.sp,
                         tabAlignment: TabAlignment.start,
                         isScrollable: true,
-                        indicatorColor: settingType==SettingType.notification?primary_color_button:Colors.transparent,
+                        indicatorColor: primary_color_button,
                         dividerColor: divider_color.withOpacity(0.1),
-                        tabs: [
-                          GestureDetector(
-                            onTap:(){
-                              settingTypeNotifier.value=SettingType.notification;
+                        onTap: (index){
+                          switch(index){
+                            case 0:
+                              settingTypeNotifier.value=SettingType.general;
                               pageController.animateTo(0);
-                            },
-                            child: MyText(
-                                text: "General",
-                                color: primary_text_color.withOpacity(0.5),
-                                weight: FontWeight.w400,
-                                fontSize: 4.sp,
-                                align: TextAlign.center
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap:(){
+                              break;
+                            case 1:
+                              settingTypeNotifier.value=SettingType.notification;
                               pageController.animateTo(1);
-                              settingTypeNotifier.value=SettingType.notification;
-                            },
-                            child: MyText(
-                                text: "Notifications",
-                                color: primary_text_color.withOpacity(0.5),
-                                weight: FontWeight.w400,
-                                fontSize: 4.sp,
-                                align: TextAlign.center
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap:(){
+                              break;
+                            case 2:
+                              settingTypeNotifier.value=SettingType.verification;
                               pageController.animateTo(2);
-                              settingTypeNotifier.value=SettingType.notification;
-                            },
-                            child: MyText(
-                                text: "Verification",
-                                color: primary_text_color.withOpacity(0.5),
-                                weight: FontWeight.w400,
-                                fontSize: 4.sp,
-                                align: TextAlign.center
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap:(){
-                              pageController.animateTo(3);
+                              break;
+                            case 3:
                               settingTypeNotifier.value=SettingType.security;
-                            },
-                            child: MyText(
-                                text: "Security",
-                                color: primary_text_color.withOpacity(0.5),
-                                weight: FontWeight.w400,
-                                fontSize: 4.sp,
-                                align: TextAlign.center
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap:(){
-                              pageController.animateTo(4);
+                              pageController.animateTo(3);
+                              break;
+                            case 4:
                               settingTypeNotifier.value=SettingType.payment;
-                            },
-                            child: MyText(
-                                text: "Payment methods",
-                                color: primary_text_color.withOpacity(0.5),
-                                weight: FontWeight.w400,
-                                fontSize: 4.sp,
-                                align: TextAlign.center
-                            ),
+                              pageController.animateTo(4);
+                              break;
+                          }
+                        },
+                        tabs: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.person_outline,
+                                color: settingType==SettingType.general?primary_color_button:primary_text_color.withOpacity(0.5),
+                                size: SizeUtils.getSize(context, 8.sp)
+                              ),
+                              SizedBox(width: 1.sp,),
+                              MyText(
+                                  text: "General",
+                                  color: settingType==SettingType.general?primary_color_button:primary_text_color.withOpacity(0.8),
+                                  weight: FontWeight.w300,
+                                  fontSize: SizeUtils.getSize(context, 4.sp),
+                                  align: TextAlign.center
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                  Icons.notification_add_outlined,
+                                  color: settingType==SettingType.notification?primary_color_button:primary_text_color.withOpacity(0.5),
+                                  size: SizeUtils.getSize(context, 8.sp)
+                              ),
+                              SizedBox(width: 1.sp,),
+                              MyText(
+                                  text: "Notifications",
+                                  color: settingType==SettingType.notification?primary_color_button:primary_text_color.withOpacity(0.8),
+                                  weight: FontWeight.w300,
+                                  fontSize: SizeUtils.getSize(context, 4.sp),
+                                  align: TextAlign.center
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                  Icons.verified_user_outlined,
+                                  color: settingType==SettingType.verification?primary_color_button:primary_text_color.withOpacity(0.5),
+                                  size: SizeUtils.getSize(context, 8.sp)
+                              ),
+                              SizedBox(width: 1.sp,),
+                              MyText(
+                                  text: "Verification",
+                                  color: settingType==SettingType.verification?primary_color_button:primary_text_color.withOpacity(0.8),
+                                  weight: FontWeight.w300,
+                                  fontSize: SizeUtils.getSize(context, 4.sp),
+                                  align: TextAlign.center
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                  Icons.security_outlined,
+                                  color: settingType==SettingType.security?primary_color_button:primary_text_color.withOpacity(0.5),
+                                  size: SizeUtils.getSize(context, 8.sp)
+                              ),
+                              SizedBox(width: 1.sp,),
+                              MyText(
+                                  text: "Security",
+                                  color: settingType==SettingType.security?primary_color_button:primary_text_color.withOpacity(0.8),
+                                  weight: FontWeight.w300,
+                                  fontSize: SizeUtils.getSize(context, 4.sp),
+                                  align: TextAlign.center
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                  Icons.payment_outlined,
+                                  color: settingType==SettingType.payment?primary_color_button:primary_text_color.withOpacity(0.5),
+                                  size: SizeUtils.getSize(context, 8.sp)
+                              ),
+                              SizedBox(width: 1.sp,),
+                              MyText(
+                                  text: "Payment methods",
+                                  color: settingType==SettingType.payment?primary_color_button:primary_text_color.withOpacity(0.8),
+                                  weight: FontWeight.w300,
+                                  fontSize: SizeUtils.getSize(context, 4.sp),
+                                  align: TextAlign.center
+                              ),
+                            ],
                           ),
                         ],
                       ),

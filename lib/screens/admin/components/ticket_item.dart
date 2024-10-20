@@ -86,7 +86,7 @@ class TicketItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        resolveStatus(withdrawalTicket: ticket),
+                        resolveStatus(context:context,withdrawalTicket: ticket),
                         const Spacer(),
                         ticket.status!=approved?MyButton(
                           text: "Approve",
@@ -94,7 +94,6 @@ class TicketItem extends StatelessWidget {
                           bgColor: Colors.green,
                           txtColor: primary_text_color,
                           verticalPadding: buttonVerticalPadding,
-                          width: SizeUtils.getSize(context, 30.sp),
                           onPressed: ()async{
                             try{
                               UserCredential? credential=userController.userCredential;
@@ -116,7 +115,6 @@ class TicketItem extends StatelessWidget {
                           bgColor: Colors.redAccent,
                           txtColor: primary_text_color,
                           verticalPadding: buttonVerticalPadding,
-                          width:SizeUtils.getSize(context, 20.sp),
                           onPressed: ()async{
                             try{
                               UserCredential? credential=userController.userCredential;
@@ -144,11 +142,11 @@ class TicketItem extends StatelessWidget {
     );
   }
 
-  Widget resolveStatus({required WithdrawalTicket withdrawalTicket}){
+  Widget resolveStatus({required BuildContext context,required WithdrawalTicket withdrawalTicket}){
     switch(withdrawalTicket.status!){
       case "Pending":
         return Container(
-          padding: EdgeInsets.all(2.sp),
+          padding: EdgeInsets.all(SizeUtils.getSize(context, 2.sp)),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(cornerRadius),
             color: Colors.orangeAccent.withOpacity(0.1),
@@ -157,14 +155,14 @@ class TicketItem extends StatelessWidget {
             text: "Pending",
             color: Colors.white60,
             weight: FontWeight.w400,
-            fontSize: 3.sp,
+            fontSize: SizeUtils.getSize(context, 3.sp),
             align: TextAlign.start,
             maxLines: 1,
           ),
         );
       case "Approved":
         return Container(
-          padding: EdgeInsets.all(2.sp),
+          padding: EdgeInsets.all(SizeUtils.getSize(context, 2.sp)),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(cornerRadius),
             color: Colors.greenAccent.withOpacity(0.3),
@@ -173,14 +171,14 @@ class TicketItem extends StatelessWidget {
             text: "Approved",
             color: Colors.white60,
             weight: FontWeight.w400,
-            fontSize: 4.sp,
+            fontSize: SizeUtils.getSize(context, 4.sp),
             align: TextAlign.start,
             maxLines: 1,
           ),
         );
       case "Rejected":
         return Container(
-          padding: EdgeInsets.all(2.sp),
+          padding: EdgeInsets.all(SizeUtils.getSize(context, 2.sp)),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(cornerRadius),
             color: Colors.redAccent.withOpacity(0.3),
@@ -189,7 +187,7 @@ class TicketItem extends StatelessWidget {
             text: "Rejected",
             color: Colors.white60,
             weight: FontWeight.w400,
-            fontSize: 3.sp,
+            fontSize: SizeUtils.getSize(context, 4.sp),
             align: TextAlign.start,
             maxLines: 1,
           ),

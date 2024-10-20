@@ -16,7 +16,7 @@ class MyIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 2.sp), vertical: SizeUtils.getSize(context, 1.sp)),
+      padding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 2.sp), vertical: SizeUtils.getSize(context, 2.sp)),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(cornerRadius),
@@ -27,7 +27,7 @@ class MyIconButton extends StatelessWidget {
         children: [
           SvgPicture.asset(
             imageAsset,
-            width: iconSize??SizeUtils.getSize(context, 2.sp),
+            width: iconSize??SizeUtils.getSize(context, 4.sp),
             fit: BoxFit.contain,
           ),
           Padding(
@@ -36,7 +36,7 @@ class MyIconButton extends StatelessWidget {
               text: text,
               color: primary_text_color,
               weight: FontWeight.w600,
-              fontSize: fontSize??SizeUtils.getSize(context, 3.sp,),
+              fontSize: fontSize??SizeUtils.getSize(context, 4.sp,),
               align: TextAlign.start,
               maxLines: 1,
             ),

@@ -21,7 +21,6 @@ class EmptyPage extends StatelessWidget {
           SvgPicture.asset(
             "assets/svgs/empty.svg",
             width: SizeUtils.getSize(context, 10.sp),
-            color: primary_icon_color.withOpacity(0.2),
             height: SizeUtils.getSize(context, 20.sp),
           ),
           SizedBox(height: SizeUtils.getSize(context, 2.sp),),
@@ -38,7 +37,7 @@ class EmptyPage extends StatelessWidget {
             text: subtitle,
             color: primary_text_color.withOpacity(0.2),
             weight: FontWeight.w400,
-            fontSize: SizeUtils.getSize(context, 6.sp),
+            fontSize: SizeUtils.getSize(context, 4.sp),
             align: TextAlign.start,
             maxLines: 3,
           ),

@@ -42,6 +42,7 @@ class _SendAndReceiveModalState extends State<SendAndReceiveModal> with SingleTi
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           TabBar(
             controller: pageController,

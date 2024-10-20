@@ -62,7 +62,7 @@ class OverView extends StatelessWidget {
                       ),
                       child: SizedBox(
                         width: width,
-                        child: assetCtr.supportedCoin.isNotEmpty?Row(
+                        child: !assetCtr.assetLoading?assetCtr.supportedCoin.isNotEmpty?Row(
                           children: assetCtr.supportedCoin.map((e){
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -74,7 +74,7 @@ class OverView extends StatelessWidget {
                               ),
                             );
                           }).toList()
-                        ):Container(
+                        ):EmptyPage(title: "Oops! Nothing is here", subtitle: "Assets are empty"):Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(SizeUtils.getSize(context, cornerRadius)),
                           ),
@@ -118,7 +118,7 @@ class OverView extends StatelessWidget {
                         ),
                         child: SizedBox(
                           width: width,
-                          child: assetCtr.supportedCoin.isNotEmpty?Row(
+                          child: !assetCtr.assetLoading?assetCtr.supportedCoin.isNotEmpty?Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -164,7 +164,7 @@ class OverView extends StatelessWidget {
                                 ],
                               ),
                             ],
-                          ):Container(
+                          ):EmptyPage(title: "Oops! Nothing is here", subtitle: "Assets are empty"):Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(SizeUtils.getSize(context, cornerRadius)),
                             ),
@@ -212,7 +212,7 @@ class OverView extends StatelessWidget {
                     text: "Transactions",
                     color: primary_text_color,
                     weight: FontWeight.w600,
-                    fontSize: SizeUtils.getSize(context, 6.sp),
+                    fontSize: SizeUtils.getSize(context, 4.sp),
                     align: TextAlign.start,
                     maxLines: 3,
                   ),

@@ -41,7 +41,6 @@ class Send extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(SizeUtils.getSize(context, 8.sp)),
         width: width,
-        height: height,
         child: Form(
           key: _formKey,
           onChanged: (){
@@ -102,7 +101,7 @@ class Send extends StatelessWidget {
                   return null;
                 },
               ),
-              const Spacer(),
+              SizedBox(height: SizeUtils.getSize(context, 6.sp)),
               ValueListenableBuilder(
                   valueListenable: formValidation,
                   builder: (context,value,_) {

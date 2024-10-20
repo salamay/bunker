@@ -45,6 +45,9 @@ class AssetController extends ChangeNotifier{
   Future<void> getMarketQuotesHistorical(UserCredential credential,String time_start,String time_end,String interval)async {
     try{
       log("Getting historical market quotes");
+      if(supportedCoin.isEmpty){
+        return;
+      }
       marketDataLoading=true;
       notifyListeners();
       Uri uri=Uri.parse(ApiUrls.quoteHistorical);

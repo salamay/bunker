@@ -187,10 +187,10 @@ class _AccountSettingsState extends State<AccountSettings> with SingleTickerProv
                 controller: pageController,
                 children: [
                   GeneralSettings(),
-                  Expanded(child: NotificationSettings()),
-                  Expanded(child: Verification()),
-                  Expanded(child: SecuritySettings()),
-                  Expanded(child: PaymentMethods())
+                  NotificationSettings(),
+                  Verification(),
+                  SecuritySettings(),
+                  PaymentMethods()
                 ],
               ),
             )

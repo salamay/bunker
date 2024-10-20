@@ -1,5 +1,6 @@
 import 'package:bunker/components/app_component.dart';
 import 'package:bunker/components/divider.dart';
+import 'package:bunker/screens/account/controller/account_setting_controller.dart';
 import 'package:bunker/screens/home/components/listtile_shimmer.dart';
 import 'package:bunker/screens/overview/components/asset_overview_box.dart';
 import 'package:bunker/screens/home/components/my_icon_button.dart';
@@ -9,9 +10,11 @@ import 'package:bunker/supported_assets/controller/asset_controller.dart';
 import 'package:bunker/utils/size_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../components/texts/MyText.dart';
+import '../account/model/profile_model.dart';
 import '../empty/empty_page.dart';
 import '../transaction/controller/transaction_controller.dart';
 import '../transaction/transaction_item.dart';
@@ -47,45 +50,96 @@ class OverView extends StatelessWidget {
             SizedBox(height: SizeUtils.getSize(context, 8.sp)),
             SizedBox(
               height: SizeUtils.getSize(context, 70.sp),
-              child: Consumer<AssetController>(
-                builder: (context, assetCtr, child) {
-                  return SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Skeletonizer(
-                      ignoreContainers: false,
-                      enabled: assetCtr.assetLoading,
-                      enableSwitchAnimation: true,
-                      effect: ShimmerEffect(
-                          duration: const Duration(milliseconds: 1000),
-                          baseColor: secondary_color.withOpacity(0.6),
-                          highlightColor: action_button_color.withOpacity(0.8)
-                      ),
-                      child: SizedBox(
-                        width: width,
-                        child: !assetCtr.assetLoading?assetCtr.supportedCoin.isNotEmpty?Row(
-                          children: assetCtr.supportedCoin.map((e){
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: AssetOverviewBox(
-                                asset: e,
-                                h: SizeUtils.getSize(context, 100.sp),
-                                w: SizeUtils.getSize(context, 70.sp),
-                                color: action_button_color.withOpacity(0.3),
+              width: width,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 10,
+                    child: Consumer<AssetController>(
+                      builder: (context, assetCtr, child) {
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Skeletonizer(
+                            ignoreContainers: false,
+                            enabled: assetCtr.assetLoading,
+                            enableSwitchAnimation: true,
+                            effect: ShimmerEffect(
+                                duration: const Duration(milliseconds: 1000),
+                                baseColor: secondary_color.withOpacity(0.6),
+                                highlightColor: action_button_color.withOpacity(0.8)
+                            ),
+                            child: SizedBox(
+                              width: width,
+                              child: !assetCtr.assetLoading?assetCtr.supportedCoin.isNotEmpty?Row(
+                                children: assetCtr.supportedCoin.map((e){
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: AssetOverviewBox(
+                                      asset: e,
+                                      h: SizeUtils.getSize(context, 100.sp),
+                                      w: SizeUtils.getSize(context, 70.sp),
+                                      color: action_button_color.withOpacity(0.3),
+                                    ),
+                                  );
+                                }).toList()
+                              ):EmptyPage(title: "Oops! Nothing is here", subtitle: "Assets are empty"):Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(SizeUtils.getSize(context, cornerRadius)),
+                                ),
+                                height: SizeUtils.getSize(context, 100.sp),
+                                width: SizeUtils.getSize(context, 70.sp),
+                                child: const ListTileShimmer(),
                               ),
-                            );
-                          }).toList()
-                        ):EmptyPage(title: "Oops! Nothing is here", subtitle: "Assets are empty"):Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(SizeUtils.getSize(context, cornerRadius)),
+                            ),
                           ),
-                          height: SizeUtils.getSize(context, 100.sp),
-                          width: SizeUtils.getSize(context, 70.sp),
-                          child: const ListTileShimmer(),
-                        ),
-                      ),
+                        );
+                      },
                     ),
-                  );
-                },
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Consumer<AccountSettingController>(
+                        builder: (context, accountCtr, child) {
+                          ProfileModel? profileModel = accountCtr.profileModel;
+                          if(profileModel!=null){
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  profileModel.kycEnabled!?"assets/svgs/verification_green.svg":"assets/svgs/verification_orange.svg",
+                                  width: SizeUtils.getSize(context, 50.sp),
+                                  height: SizeUtils.getSize(context, 50.sp),
+                                ),
+                                MyText(
+                                  text: profileModel.kycEnabled!?"KYC verified":"Unverified",
+                                  color: primary_text_color,
+                                  weight: FontWeight.w400,
+                                  fontSize: SizeUtils.getSize(context, 4.sp),
+                                  align: TextAlign.center,
+                                  maxLines: 1,
+                                ),
+                                MyText(
+                                  text: profileModel.kycEnabled!?"You are now a verified user":"You are not yet a verified user",
+                                  color: primary_text_color.withOpacity(0.8),
+                                  weight: FontWeight.w300,
+                                  fontSize: SizeUtils.getSize(context, 3.sp),
+                                  align: TextAlign.center,
+                                  maxLines: 3,
+                                ),
+                              ],
+                            );
+                          }else{
+                            return const SizedBox();
+                          }
+                      }
+                    ),
+                  )
+                ],
               ),
             ),
             SizedBox(height: SizeUtils.getSize(context, 2.sp),),

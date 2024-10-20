@@ -233,8 +233,8 @@ class _HomeState extends State<Home> {
   }
 
   void getData({required BuildContext context})async{
-    await getAssets(context: context);
     getProfile(context: context);
+    await getAssets(context: context);
     getMarketData(context: context);
     getAuthHistories(context: context);
   }

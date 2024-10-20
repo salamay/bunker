@@ -19,6 +19,7 @@ class ProfileModel {
   String? country;
   String? state;
   String? city;
+  dynamic imageUrl;
   bool? isTxSent;
   bool? isTxReceived;
   bool? is2FaEnabled;
@@ -36,6 +37,7 @@ class ProfileModel {
     this.country,
     this.state,
     this.city,
+    this.imageUrl,
     this.isTxSent,
     this.isTxReceived,
     this.is2FaEnabled,
@@ -54,6 +56,7 @@ class ProfileModel {
     country: json["country"],
     state: json["state"],
     city: json["city"],
+    imageUrl: json["image_url"],
     isTxSent: json["is_tx_sent"],
     isTxReceived: json["is_tx_received"],
     is2FaEnabled: json["is2faEnabled"],
@@ -72,6 +75,7 @@ class ProfileModel {
     "country": country,
     "state": state,
     "city": city,
+    "image_url": imageUrl,
     "is_tx_sent": isTxSent,
     "is_tx_received": isTxReceived,
     "is2faEnabled": is2FaEnabled,

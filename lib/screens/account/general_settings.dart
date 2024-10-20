@@ -64,13 +64,15 @@ class GeneralSettings extends StatelessWidget {
                   builder: (context, accountCtr, child) {
                     ProfileModel? profile=accountCtr.profileModel;
                     if(profile!=null){
-                      emailController.text=profile.email??"";
-                      firstNameController.text=profile.firstName??"";
-                      lastNameController.text=profile.lastName??"";
-                      dobNotifier.value=profile.dob??"";
-                      countryNotifier.value=profile.country??"";
-                      stateNotifier.value=profile.state??"";
-                      cityNotifier.value=profile.city??"";
+                      WidgetsBinding.instance.addPostFrameCallback((timestamp){
+                        emailController.text=profile.email??"";
+                        firstNameController.text=profile.firstName??"";
+                        lastNameController.text=profile.lastName??"";
+                        dobNotifier.value=profile.dob??"";
+                        countryNotifier.value=profile.country??"";
+                        stateNotifier.value=profile.state??"";
+                        cityNotifier.value=profile.city??"";
+                      });
                     }
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

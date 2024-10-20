@@ -5,6 +5,7 @@ import 'package:bunker/components/button/MyButton.dart';
 import 'package:bunker/components/divider.dart';
 import 'package:bunker/screens/account/model/profile_model.dart';
 import 'package:bunker/screens/account/verification/components/2faModal.dart';
+import 'package:bunker/screens/account/verification/kyc_modal.dart';
 import 'package:bunker/screens/account/verification/utils/verification_utils.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter/material.dart';
@@ -66,16 +67,18 @@ class _VerificationState extends State<Verification> {
             builder: (context,accountCtr,_) {
               ProfileModel? profileModel = accountSettingController.profileModel;
               if(profileModel!=null){
-                log(profileModel.is2FaEnabled!.toString());
-                if(profileModel.basicDetailsUpdated==true){
-                  stepNotifier.value=1;
-                }
-                if(profileModel.is2FaEnabled!){
-                  stepNotifier.value=2;
-                }
-                if(profileModel.kycEnabled==true){
-                  stepNotifier.value=3;
-                }
+                WidgetsBinding.instance.addPostFrameCallback((time){
+                  log(profileModel.is2FaEnabled!.toString());
+                  if(profileModel.basicDetailsUpdated==true){
+                    stepNotifier.value=1;
+                  }
+                  if(profileModel.is2FaEnabled!){
+                    stepNotifier.value=2;
+                  }
+                  if(profileModel.kycEnabled==true){
+                    stepNotifier.value=3;
+                  }
+                });
               }
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,7 +119,7 @@ class _VerificationState extends State<Verification> {
                           enableStepTapping: false,
                           stepBorderRadius: SizeUtils.getSize(context, 5.sp),
                           activeStepTextColor: primary_text_color,
-                          finishedStepTextColor: secondary_text_color,
+                          finishedStepTextColor: primary_text_color,
                           finishedStepBackgroundColor: Colors.green.withOpacity(0.4),
                           unreachedStepBackgroundColor: Colors.orange.withOpacity(0.4),
                           activeStepBackgroundColor: Colors.green,
@@ -175,100 +178,118 @@ class _VerificationState extends State<Verification> {
                       }
                   ),
                   SizedBox(height: SizeUtils.getSize(context, 4.sp),),
-                  Align(
-                    alignment: Alignment.center,
-                    child: MyText(
-                      text: "Complete Two-Factor Authentication",
-                      color: primary_text_color,
-                      weight: FontWeight.w600,
-                      fontSize: SizeUtils.getSize(context, 6.sp),
-                      align: TextAlign.start,
-                      maxLines: 3,
-                    ),
-                  ),
-                  SizedBox(height: SizeUtils.getSize(context, 2.sp),),
-                  Align(
-                    alignment: Alignment.center,
-                    child: MyText(
-                      text: "You must activate two-factor authentication before you can continue.",
-                      color: primary_text_color.withOpacity(0.8),
-                      weight: FontWeight.w400,
-                      fontSize: SizeUtils.getSize(context, 4.sp),
-                      align: TextAlign.start,
-                      maxLines: 3,
-                    ),
-                  ),
-                  SizedBox(height: SizeUtils.getSize(context, 4.sp),),
-                  Align(
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                      width: width*0.3,
-                      child: ValueListenableBuilder(
-                          valueListenable: isExpanded,
-                          builder: (context,expanded,_) {
-                            return ExpandedTile(
-                              theme: ExpandedTileThemeData(
-                                  headerColor: Colors.transparent,
-                                  headerPadding: EdgeInsets.all(SizeUtils.getSize(context, 8.sp)),
-                                  headerSplashColor: primary_color,
-                                  contentSeparatorColor: Colors.transparent,
-                                  contentBackgroundColor: Colors.transparent,
-                                  contentPadding: EdgeInsets.all(SizeUtils.getSize(context, 8.sp)),
-                                  leadingPadding: EdgeInsets.all(SizeUtils.getSize(context, 0.sp)),
-
-                                  headerBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(SizeUtils.getSize(context, 8.sp)),
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 0.2.sp,
-                                    ),
-                                  )
-                              ),
-                              controller: _controller,
-                              title: Align(
+                  ValueListenableBuilder(
+                      valueListenable: stepNotifier,
+                      builder: (context,activeStep,child){
+                        if(activeStep==1){
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Align(
                                 alignment: Alignment.center,
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, buttonVerticalPadding),horizontal: SizeUtils.getSize(context, 8.sp)),
-                                  decoration: BoxDecoration(
-                                      color: primary_color_button,
-                                      borderRadius: BorderRadius.circular(SizeUtils.getSize(context, cornerRadius))
-                                  ),
-                                  child: MyText(
-                                    text: "Complete Two-Factor Authentication",
-                                    color: primary_text_color.withOpacity(0.8),
-                                    weight: FontWeight.w600,
-                                    fontSize: SizeUtils.getSize(context, 4.sp),
-                                    align: TextAlign.start,
-                                    maxLines: 1,
-                                  ),
-                                )
+                                child: MyText(
+                                  text: "Complete Two-Factor Authentication",
+                                  color: primary_text_color,
+                                  weight: FontWeight.w600,
+                                  fontSize: SizeUtils.getSize(context, 6.sp),
+                                  align: TextAlign.start,
+                                  maxLines: 3,
+                                ),
                               ),
-                              trailing: expanded?Icon(
-                                Icons.keyboard_double_arrow_up,
-                                size: SizeUtils.getSize(context, 6.sp),
-                                color: primary_icon_color,
-                              ):Icon(
-                                Icons.keyboard_double_arrow_down,
-                                size: SizeUtils.getSize(context, 6.sp),
-                                color: primary_icon_color,
+                              SizedBox(height: SizeUtils.getSize(context, 2.sp),),
+                              Align(
+                                alignment: Alignment.center,
+                                child: MyText(
+                                  text: "You must activate two-factor authentication before you can continue.",
+                                  color: primary_text_color.withOpacity(0.8),
+                                  weight: FontWeight.w400,
+                                  fontSize: SizeUtils.getSize(context, 4.sp),
+                                  align: TextAlign.start,
+                                  maxLines: 3,
+                                ),
                               ),
-                              content: TwoFaModal(profileModel: profileModel,),
-                              onTap: () {
-                                switch(expanded) {
-                                  case true:
-                                    isExpanded.value=false;
-                                    break;
-                                  case false:
-                                    isExpanded.value=true;
-                                    break;
-                                }
-                              },
-                            );
-                          }
-                      ),
-                    ),
+                              SizedBox(height: SizeUtils.getSize(context, 4.sp),),
+                              Align(
+                                alignment: Alignment.center,
+                                child: SizedBox(
+                                  width: width*0.3,
+                                  child: ValueListenableBuilder(
+                                      valueListenable: isExpanded,
+                                      builder: (context,expanded,_) {
+                                        return ExpandedTile(
+                                          theme: ExpandedTileThemeData(
+                                              headerColor: Colors.transparent,
+                                              headerPadding: EdgeInsets.all(SizeUtils.getSize(context, 8.sp)),
+                                              headerSplashColor: primary_color,
+                                              contentSeparatorColor: Colors.transparent,
+                                              contentBackgroundColor: Colors.transparent,
+                                              contentPadding: EdgeInsets.all(SizeUtils.getSize(context, 8.sp)),
+                                              leadingPadding: EdgeInsets.all(SizeUtils.getSize(context, 0.sp)),
+
+                                              headerBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(SizeUtils.getSize(context, 8.sp)),
+                                                borderSide: BorderSide(
+                                                  color: Colors.transparent,
+                                                  width: 0.2.sp,
+                                                ),
+                                              )
+                                          ),
+                                          controller: _controller,
+                                          title: Align(
+                                              alignment: Alignment.center,
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, buttonVerticalPadding),horizontal: SizeUtils.getSize(context, 8.sp)),
+                                                decoration: BoxDecoration(
+                                                    color: primary_color_button,
+                                                    borderRadius: BorderRadius.circular(SizeUtils.getSize(context, cornerRadius))
+                                                ),
+                                                child: MyText(
+                                                  text: "Complete Two-Factor Authentication",
+                                                  color: primary_text_color.withOpacity(0.8),
+                                                  weight: FontWeight.w600,
+                                                  fontSize: SizeUtils.getSize(context, 4.sp),
+                                                  align: TextAlign.start,
+                                                  maxLines: 1,
+                                                ),
+                                              )
+                                          ),
+                                          trailing: expanded?Icon(
+                                            Icons.keyboard_double_arrow_up,
+                                            size: SizeUtils.getSize(context, 6.sp),
+                                            color: primary_icon_color,
+                                          ):Icon(
+                                            Icons.keyboard_double_arrow_down,
+                                            size: SizeUtils.getSize(context, 6.sp),
+                                            color: primary_icon_color,
+                                          ),
+                                          content: TwoFaModal(profileModel: profileModel,),
+                                          onTap: () {
+                                            switch(expanded) {
+                                              case true:
+                                                isExpanded.value=false;
+                                                break;
+                                              case false:
+                                                isExpanded.value=true;
+                                                break;
+                                            }
+                                          },
+                                        );
+                                      }
+                                  ),
+                                ),
+                              ),
+
+                            ],
+                          );
+                        }else if(activeStep==2){
+                          return KycModal();
+                        }else{
+                          return const SizedBox();
+                        }
+
+                    }
                   ),
-          
+
                 ],
               );
             }

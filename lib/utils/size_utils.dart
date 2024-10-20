@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 
 class SizeUtils{
 
   static double getSize(BuildContext context,double size){
     if(!isTablet(context)){
-      return size/1.6;
+      return size*2.5;
     }else{
       return size;
     }

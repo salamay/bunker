@@ -20,7 +20,6 @@ class TransactionController extends ChangeNotifier{
   Future<void> getTransactions({required UserCredential credential})async{
     log("Getting transactions");
     try{
-      transactionLoading=true;
       var response = await my_api.get(ApiUrls.transactions, {"Content-Type": "application/json","Authorization":"Bearer ${credential.token}"});
       log("Getting transactions: Response code ${response!.statusCode}");
       if(response.statusCode==200){

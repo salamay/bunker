@@ -133,6 +133,7 @@ class MessageItem extends StatelessWidget {
     );
   }
   String parseDate(DateTime date){
+
     if(date.isToday){
       return "Today";
     }else if(date.isYesterday){

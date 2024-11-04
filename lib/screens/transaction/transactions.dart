@@ -28,7 +28,7 @@ class Transactions extends StatefulWidget {
   State<Transactions> createState() => _TransactionsState();
 }
 
-class _TransactionsState extends State<Transactions> with SingleTickerProviderStateMixin{
+class _TransactionsState extends State<Transactions> with SingleTickerProviderStateMixin,AutomaticKeepAliveClientMixin{
   late UserController userController;
   late WithdrawalController withdrawalController;
   late TransactionController transactionController;
@@ -67,6 +67,8 @@ class _TransactionsState extends State<Transactions> with SingleTickerProviderSt
   }
   @override
   Widget build(BuildContext context) {
+    super.build(context); // Necessary for `AutomaticKeepAliveClientMixin`
+
     return Container(
       height: height,
       width: width,
@@ -155,4 +157,6 @@ class _TransactionsState extends State<Transactions> with SingleTickerProviderSt
       log(e.toString());
     }
   }
+  @override
+  bool get wantKeepAlive => true;  // Keeps the widget alive
 }

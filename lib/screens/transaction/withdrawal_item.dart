@@ -15,7 +15,7 @@ class WithdrawalItem extends StatelessWidget {
       child: ListTile(
         hoverColor: action_button_color,
         tileColor: Colors.transparent,
-        contentPadding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 2.sp),
+        contentPadding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 0.sp),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(cornerRadius),
         ),
@@ -32,7 +32,7 @@ class WithdrawalItem extends StatelessWidget {
         ),
         subtitle: MyText(
           text: withdrawalTicket.date.toString(),
-          color: primary_text_color,
+          color: primary_text_color.withOpacity(0.5),
           weight: FontWeight.w400,
           fontSize: 2.sp,
           align: TextAlign.start,
@@ -47,7 +47,7 @@ class WithdrawalItem extends StatelessWidget {
     switch(withdrawalTicket.status!){
       case "Pending":
         return Container(
-          padding: EdgeInsets.all(2.sp),
+          padding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 1.sp),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(cornerRadius),
             color: Colors.orange,
@@ -63,7 +63,7 @@ class WithdrawalItem extends StatelessWidget {
         );
       case "Approved":
         return Container(
-          padding: EdgeInsets.all(2.sp),
+          padding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 1.sp),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(cornerRadius),
             color: Colors.green,
@@ -72,14 +72,14 @@ class WithdrawalItem extends StatelessWidget {
             text: "Approved",
             color: Colors.white,
             weight: FontWeight.w400,
-            fontSize: 4.sp,
+            fontSize: 3.sp,
             align: TextAlign.start,
             maxLines: 1,
           ),
         );
       case "Rejected":
         return Container(
-          padding: EdgeInsets.all(2.sp),
+          padding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 1.sp),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(cornerRadius),
             color: Colors.redAccent,

@@ -195,7 +195,7 @@ class WelcomeScreen extends StatelessWidget {
                                       String email=emailController.text.trim();
                                       String password=passwordController.text.trim();
                                       if(_formKey.currentState!.validate()){
-                                        context.push(AppRoutes.loadingScreen, extra: {
+                                        context.go(AppRoutes.loadingScreen, extra: {
                                           'callBack':signIn,
                                           'message': 'Restoring wallet'
                                         });

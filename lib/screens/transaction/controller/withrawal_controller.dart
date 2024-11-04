@@ -21,7 +21,6 @@ class WithdrawalController extends ChangeNotifier{
   Future<void> getWithdrawals({required UserCredential credential})async{
     log("Getting withdrawals");
     try{
-      withdrawalLoading=true;
       var response = await my_api.get(ApiUrls.userWithdrawals, {"Content-Type": "application/json","Authorization":"Bearer ${credential.token}"});
       log("Getting withdrawals: Response code ${response!.statusCode}");
       if(response.statusCode==200){

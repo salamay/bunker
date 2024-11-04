@@ -19,6 +19,7 @@ import 'package:bunker/user/controller/user_controller.dart';
 import 'package:bunker/user/model/user_crendential.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../components/texts/MyText.dart';
@@ -42,6 +43,7 @@ class _HomeState extends State<Home> {
   late DateTime time_end;
   String interval="5m";
   late Timer _marketDataTimer;
+  late Timer _assetTimer;
   ValueNotifier<bool> assetLoadingNotifier=ValueNotifier(true);
 
   @override
@@ -52,7 +54,7 @@ class _HomeState extends State<Home> {
     homeController=Provider.of<HomeController>(context,listen: false);
     userController=Provider.of<UserController>(context,listen: false);
     accountSettingController=Provider.of<AccountSettingController>(context,listen: false);
-    Future.delayed(Duration(seconds: 2),(){
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       getData(context: context);
     });
   }
@@ -62,6 +64,7 @@ class _HomeState extends State<Home> {
     // TODO: implement dispose
     super.dispose();
     _marketDataTimer.cancel();
+    _assetTimer.cancel();
   }
   @override
   Widget build(BuildContext context) {
@@ -264,14 +267,22 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> getAssets({required BuildContext context})async{
-    UserCredential? credential=userController.userCredential;
-    if(credential!=null){
+    _assetTimer=Timer.periodic(const Duration(seconds: 30), (timer)async{
       try{
-        await assetController.getAssets(credential: credential);
-      }catch(e){
+        log("Getting assets: ${timer.tick}");
+        UserCredential? credential=userController.userCredential;
+        if(credential!=null){
+          try{
+            await assetController.getAssets(credential: credential);
+          }catch(e){
 
+          }
+        }
+      }catch(e){
+        log(e.toString());
+        _assetTimer.cancel();
       }
-    }
+    });
   }
   Future<void> getProfile({required BuildContext context})async{
     UserCredential? credential=userController.userCredential;

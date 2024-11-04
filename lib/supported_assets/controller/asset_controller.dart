@@ -39,7 +39,8 @@ class AssetController extends ChangeNotifier{
   }
   void deductBalance(String id,double amount){
     balances[id]!.balanceInFiat-=amount;
-    calculateTotalBalance();
+    overallBalance-=amount;
+    notifyListeners();
   }
 
   Future<void> getMarketQuotesHistorical(UserCredential credential,String time_start,String time_end,String interval)async {
@@ -48,8 +49,6 @@ class AssetController extends ChangeNotifier{
       if(supportedCoin.isEmpty){
         return;
       }
-      marketDataLoading=true;
-      notifyListeners();
       Uri uri=Uri.parse(ApiUrls.quoteHistorical);
       String ids=supportedCoin.map((e) => e.marketId).join(",");
       Uri finalUri=uri.replace(
@@ -87,11 +86,10 @@ class AssetController extends ChangeNotifier{
     log("Getting assets");
     try{
       assetLoading=true;
-      resetOverallBalance();
-      notifyListeners();
       var response = await my_api.get("${ApiUrls.baseUrl}/wallets", {"Content-Type": "application/json","Authorization":"Bearer ${credential.token}"});
       log("Assets: Response code ${response!.statusCode}");
       if(response.statusCode==200){
+        resetOverallBalance();
         final assets=assetModelFromJson(response.body);
         supportedCoin=assets;
         colors=[];

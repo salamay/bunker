@@ -17,7 +17,7 @@ class AccountSettings extends StatefulWidget {
   State<AccountSettings> createState() => _AccountSettingsState();
 }
 
-class _AccountSettingsState extends State<AccountSettings> with SingleTickerProviderStateMixin{
+class _AccountSettingsState extends State<AccountSettings> with SingleTickerProviderStateMixin,AutomaticKeepAliveClientMixin{
   late TabController pageController;
   ValueNotifier<SettingType> settingTypeNotifier=ValueNotifier(SettingType.general);
 
@@ -29,6 +29,7 @@ class _AccountSettingsState extends State<AccountSettings> with SingleTickerProv
   }
   @override
   Widget build(BuildContext context) {
+    super.build(context); // Necessary for `AutomaticKeepAliveClientMixin`
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.all(8.sp),
@@ -199,4 +200,6 @@ class _AccountSettingsState extends State<AccountSettings> with SingleTickerProv
       ),
     );
   }
+  @override
+  bool get wantKeepAlive => true;  // Keeps the widget alive
 }

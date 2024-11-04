@@ -31,6 +31,8 @@ class GeneralSettings extends StatelessWidget {
   ValueNotifier<String?> stateNotifier=ValueNotifier(null);
   ValueNotifier<String?> cityNotifier=ValueNotifier(null);
   ValueNotifier<bool> formValidation=ValueNotifier(false);
+  final TextEditingController addressController=TextEditingController();
+
   late UserController userController;
   @override
   Widget build(BuildContext context) {
@@ -72,6 +74,7 @@ class GeneralSettings extends StatelessWidget {
                         countryNotifier.value=profile.country??"";
                         stateNotifier.value=profile.state??"";
                         cityNotifier.value=profile.city??"";
+                        addressController.text=profile.address??"";
                       });
                     }
                     return Column(
@@ -117,7 +120,7 @@ class GeneralSettings extends StatelessWidget {
                                 textAlign: TextAlign.start,
                                 hintText: "First name",
                                 enable: true,
-                                textInputType: TextInputType.emailAddress,
+                                textInputType: TextInputType.text,
                                 errorText: "Invalid first name",
                                 maxLines: 1,
                                 obscureText: false,
@@ -135,7 +138,7 @@ class GeneralSettings extends StatelessWidget {
                                 textAlign: TextAlign.start,
                                 hintText: "Last name",
                                 enable: true,
-                                textInputType: TextInputType.emailAddress,
+                                textInputType: TextInputType.text,
                                 errorText: "Invalid last name",
                                 maxLines: 1,
                                 obscureText: false,
@@ -221,6 +224,22 @@ class GeneralSettings extends StatelessWidget {
 
                           },
                         ),
+                        SizedBox(height: SizeUtils.getSize(context, 2.sp),),
+                        MyFormField(
+                          controller: addressController,
+                          textAlign: TextAlign.start,
+                          hintText: "Address",
+                          enable: true,
+                          textInputType: TextInputType.name,
+                          errorText: "Invalid first name",
+                          maxLines: 1,
+                          obscureText: false,
+                          onEditingComplete: () {
+
+                          },
+                          onFieldSubmitted: null,
+                          validator: (val)=>val!.isEmpty?"Address":null,
+                        ),
                         SizedBox(height: SizeUtils.getSize(context, 4.sp),),
                         ValueListenableBuilder(
                             valueListenable: formValidation,
@@ -244,6 +263,7 @@ class GeneralSettings extends StatelessWidget {
                                       String country=countryNotifier.value??"";
                                       String state=stateNotifier.value??"";
                                       String city=cityNotifier.value??"";
+                                      String address=addressController.text.trim();
                                       profile.firstName=firstName;
                                       profile.lastName=lastName;
                                       profile.dob=dob;

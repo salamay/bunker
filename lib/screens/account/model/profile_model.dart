@@ -19,6 +19,7 @@ class ProfileModel {
   String? country;
   String? state;
   String? city;
+  String? address;
   dynamic imageUrl;
   bool? isTxSent;
   bool? isTxReceived;
@@ -37,6 +38,7 @@ class ProfileModel {
     this.country,
     this.state,
     this.city,
+    this.address,
     this.imageUrl,
     this.isTxSent,
     this.isTxReceived,
@@ -56,6 +58,7 @@ class ProfileModel {
     country: json["country"],
     state: json["state"],
     city: json["city"],
+    address: json["address"],
     imageUrl: json["image_url"],
     isTxSent: json["is_tx_sent"],
     isTxReceived: json["is_tx_received"],
@@ -75,6 +78,7 @@ class ProfileModel {
     "country": country,
     "state": state,
     "city": city,
+    "address": address,
     "image_url": imageUrl,
     "is_tx_sent": isTxSent,
     "is_tx_received": isTxReceived,

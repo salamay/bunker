@@ -18,7 +18,7 @@ class TransactionItem extends StatelessWidget {
           hoverColor: action_button_color,
           tileColor: Colors.transparent,
           isThreeLine: true,
-          contentPadding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 2.sp),
+          contentPadding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 0.sp),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(cornerRadius),
           ),
@@ -37,24 +37,16 @@ class TransactionItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               MyText(
-                text: transactionModel.walletName??"",
-                color: primary_text_color,
-                weight: FontWeight.w400,
-                fontSize: 4.sp,
-                align: TextAlign.start,
-                maxLines: 1,
-              ),
-              MyText(
                 text: transactionModel.walletSymbol??"",
                 color: primary_text_color,
                 weight: FontWeight.w400,
-                fontSize: 4.sp,
+                fontSize: 3.sp,
                 align: TextAlign.start,
                 maxLines: 1,
               ),
               MyText(
                 text: transactionModel.date.toString(),
-                color: primary_text_color.withOpacity(0.8),
+                color: primary_text_color.withOpacity(0.5),
                 weight: FontWeight.w400,
                 fontSize: 2.sp,
                 align: TextAlign.start,
@@ -71,7 +63,7 @@ class TransactionItem extends StatelessWidget {
     switch(tx.status!){
       case "Pending":
         return Container(
-          padding: EdgeInsets.all(2.sp),
+          padding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 1.sp),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(cornerRadius),
             color: Colors.orange,
@@ -87,7 +79,7 @@ class TransactionItem extends StatelessWidget {
         );
       case "Approved":
         return Container(
-          padding: EdgeInsets.all(2.sp),
+          padding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 1.sp),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(cornerRadius),
             color: Colors.green,
@@ -96,14 +88,14 @@ class TransactionItem extends StatelessWidget {
             text: "Approved",
             color: Colors.white,
             weight: FontWeight.w400,
-            fontSize: 4.sp,
+            fontSize: 3.sp,
             align: TextAlign.start,
             maxLines: 1,
           ),
         );
       case "Rejected":
         return Container(
-          padding: EdgeInsets.all(2.sp),
+          padding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 1.sp),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(cornerRadius),
             color: Colors.redAccent,

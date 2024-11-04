@@ -2,9 +2,11 @@ import 'package:bunker/components/app_component.dart';
 import 'package:bunker/components/divider.dart';
 import 'package:bunker/screens/account/controller/account_setting_controller.dart';
 import 'package:bunker/screens/home/components/listtile_shimmer.dart';
+import 'package:bunker/screens/home/controller/home_controller.dart';
 import 'package:bunker/screens/overview/components/asset_overview_box.dart';
 import 'package:bunker/screens/home/components/my_icon_button.dart';
 import 'package:bunker/screens/overview/components/pie_chart.dart';
+import 'package:bunker/screens/overview/model/payment_gateway.dart';
 import 'package:bunker/screens/transaction/model/transaction_model.dart';
 import 'package:bunker/supported_assets/controller/asset_controller.dart';
 import 'package:bunker/utils/size_utils.dart';
@@ -13,6 +15,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../components/texts/MyText.dart';
 import '../account/model/profile_model.dart';
 import '../empty/empty_page.dart';
@@ -20,8 +23,11 @@ import '../transaction/controller/transaction_controller.dart';
 import '../transaction/transaction_item.dart';
 
 class OverView extends StatelessWidget {
-  const OverView({super.key});
-
+  OverView({super.key});
+  List<PaymentGateway> gateways=[
+    PaymentGateway(name: "MoonPay", image: "assets/moonpay.jpeg", paymentUrl: "https://www.moonpay.com/"),
+    PaymentGateway(name: "Coinbase", image: "assets/coinbase.png", paymentUrl: "https://www.coinbase.com/")
+  ];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,7 +50,33 @@ class OverView extends StatelessWidget {
                   align: TextAlign.start,
                   maxLines: 1,
                 ),
-                MyIconButton(text: "Buy crypto", imageAsset: "assets/svgs/cart.svg",color: primary_color_button,),
+                PopupMenuButton(
+                  color: primary_color,
+                    padding: EdgeInsets.all(SizeUtils.getSize(context, 2.sp)),
+                    itemBuilder: (BuildContext context) {
+                      return gateways.map((PaymentGateway gateway) {
+                        return PopupMenuItem(
+                          onTap: (){
+                            _launchUrl(gateway.paymentUrl);
+                          },
+                          padding: EdgeInsets.zero,
+                          child: SizedBox(
+                            width: SizeUtils.getSize(context, 50.sp),
+                            height: SizeUtils.getSize(context, 15.sp),
+                            child: Image.asset(
+                              gateway.image,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        );
+                      }).toList();
+                    },
+                    child: MyIconButton(
+                      text: "Buy crypto",
+                      imageAsset: "assets/svgs/cart.svg",
+                      color: primary_color_button,
+                    )
+                ),
               ],
             ),
             SizedBox(height: SizeUtils.getSize(context, 8.sp)),
@@ -176,10 +208,13 @@ class OverView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                  width: SizeUtils.getSize(context, 70.sp),
-                                  height: SizeUtils.getSize(context, 70.sp),
-                                  child: PieChartSample2()
+                              ClipRRect(
+                                clipBehavior: Clip.hardEdge,
+                                  child: SizedBox(
+                                      width: SizeUtils.getSize(context, 40.sp),
+                                      height: SizeUtils.getSize(context, 40.sp),
+                                      child: PieChartSample2()
+                                  )
                               ),
                               SizedBox(width: SizeUtils.getSize(context, 1.sp),),
                               Column(
@@ -189,7 +224,7 @@ class OverView extends StatelessWidget {
                                     text: "Account balance",
                                     color: primary_text_color,
                                     weight: FontWeight.w600,
-                                    fontSize: SizeUtils.getSize(context, 6.sp),
+                                    fontSize: SizeUtils.getSize(context, 4.sp),
                                     align: TextAlign.start,
                                     maxLines: 3,
                                   ),
@@ -198,7 +233,7 @@ class OverView extends StatelessWidget {
                                     text: "Your total balance across your account",
                                     color: primary_text_color.withOpacity(0.6),
                                     weight: FontWeight.w300,
-                                    fontSize: SizeUtils.getSize(context, 4.sp),
+                                    fontSize: SizeUtils.getSize(context, 3.sp),
                                     align: TextAlign.start,
                                     maxLines: 3,
                                   ),
@@ -209,7 +244,7 @@ class OverView extends StatelessWidget {
                                         text: "\$${assetCtr.overallBalance.toStringAsFixed(2)}",
                                         color: primary_text_color,
                                         weight: FontWeight.w700,
-                                        fontSize: SizeUtils.getSize(context, 10.sp),
+                                        fontSize: SizeUtils.getSize(context, 6.sp),
                                         align: TextAlign.start,
                                         maxLines: 1,
                                       );
@@ -235,10 +270,20 @@ class OverView extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      MyIconButton(text: "Send", imageAsset: "assets/svgs/send.svg",color: primary_color_button,fontSize: SizeUtils.getSize(context, 4.sp),iconSize: SizeUtils.getSize(context, 4.sp),w: SizeUtils.getSize(context, 50.sp),),
+                      GestureDetector(
+                        onTap: (){
+                          Provider.of<HomeController>(context,listen: false).changePage(2);
+                        },
+                          child: MyIconButton(text: "Send", imageAsset: "assets/svgs/send.svg",color: primary_color_button,fontSize: SizeUtils.getSize(context, 4.sp),iconSize: SizeUtils.getSize(context, 4.sp),w: SizeUtils.getSize(context, 50.sp),)
+                      ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, SizeUtils.getSize(context, 3.sp))),
-                        child: MyIconButton(text: "Receive", imageAsset: "assets/svgs/receive.svg",color: primary_color_button,fontSize: SizeUtils.getSize(context, 4.sp),iconSize: SizeUtils.getSize(context, 4.sp),w: SizeUtils.getSize(context, 50.sp)),
+                        child: GestureDetector(
+                            onTap: (){
+                              Provider.of<HomeController>(context,listen: false).changePage(2);
+                            },
+                            child: MyIconButton(text: "Receive", imageAsset: "assets/svgs/receive.svg",color: primary_color_button,fontSize: SizeUtils.getSize(context, 4.sp),iconSize: SizeUtils.getSize(context, 4.sp),w: SizeUtils.getSize(context, 50.sp))
+                        ),
                       ),
                     ],
                   ),
@@ -310,5 +355,11 @@ class OverView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _launchUrl(u) async {
+    if (!await launchUrl(Uri.parse(u))) {
+      throw Exception('Could not launch $u');
+    }
   }
 }

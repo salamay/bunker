@@ -34,6 +34,7 @@ class SupportController extends ChangeNotifier{
       if(response.statusCode==200){
         final ticket=SupportTicket.fromJson(jsonDecode(response.body));
         supportTickets.add(ticket);
+        ticketMessages[ticket.id!]=[];
       }else{
         throw Exception();
       }
@@ -111,6 +112,7 @@ class SupportController extends ChangeNotifier{
           TicketMessage m=ticketMessageFromJson(e);
           if(messages.where((element) => element.id==m.id).isEmpty){
             messages.add(m);
+            messages.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
             ticketMessages[ticketId]=messages;
             notifyListeners();
           }
@@ -157,6 +159,7 @@ class SupportController extends ChangeNotifier{
           TicketMessage m=ticketMessageFromJson(e);
           if(messages.where((element) => element.id==m.id).isEmpty){
             messages.add(m);
+            messages.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
             adminTicketMessages[ticketId]=messages;
             notifyListeners();
           }
@@ -188,10 +191,7 @@ class SupportController extends ChangeNotifier{
       log("Send message: Response code ${response!.statusCode}");
       if(response.statusCode==200){
         final message=TicketMessage.fromJson(jsonDecode(response.body));
-        if(ticketMessages.containsKey(ticketId)){
-          ticketMessages[ticketId]!.add(message);
-          notifyListeners();
-        }
+        ticketMessages[ticketId]!.add(message);
       }else{
         throw Exception();
       }
@@ -217,10 +217,8 @@ class SupportController extends ChangeNotifier{
       log("Send message: Response code ${response!.statusCode}");
       if(response.statusCode==200){
         final message=TicketMessage.fromJson(jsonDecode(response.body));
-        if(ticketMessages.containsKey(ticketId)){
-          adminTicketMessages[ticketId]!.add(message);
-          notifyListeners();
-        }
+        adminTicketMessages[ticketId]!.add(message);
+        notifyListeners();
       }else{
         throw Exception();
       }

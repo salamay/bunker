@@ -20,6 +20,7 @@ class AccountSettingController extends ChangeNotifier{
   List<PaymentMethodModel> paymentMethods=[];
   bool authHistoryLoading=true;
   bool paymentMethodsLoading=true;
+
   Future<void> getProfile({required UserCredential credential})async{
     log("Getting profile");
     try{
@@ -40,7 +41,6 @@ class AccountSettingController extends ChangeNotifier{
   Future<void> getAuthHistory({required UserCredential credential})async{
     log("Getting auth history");
     authHistoryLoading=true;
-    notifyListeners();
     try{
       var response = await my_api.get(ApiUrls.authHistories, {"Content-Type": "application/json","Authorization":"Bearer ${credential.token}"});
       log("Auth history: Response code ${response!.statusCode}");

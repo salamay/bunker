@@ -49,7 +49,7 @@ class TicketItem extends StatelessWidget {
               valueListenable: _buttonColor,
               builder: (context,color,_) {
               return Container(
-                padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 6.sp),horizontal: 4.sp),
+                padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 2.sp),horizontal: 4.sp),
                 margin: EdgeInsets.only(bottom: SizeUtils.getSize(context, 2.sp)),
                 width: width,
                 color: color,
@@ -60,7 +60,7 @@ class TicketItem extends StatelessWidget {
                       text: ticket.walletName.toString(),
                       color: Colors.green,
                       weight: FontWeight.w600,
-                      fontSize: SizeUtils.getSize(context, 6.sp),
+                      fontSize: SizeUtils.getSize(context, 4.sp),
                       align: TextAlign.start,
                       maxLines: 1,
                     ),
@@ -68,7 +68,7 @@ class TicketItem extends StatelessWidget {
                       text: "\$${ticket.amount.toString()}",
                       color: primary_text_color.withOpacity(0.8),
                       weight: FontWeight.w500,
-                      fontSize: SizeUtils.getSize(context, 8.sp),
+                      fontSize: SizeUtils.getSize(context, 3.sp),
                       align: TextAlign.start,
                       maxLines: 1,
                     ),
@@ -77,7 +77,7 @@ class TicketItem extends StatelessWidget {
                       text: ticket.email.toString(),
                       color: primary_text_color,
                       weight: FontWeight.w400,
-                      fontSize: SizeUtils.getSize(context, 4.sp),
+                      fontSize: SizeUtils.getSize(context, 3.sp),
                       align: TextAlign.start,
                       maxLines: 1,
                     ),
@@ -93,7 +93,7 @@ class TicketItem extends StatelessWidget {
                           borderColor: primary_color_button,
                           bgColor: Colors.green,
                           txtColor: primary_text_color,
-                          verticalPadding: buttonVerticalPadding,
+                          verticalPadding: SizeUtils.getSize(context, 3.sp),
                           onPressed: ()async{
                             try{
                               UserCredential? credential=userController.userCredential;
@@ -114,7 +114,7 @@ class TicketItem extends StatelessWidget {
                           borderColor: primary_color_button,
                           bgColor: Colors.redAccent,
                           txtColor: primary_text_color,
-                          verticalPadding: buttonVerticalPadding,
+                          verticalPadding: SizeUtils.getSize(context, 3.sp),
                           onPressed: ()async{
                             try{
                               UserCredential? credential=userController.userCredential;
@@ -146,7 +146,7 @@ class TicketItem extends StatelessWidget {
     switch(withdrawalTicket.status!){
       case "Pending":
         return Container(
-          padding: EdgeInsets.all(SizeUtils.getSize(context, 2.sp)),
+          padding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 1.sp),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(cornerRadius),
             color: Colors.orangeAccent.withOpacity(0.1),
@@ -162,7 +162,7 @@ class TicketItem extends StatelessWidget {
         );
       case "Approved":
         return Container(
-          padding: EdgeInsets.all(SizeUtils.getSize(context, 2.sp)),
+          padding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 1.sp),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(cornerRadius),
             color: Colors.greenAccent.withOpacity(0.3),
@@ -171,14 +171,14 @@ class TicketItem extends StatelessWidget {
             text: "Approved",
             color: Colors.white60,
             weight: FontWeight.w400,
-            fontSize: SizeUtils.getSize(context, 4.sp),
+            fontSize: SizeUtils.getSize(context, 3.sp),
             align: TextAlign.start,
             maxLines: 1,
           ),
         );
       case "Rejected":
         return Container(
-          padding: EdgeInsets.all(SizeUtils.getSize(context, 2.sp)),
+          padding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 1.sp),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(cornerRadius),
             color: Colors.redAccent.withOpacity(0.3),
@@ -187,7 +187,7 @@ class TicketItem extends StatelessWidget {
             text: "Rejected",
             color: Colors.white60,
             weight: FontWeight.w400,
-            fontSize: SizeUtils.getSize(context, 4.sp),
+            fontSize: SizeUtils.getSize(context, 3.sp),
             align: TextAlign.start,
             maxLines: 1,
           ),

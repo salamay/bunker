@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bunker/utils/size_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -35,12 +37,15 @@ class _AdminSupportTicketState extends State<AdminSupportTicket> {
     super.initState();
     supportController=Provider.of<SupportController>(context,listen: false);
     userController=Provider.of<UserController>(context,listen: false);
-    SchedulerBinding.instance.addPostFrameCallback((timestamp)async{
-      await allTicket(context: context);
-      await getTicketMessage(context: context);
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      load();
     });
   }
 
+  load()async{
+    await allTicket(context: context);
+    await getTicketMessage(context: context);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,67 +57,69 @@ class _AdminSupportTicketState extends State<AdminSupportTicket> {
         child: ValueListenableBuilder(
             valueListenable: selectedTicketNotifier,
             builder: (context,selectedTicket,_) {
-              return selectedTicket==null?Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: SizeUtils.getSize(context, 4.sp),),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      MyText(
-                        text: "Users ticket",
-                        color: primary_text_color,
-                        weight: FontWeight.w600,
-                        fontSize: SizeUtils.getSize(context, 6.sp),
-                        align: TextAlign.start,
-                        maxLines: 3,
-                      ),
-                      GestureDetector(
-                          onTap: (){
-                            context.pop();
-                          },
-                          child: MyIconButton(text: "Back", imageAsset: "assets/svgs/back.svg",color: primary_color_button,)
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: SizeUtils.getSize(context, 4.sp),),
-                  Consumer<SupportController>(
-                      builder: (context,supportCtr,_) {
-                        return Skeletonizer(
-                          ignoreContainers: false,
-                          enabled: supportCtr.adminSupportTicketLoading,
-                          enableSwitchAnimation: true,
-                          effect: ShimmerEffect(
-                              duration: const Duration(milliseconds: 1000),
-                              baseColor: secondary_color.withOpacity(0.6),
-                              highlightColor: action_button_color.withOpacity(0.8)
-                          ),
-                          child: !supportCtr.adminSupportTicketLoading?supportCtr.adminSupportTickets.isNotEmpty?Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: supportCtr.supportTickets.map((e)=>TicketItem(
-                                ticket: e,
-                                callBack: (){
-                                  selectedTicketNotifier.value=e;
-      
-                                },
-                              )).toList()
-                          ):Center(
-                            child: Container(
-                              padding: EdgeInsets.all(SizeUtils.getSize(context, 6.sp)),
-                              decoration: BoxDecoration(
-                                  color: secondary_color.withOpacity(0.3),
-                                  borderRadius: BorderRadius.all(Radius.circular(cornerRadius))
-                              ),
-                              child: EmptyPage(
-                                  title: "Oops! Nothing is here",
-                                  subtitle: "No ticket yet"
-                              ),
+              return selectedTicket==null?SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: SizeUtils.getSize(context, 4.sp),),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        MyText(
+                          text: "Users ticket",
+                          color: primary_text_color,
+                          weight: FontWeight.w600,
+                          fontSize: SizeUtils.getSize(context, 6.sp),
+                          align: TextAlign.start,
+                          maxLines: 3,
+                        ),
+                        GestureDetector(
+                            onTap: (){
+                              context.pop();
+                            },
+                            child: MyIconButton(text: "Back", imageAsset: "assets/svgs/back.svg",color: primary_color_button,)
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: SizeUtils.getSize(context, 4.sp),),
+                    Consumer<SupportController>(
+                        builder: (context,supportCtr,_) {
+                          return Skeletonizer(
+                            ignoreContainers: false,
+                            enabled: supportCtr.adminSupportTicketLoading,
+                            enableSwitchAnimation: true,
+                            effect: ShimmerEffect(
+                                duration: const Duration(milliseconds: 1000),
+                                baseColor: secondary_color.withOpacity(0.6),
+                                highlightColor: action_button_color.withOpacity(0.8)
                             ),
-                          ):const ListTileShimmer(),
-                        );
-                      }
-                  )
-                ],
+                            child: !supportCtr.adminSupportTicketLoading?supportCtr.adminSupportTickets.isNotEmpty?Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: supportCtr.adminSupportTickets.map((e)=>TicketItem(
+                                  ticket: e,
+                                  callBack: (){
+                                    selectedTicketNotifier.value=e;
+                      
+                                  },
+                                )).toList()
+                            ):Center(
+                              child: Container(
+                                padding: EdgeInsets.all(SizeUtils.getSize(context, 6.sp)),
+                                decoration: BoxDecoration(
+                                    color: secondary_color.withOpacity(0.3),
+                                    borderRadius: BorderRadius.all(Radius.circular(cornerRadius))
+                                ),
+                                child: EmptyPage(
+                                    title: "Oops! Nothing is here",
+                                    subtitle: "No ticket yet"
+                                ),
+                              ),
+                            ):const ListTileShimmer(),
+                          );
+                        }
+                    )
+                  ],
+                ),
               ):AdminMessageView(ticket: selectedTicket,backCallBack: (){
                 selectedTicketNotifier.value=null;
               },);
@@ -137,7 +144,8 @@ class _AdminSupportTicketState extends State<AdminSupportTicket> {
     UserCredential? credential=userController.userCredential;
     if(credential!=null){
       try{
-        List<SupportTicket> tickets=supportController.supportTickets;
+        List<SupportTicket> tickets=supportController.adminSupportTickets;
+        log("Tickets: ${tickets.length}");
         for(SupportTicket ticket in tickets){
           await supportController.loadTicketMessageForAdmin(credential: credential, ticketId: ticket.id!);
         }

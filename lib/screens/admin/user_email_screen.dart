@@ -111,7 +111,7 @@ class UserEmailScreen extends StatelessWidget {
                             if(_formKey.currentState!.validate()){
                               String email=emailController.text.trim();
                               if(_formKey.currentState!.validate()){
-                                context.push(AppRoutes.loadingScreen, extra: {
+                                context.pushReplacement(AppRoutes.loadingScreen, extra: {
                                   'callBack':getWallet,
                                   'message': 'Please wait'
                                 });

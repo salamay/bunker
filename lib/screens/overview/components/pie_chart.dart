@@ -27,7 +27,6 @@ class PieChart2State extends State {
     assetController = Provider.of<AssetController>(context,listen: false);
     return Consumer<AssetController>(
       builder: (context, assetCtr, child) {
-
         return PieChart(
           PieChartData(
             centerSpaceColor: action_button_color,
@@ -49,7 +48,7 @@ class PieChart2State extends State {
               show: false,
             ),
             sectionsSpace: 0,
-            centerSpaceRadius: SizeUtils.getSize(context, 12.sp),
+            centerSpaceRadius: SizeUtils.getSize(context, 8.sp),
             sections: showingSections(assets: assetCtr.supportedCoin),
           ),
         );
@@ -63,8 +62,8 @@ class PieChart2State extends State {
       double totalBalance = assets.fold(0, (previousValue, asset) => previousValue + asset.balance!);
 
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? SizeUtils.getSize(context, 4.sp) : SizeUtils.getSize(context, 2.sp);
-      final radius = isTouched ? SizeUtils.getSize(context, 15.sp) : SizeUtils.getSize(context, 10.sp);
+      final fontSize = isTouched ? SizeUtils.getSize(context, 3.sp) : SizeUtils.getSize(context, 2.sp);
+      final radius = isTouched ? SizeUtils.getSize(context, 10.sp) : SizeUtils.getSize(context, 8.sp);
       double percentage = (assets[i].balance! / totalBalance) * 100;
       return PieChartSectionData(
         color: assetController.colors[i],

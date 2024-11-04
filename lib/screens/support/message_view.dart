@@ -138,7 +138,7 @@ class MessageView extends StatelessWidget {
                     textInputType: TextInputType.text,
                     errorText: "Must be provided",
                     maxLines: 3,
-                    maxLength: 50,
+                    maxLength: 400,
                     obscureText: false,
                     onEditingComplete: () {
 

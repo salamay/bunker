@@ -26,7 +26,7 @@ class _SideButtonState extends State<SideButton> {
       onEnter: (event) => setState(() => _buttonColor = action_button_color),
       onExit: (event) => setState(() => _buttonColor = widget.selectedColor),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 4.sp)),
+        padding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 4.sp),vertical: 2.sp),
         decoration: BoxDecoration(
           color: widget.selectedColor,
           borderRadius: BorderRadius.circular(SizeUtils.getSize(context, 2.sp)),
@@ -34,19 +34,14 @@ class _SideButtonState extends State<SideButton> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                SvgPicture.asset(
-                  widget.imageAsset,
-                  width: SizeUtils.getSize(context, 8.sp),
-                  fit: BoxFit.contain,
-                  color: primary_color_button.withOpacity(0.5),
-                ),
-              ],
+            SvgPicture.asset(
+              widget.imageAsset,
+              width: SizeUtils.getSize(context, 8.sp),
+              fit: BoxFit.contain,
+              color: primary_color_button.withOpacity(0.5),
             ),
             Padding(
-              padding: EdgeInsets.all(SizeUtils.getSize(context, 8.sp)),
+              padding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 4.sp)),
               child: MyText(
                 text: widget.text,
                 color: primary_text_color,

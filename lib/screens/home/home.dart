@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bunker/components/app_component.dart';
+import 'package:bunker/routes/AppRoutes.dart';
 import 'package:bunker/screens/account/account_settings.dart';
 import 'package:bunker/screens/account/controller/account_setting_controller.dart';
 import 'package:bunker/screens/account/model/profile_model.dart';
@@ -21,6 +22,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../components/texts/MyText.dart';
 import '../../utils/date_utils.dart';
@@ -98,7 +100,30 @@ class _HomeState extends State<Home> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(height: SizeUtils.getSize(context, 4.sp),),
-                            ProfileWidget(email: "ayotundesalam16@gmail.com"),
+                            GestureDetector(
+                              onTap: (){
+                                context.go(AppRoutes.welcome);
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.logout,
+                                    color: Colors.red,
+                                    size: SizeUtils.getSize(context, 6.sp),
+                                  ),
+                                  SizedBox(width: SizeUtils.getSize(context, 2.sp),),
+                                  MyText(
+                                    text: "Sign out",
+                                    color: primary_text_color,
+                                    weight: FontWeight.w400,
+                                    fontSize: SizeUtils.getSize(context, 3.sp),
+                                    align: TextAlign.start,
+                                    maxLines: 3,
+                                  ),
+                                ],
+                              ),
+                            ),
                             SizedBox(height: SizeUtils.getSize(context, 4.sp),),
                             MyText(
                               text: "GENERAL",
@@ -238,7 +263,7 @@ class _HomeState extends State<Home> {
   void getData({required BuildContext context})async{
     getProfile(context: context);
     await getAssets(context: context);
-    getMarketData(context: context);
+    // getMarketData(context: context);
     getAuthHistories(context: context);
   }
   Future<void> getMarketData({required BuildContext context})async{

@@ -43,7 +43,7 @@ class _AccountSettingsState extends State<AccountSettings> with SingleTickerProv
               text: "Account Settings",
               color: primary_text_color,
               weight: FontWeight.w600,
-              fontSize: 6.sp,
+              fontSize: SizeUtils.getSize(context, 6.sp),
               align: TextAlign.start,
               maxLines: 3,
             ),

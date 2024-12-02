@@ -16,6 +16,7 @@ class MyFormField extends StatelessWidget {
     required this.errorText,
     required this.maxLines,
     required this.obscureText,
+    this.onChanged,
     this.onEditingComplete,
     this.onFieldSubmitted,
     this.onTapOutside,
@@ -36,6 +37,7 @@ class MyFormField extends StatelessWidget {
   bool obscureText;
   int? maxLength;
   Function()? onEditingComplete;
+  Function (String)? onChanged;
   Function(PointerDownEvent)? onTapOutside;
   Function (String)? onFieldSubmitted;
   String? Function(String?)? validator;
@@ -57,21 +59,33 @@ class MyFormField extends StatelessWidget {
         maxLines: maxLines??1,
         obscureText: obscureText,
         style: style??GoogleFonts.roboto(
-          fontSize: SizeUtils.getSize(context, 4.sp),
+          fontSize: SizeUtils.getSize(context, 3.sp),
           color: primary_text_color,
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w300,
         ),
         decoration: inputDecoration??textFieldDecoration.copyWith(
           hintText: hintText,
           floatingLabelBehavior: FloatingLabelBehavior.always,
+          contentPadding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 2.sp),vertical: 0),
+          hintStyle: GoogleFonts.roboto(
+              fontWeight: FontWeight.normal,
+              color: primary_text_color.withOpacity(0.4),
+              fontSize: SizeUtils.getSize(context, 3.sp)
+          ),
           suffixIcon: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               suffixIcon??SizedBox(),
             ],
           ),
+          errorStyle: GoogleFonts.poppins(
+              fontWeight: FontWeight.normal,
+              color: Colors.orangeAccent.withOpacity(0.8),
+              fontSize: SizeUtils.getSize(context, 2.sp)
+          ),
         ),
         keyboardType: textInputType,
+        onChanged: onChanged,
         validator: validator,
         onTapOutside: onTapOutside,
         onFieldSubmitted: onFieldSubmitted,

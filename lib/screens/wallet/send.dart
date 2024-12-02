@@ -35,7 +35,7 @@ class Send extends StatelessWidget {
     withdrawalController=Provider.of<WithdrawalController>(context,listen: false);
     assetController=Provider.of<AssetController>(context,listen: false);
     return LoaderOverlay(
-      useDefaultLoading: true,
+      useDefaultLoading: false,
       overlayWidget: Loading(size: SizeUtils.getSize(context, 10.sp),),
       overlayOpacity: 0.1,
       child: Container(

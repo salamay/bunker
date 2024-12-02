@@ -4,6 +4,7 @@ import 'package:bunker/routes/AppRoutes.dart';
 import 'package:bunker/screens/account/controller/account_setting_controller.dart';
 import 'package:bunker/screens/admin/controller/admin_controller.dart';
 import 'package:bunker/screens/home/controller/home_controller.dart';
+import 'package:bunker/screens/registration/controller/registration_controller.dart';
 import 'package:bunker/screens/support/controller/support_controller.dart';
 import 'package:bunker/screens/transaction/controller/transaction_controller.dart';
 import 'package:bunker/screens/transaction/controller/withrawal_controller.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AdminController()),
         ChangeNotifierProvider(create: (_) => SupportController()),
         ChangeNotifierProvider(create: (_) => TransactionController()),
+        ChangeNotifierProvider(create: (_) => RegistrationController()),
       ],
       child: ScreenUtilInit(
           minTextAdapt: true,

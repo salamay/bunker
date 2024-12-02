@@ -16,7 +16,7 @@ class MyIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 2.sp), vertical: SizeUtils.getSize(context, 2.sp)),
+      padding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 2.sp), vertical: SizeUtils.getSize(context, 1.5.sp)),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(cornerRadius),

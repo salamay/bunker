@@ -72,7 +72,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
                     child: MyText(
                       text: "Email Notifications",
                       color: primary_text_color,
-                      weight: FontWeight.w600,
+                      weight: FontWeight.w400,
                       fontSize: SizeUtils.getSize(context, 4.sp),
                       align: TextAlign.start,
                       maxLines: 1,

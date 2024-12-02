@@ -1,3 +1,4 @@
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -54,7 +55,6 @@ final InputDecoration textFieldDecoration=InputDecoration(
     color: primary_text_color.withOpacity(0.4),
     fontSize: 3.sp
   ),
-
   contentPadding: EdgeInsets.symmetric(horizontal: 2.sp,vertical: 2.sp),
   focusedBorder:  OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(2.sp)),
@@ -63,7 +63,6 @@ final InputDecoration textFieldDecoration=InputDecoration(
       width: 0.2,
     ),
   ),
-
   enabledBorder: OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(2.sp)),
     borderSide: BorderSide(

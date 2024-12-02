@@ -1,6 +1,7 @@
 import 'package:bunker/components/app_component.dart';
 import 'package:bunker/supported_assets/controller/asset_controller.dart';
 import 'package:bunker/supported_assets/model/assets.dart';
+import 'package:bunker/utils/size_utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,22 +19,22 @@ class DepositItem extends StatelessWidget {
   Widget build(BuildContext context) {
     assetController=Provider.of<AssetController>(context,listen: false);
     return Container(
-      margin: EdgeInsets.only(bottom: 2.sp),
+      margin: EdgeInsets.only(bottom: SizeUtils.getSize(context, 2.sp)),
       child: Material(
-        borderRadius: BorderRadius.circular(cornerRadius),
+        borderRadius: BorderRadius.circular(SizeUtils.getSize(context, cornerRadius)),
         clipBehavior: Clip.hardEdge,
         color: Colors.transparent,
         child: ListTile(
           hoverColor: action_button_color.withOpacity(0.4),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(cornerRadius),
+            borderRadius: BorderRadius.circular(SizeUtils.getSize(context, cornerRadius)),
           ),
           onTap: (){
             callBack.call();
           },
           leading:  SizedBox(
-            width: 10.sp,
-            height: 10.sp,
+            width: SizeUtils.getSize(context, 10.sp),
+            height: SizeUtils.getSize(context, 10.sp),
             child: CachedNetworkImage(
               imageUrl: asset.image!,
               imageBuilder: (context, imageProvider) => Container(
@@ -46,17 +47,17 @@ class DepositItem extends StatelessWidget {
               ),
               placeholder: (context, url) => Skeleton.replace(
                 child: Container(
-                  width: 10.sp,
-                  height: 10.sp,
+                  width: SizeUtils.getSize(context, 10.sp),
+                  height: SizeUtils.getSize(context, 10.sp),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(8.sp)),
+                    borderRadius: BorderRadius.all(Radius.circular(SizeUtils.getSize(context, 8.sp))),
                   ),
                 ),
               ),
               errorWidget: (context, url, error) => SizedBox(
-                  width: 10.sp,
-                  height: 10.sp,
-                  child: Icon(Icons.error,size: 10.sp,)
+                  width: SizeUtils.getSize(context, 10.sp),
+                  height: SizeUtils.getSize(context, 10.sp),
+                  child: Icon(Icons.error,size: SizeUtils.getSize(context, 8.sp),)
               ),
             ),
           ),
@@ -64,7 +65,7 @@ class DepositItem extends StatelessWidget {
             text: asset.symbol!,
             color: primary_text_color,
             weight: FontWeight.w500,
-            fontSize: 4.sp,
+            fontSize: SizeUtils.getSize(context, 4.sp),
             align: TextAlign.start,
             maxLines: 3,
           ),
@@ -72,7 +73,7 @@ class DepositItem extends StatelessWidget {
             text: asset.symbol!,
             color: primary_text_color.withOpacity(0.8),
             weight: FontWeight.w400,
-            fontSize: 3.sp,
+            fontSize: SizeUtils.getSize(context, 3.sp),
             align: TextAlign.start,
             maxLines: 3,
           ),
@@ -80,7 +81,7 @@ class DepositItem extends StatelessWidget {
             text: "\$${asset.balance!.toStringAsFixed(2)}",
             color: primary_text_color.withOpacity(0.8),
             weight: FontWeight.w400,
-            fontSize: 4.sp,
+            fontSize: SizeUtils.getSize(context, 4.sp),
             align: TextAlign.start,
             maxLines: 3,
           ),

@@ -62,8 +62,8 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                           MyText(
                             text: "Payment Methods",
                             color: primary_text_color,
-                            weight: FontWeight.w600,
-                            fontSize: SizeUtils.getSize(context, 6.sp),
+                            weight: FontWeight.w400,
+                            fontSize: SizeUtils.getSize(context, 4.sp),
                             align: TextAlign.start,
                             maxLines: 1,
                           ),
@@ -101,12 +101,11 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                           )
                         ],
                       ),
-                      SizedBox(height: SizeUtils.getSize(context, 2.sp),),
                       MyText(
                         text: "You can add or remove your payment methods here",
                         color: primary_text_color.withOpacity(0.8),
                         weight: FontWeight.w400,
-                        fontSize: SizeUtils.getSize(context, 4.sp),
+                        fontSize: SizeUtils.getSize(context, 3.sp),
                         align: TextAlign.start,
                         maxLines: 3,
                       ),

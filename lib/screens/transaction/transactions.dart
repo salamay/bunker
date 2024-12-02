@@ -98,7 +98,7 @@ class _TransactionsState extends State<Transactions> with SingleTickerProviderSt
                               text: "Withdrawals",
                               color: primary_text_color.withOpacity(0.5),
                               weight: FontWeight.w400,
-                              fontSize: 4.sp,
+                              fontSize: SizeUtils.getSize(context, 4.sp),
                               align: TextAlign.center
                           ),
                         ),
@@ -111,7 +111,7 @@ class _TransactionsState extends State<Transactions> with SingleTickerProviderSt
                               text: "Deposit",
                               color: primary_text_color.withOpacity(0.5),
                               weight: FontWeight.w400,
-                              fontSize: 4.sp,
+                              fontSize: SizeUtils.getSize(context, 4.sp),
                               align: TextAlign.center
                           ),
                         ),

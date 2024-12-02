@@ -84,7 +84,7 @@ class _DepositPageState extends State<DepositPage> {
                 text: "Deposit",
                 color: primary_text_color,
                 weight: FontWeight.w600,
-                fontSize: SizeUtils.getSize(context, 8.sp),
+                fontSize: SizeUtils.getSize(context, 6.sp),
                 align: TextAlign.start,
                 maxLines: 3,
               ),

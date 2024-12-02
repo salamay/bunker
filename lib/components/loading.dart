@@ -11,7 +11,7 @@ class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: SpinKitChasingDots(
+      child: SpinKitFadingCircle(
         color: Colors.orange,
         size: size??30.sp,
       ),

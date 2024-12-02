@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:bunker/components/app_component.dart';
 import 'package:bunker/components/divider.dart';
 import 'package:bunker/screens/account/controller/account_setting_controller.dart';
+import 'package:bunker/screens/buy_crypto/buy_crypto_dialog.dart';
 import 'package:bunker/screens/home/components/listtile_shimmer.dart';
 import 'package:bunker/screens/home/controller/home_controller.dart';
 import 'package:bunker/screens/overview/components/asset_overview_box.dart';
@@ -13,21 +16,19 @@ import 'package:bunker/utils/size_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../components/texts/MyText.dart';
 import '../account/model/profile_model.dart';
 import '../empty/empty_page.dart';
 import '../transaction/controller/transaction_controller.dart';
 import '../transaction/transaction_item.dart';
+import '../wallet/controller/wallet_controller.dart';
 
 class OverView extends StatelessWidget {
   OverView({super.key});
-  List<PaymentGateway> gateways=[
-    PaymentGateway(name: "MoonPay", image: "assets/moonpay.jpeg", paymentUrl: "https://www.moonpay.com/"),
-    PaymentGateway(name: "Coinbase", image: "assets/coinbase.png", paymentUrl: "https://www.coinbase.com/")
-  ];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,33 +51,36 @@ class OverView extends StatelessWidget {
                   align: TextAlign.start,
                   maxLines: 1,
                 ),
-                PopupMenuButton(
-                  color: primary_color,
-                    padding: EdgeInsets.all(SizeUtils.getSize(context, 2.sp)),
-                    itemBuilder: (BuildContext context) {
-                      return gateways.map((PaymentGateway gateway) {
-                        return PopupMenuItem(
-                          onTap: (){
-                            _launchUrl(gateway.paymentUrl);
-                          },
-                          padding: EdgeInsets.zero,
-                          child: SizedBox(
-                            width: SizeUtils.getSize(context, 50.sp),
-                            height: SizeUtils.getSize(context, 15.sp),
-                            child: Image.asset(
-                              gateway.image,
-                              fit: BoxFit.cover,
+                GestureDetector(
+                  onTap: (){
+                    showAdaptiveDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (context){
+                          return BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                            child: AlertDialog(
+                              backgroundColor: primary_color,
+                              content: Container(
+                                width: width*0.3,
+                                clipBehavior: Clip.hardEdge,
+                                padding: EdgeInsets.symmetric(horizontal: 4.sp,vertical: 6.sp),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(cornerRadius))
+                                ),
+                                child: BuyCryptoDialog(),
+                              ),
                             ),
-                          )
-                        );
-                      }).toList();
-                    },
-                    child: MyIconButton(
-                      text: "Buy crypto",
-                      imageAsset: "assets/svgs/cart.svg",
-                      color: primary_color_button,
-                    )
-                ),
+                          );
+                        }
+                    );
+                  },
+                  child: MyIconButton(
+                    text: "Buy crypto",
+                    imageAsset: "assets/svgs/cart.svg",
+                    color: primary_color_button,
+                  ),
+                )
               ],
             ),
             SizedBox(height: SizeUtils.getSize(context, 8.sp)),
@@ -106,7 +110,7 @@ class OverView extends StatelessWidget {
                             child: SizedBox(
                               width: width,
                               child: !assetCtr.assetLoading?assetCtr.supportedCoin.isNotEmpty?Row(
-                                children: assetCtr.supportedCoin.map((e){
+                                children: assetCtr.supportedCoin.sublist(0,3).map((e){
                                   return Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: AssetOverviewBox(
@@ -211,8 +215,8 @@ class OverView extends StatelessWidget {
                               ClipRRect(
                                 clipBehavior: Clip.hardEdge,
                                   child: SizedBox(
-                                      width: SizeUtils.getSize(context, 40.sp),
-                                      height: SizeUtils.getSize(context, 40.sp),
+                                      width: SizeUtils.getSize(context, 30.sp),
+                                      height: SizeUtils.getSize(context, 30.sp),
                                       child: PieChartSample2()
                                   )
                               ),
@@ -243,8 +247,8 @@ class OverView extends StatelessWidget {
                                       return MyText(
                                         text: "\$${assetCtr.overallBalance.toStringAsFixed(2)}",
                                         color: primary_text_color,
-                                        weight: FontWeight.w700,
-                                        fontSize: SizeUtils.getSize(context, 6.sp),
+                                        weight: FontWeight.w600,
+                                        fontSize: SizeUtils.getSize(context, 5.sp),
                                         align: TextAlign.start,
                                         maxLines: 1,
                                       );
@@ -272,6 +276,8 @@ class OverView extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: (){
+                          WalletController walletController=Provider.of<WalletController>(context,listen: false);
+                          walletController.changeModal(false);
                           Provider.of<HomeController>(context,listen: false).changePage(2);
                         },
                           child: MyIconButton(text: "Send", imageAsset: "assets/svgs/send.svg",color: primary_color_button,fontSize: SizeUtils.getSize(context, 4.sp),iconSize: SizeUtils.getSize(context, 4.sp),w: SizeUtils.getSize(context, 50.sp),)
@@ -280,6 +286,8 @@ class OverView extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, SizeUtils.getSize(context, 3.sp))),
                         child: GestureDetector(
                             onTap: (){
+                              WalletController walletController=Provider.of<WalletController>(context,listen: false);
+                              walletController.changeModal(true);
                               Provider.of<HomeController>(context,listen: false).changePage(2);
                             },
                             child: MyIconButton(text: "Receive", imageAsset: "assets/svgs/receive.svg",color: primary_color_button,fontSize: SizeUtils.getSize(context, 4.sp),iconSize: SizeUtils.getSize(context, 4.sp),w: SizeUtils.getSize(context, 50.sp))
@@ -355,11 +363,5 @@ class OverView extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Future<void> _launchUrl(u) async {
-    if (!await launchUrl(Uri.parse(u))) {
-      throw Exception('Could not launch $u');
-    }
   }
 }

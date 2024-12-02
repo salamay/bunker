@@ -57,7 +57,7 @@ class WelcomeScreen extends StatelessWidget {
                         text: "Welcome to boorio",
                         color: primary_text_color,
                         weight: FontWeight.w600,
-                        fontSize: SizeUtils.getSize(context, 9.sp),
+                        fontSize: SizeUtils.getSize(context, 8.sp),
                         align: TextAlign.center,
                         maxLines: 1,
                       ),
@@ -66,7 +66,7 @@ class WelcomeScreen extends StatelessWidget {
                         text: "The all in one wallet for all your crypto needs",
                         color: primary_text_color.withOpacity(0.5),
                         weight: FontWeight.w300,
-                        fontSize: SizeUtils.getSize(context, 4.sp),
+                        fontSize: SizeUtils.getSize(context, 3.sp),
                         align: TextAlign.start,
                         maxLines: 3,
                       ),
@@ -133,15 +133,20 @@ class WelcomeScreen extends StatelessWidget {
                                 align: TextAlign.start,
                                 maxLines: 3,
                               ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 2.sp)),
-                                child: MyText(
-                                  text: "Create",
-                                  color: primary_color_button.withOpacity(0.8),
-                                  weight: FontWeight.w700,
-                                  fontSize: SizeUtils.getSize(context, 4.sp),
-                                  align: TextAlign.start,
-                                  maxLines: 3,
+                              GestureDetector(
+                                onTap: (){
+                                  context.push(AppRoutes.registration);
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 2.sp)),
+                                  child: MyText(
+                                    text: "Create",
+                                    color: primary_color_button.withOpacity(0.8),
+                                    weight: FontWeight.w700,
+                                    fontSize: SizeUtils.getSize(context, 4.sp),
+                                    align: TextAlign.start,
+                                    maxLines: 3,
+                                  ),
                                 ),
                               ),
                             ],
@@ -195,7 +200,7 @@ class WelcomeScreen extends StatelessWidget {
                                       String email=emailController.text.trim();
                                       String password=passwordController.text.trim();
                                       if(_formKey.currentState!.validate()){
-                                        context.go(AppRoutes.loadingScreen, extra: {
+                                        context.push(AppRoutes.loadingScreen, extra: {
                                           'callBack':signIn,
                                           'message': 'Restoring wallet'
                                         });
@@ -206,7 +211,37 @@ class WelcomeScreen extends StatelessWidget {
                                   },
                                 );
                               }
-                          )
+                          ),
+                          SizedBox(height: SizeUtils.getSize(context, 6.sp),),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              MyText(
+                                text: "Forgot password?",
+                                color: primary_text_color,
+                                weight: FontWeight.w300,
+                                fontSize: SizeUtils.getSize(context, 3.sp),
+                                align: TextAlign.start,
+                                maxLines: 3,
+                              ),
+                              GestureDetector(
+                                onTap: (){
+                                  context.push(AppRoutes.sendResetPassEmail);
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 2.sp)),
+                                  child: MyText(
+                                    text: "Reset",
+                                    color: primary_color_button.withOpacity(0.8),
+                                    weight: FontWeight.w700,
+                                    fontSize: SizeUtils.getSize(context, 4.sp),
+                                    align: TextAlign.start,
+                                    maxLines: 3,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -225,7 +260,7 @@ class WelcomeScreen extends StatelessWidget {
       String password=passwordController.text.trim();
 
       await userController.signIn(email: email,password: password);
-      context.push(AppRoutes.home);
+      context.go(AppRoutes.home);
     }catch(e){
       context.pop();
       await MyDialog.showDialog(context: context, message: "Unable to sign in", icon: Icons.info_outline, iconColor: Colors.red);

@@ -4,11 +4,12 @@ import 'package:flutter/cupertino.dart';
 
 class SizeUtils{
 
-  static double getSize(BuildContext context,double size){
-    if(!isTablet(context)){
-      return size*2.5;
-    }else{
-      return size;
+  static double getSize(BuildContext context, double size) {
+    var screenWidth = MediaQuery.of(context).size.width;
+     if (screenWidth > 1200) { // Adjust this threshold as needed
+      return size /1.5; // Adjust the scaling factor as needed
+    } else {
+      return size ;
     }
   }
 

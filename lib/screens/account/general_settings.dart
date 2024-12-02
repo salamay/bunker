@@ -12,7 +12,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
-
 import '../../components/button/MyButton.dart';
 import '../../components/dialogs/my_dialog.dart';
 import '../../components/form/MyFormField.dart';
@@ -20,8 +19,10 @@ import '../../components/texts/MyText.dart';
 import '../../user/controller/user_controller.dart';
 import '../../user/model/user_crendential.dart';
 import '../../utils/size_utils.dart';
+
 class GeneralSettings extends StatelessWidget {
   GeneralSettings({super.key});
+
   final _formKey= GlobalKey<FormState>();
   final TextEditingController emailController=TextEditingController();
   final TextEditingController firstNameController=TextEditingController();
@@ -39,10 +40,10 @@ class GeneralSettings extends StatelessWidget {
     userController=Provider.of<UserController>(context,listen: false);
     return LoaderOverlay(
       useDefaultLoading: false,
-      overlayOpacity: 0.3,
+      overlayOpacity: 0.1,
       overlayWidget: Loading(size: SizeUtils.getSize(context, 10.sp),),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal:SizeUtils.getSize(context, 6.sp), vertical: 4.sp),
+        padding: EdgeInsets.symmetric(horizontal:SizeUtils.getSize(context, 6.sp), vertical: SizeUtils.getSize(context, 4.sp)),
         height: height,
         decoration: BoxDecoration(
           color: secondary_color,
@@ -84,7 +85,7 @@ class GeneralSettings extends StatelessWidget {
                         MyText(
                           text: "Basic details",
                           color: primary_text_color,
-                          weight: FontWeight.w600,
+                          weight: FontWeight.w400,
                           fontSize: SizeUtils.getSize(context, 4.sp),
                           align: TextAlign.start,
                           maxLines: 1,
@@ -270,6 +271,7 @@ class GeneralSettings extends StatelessWidget {
                                       profile.country=country;
                                       profile.state=state;
                                       profile.city=city;
+                                      profile.address=address;
                                       profile.basicDetailsUpdated=true;
                                       UserCredential? credential=userController.userCredential;
                                       if(credential!=null){

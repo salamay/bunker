@@ -6,7 +6,9 @@ import 'package:bunker/screens/wallet/send.dart';
 import 'package:bunker/supported_assets/model/assets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../components/texts/MyText.dart';
@@ -27,11 +29,20 @@ class _SendAndReceiveModalState extends State<SendAndReceiveModal> with SingleTi
   void initState() {
     // TODO: implement initState
     super.initState();
-    pageController=TabController(length: 2, vsync: this);
-
+    pageController=TabController(length: 2, initialIndex: 0,vsync: this);
   }
   @override
   Widget build(BuildContext context) {
+    bool isReceive=Provider.of<WalletController>(context).isReceive;
+    SchedulerBinding.instance.addPostFrameCallback((time){
+      if(isReceive){
+        log("isReceive: $isReceive");
+        pageController.animateTo(1);
+      }else{
+        log("isReceive: $isReceive");
+        pageController.animateTo(0);
+      }
+    });
     return Container(
       width: width,
       height: height,
@@ -54,11 +65,13 @@ class _SendAndReceiveModalState extends State<SendAndReceiveModal> with SingleTi
             tabs: [
               GestureDetector(
                 onTap:(){
+                  WalletController walletController=Provider.of<WalletController>(context,listen: false);
+                  walletController.isReceive=false;
                   pageController.animateTo(0);
                 },
                 child: MyText(
                     text: "Withdrawal",
-                    color: primary_text_color.withOpacity(0.5),
+                    color: primary_text_color.withOpacity(0.8),
                     weight: FontWeight.w400,
                     fontSize: SizeUtils.getSize(context, 4.sp),
                     align: TextAlign.center
@@ -66,11 +79,13 @@ class _SendAndReceiveModalState extends State<SendAndReceiveModal> with SingleTi
               ),
               GestureDetector(
                 onTap:(){
+                  WalletController walletController=Provider.of<WalletController>(context,listen: false);
+                  walletController.isReceive=false;
                   pageController.animateTo(1);
                 },
                 child: MyText(
                     text: "Receive",
-                    color: primary_text_color.withOpacity(0.5),
+                    color: primary_text_color.withOpacity(0.8),
                     weight: FontWeight.w400,
                     fontSize: SizeUtils.getSize(context, 4.sp),
                     align: TextAlign.center

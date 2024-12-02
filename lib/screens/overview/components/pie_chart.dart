@@ -12,52 +12,49 @@ import 'package:provider/provider.dart';
 import '../../../supported_assets/model/assets.dart';
 import '../../../utils/size_utils.dart';
 
-class PieChartSample2 extends StatefulWidget {
+class PieChartSample2 extends StatelessWidget {
   PieChartSample2({super.key});
-
-  @override
-  State<StatefulWidget> createState() => PieChart2State();
-}
-
-class PieChart2State extends State {
   int touchedIndex = -1;
   late AssetController assetController;
+
   @override
   Widget build(BuildContext context) {
     assetController = Provider.of<AssetController>(context,listen: false);
     return Consumer<AssetController>(
       builder: (context, assetCtr, child) {
-        return PieChart(
+        return assetCtr.supportedCoin.isNotEmpty?PieChart(
           PieChartData(
             centerSpaceColor: action_button_color,
             pieTouchData: PieTouchData(
-              touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                setState(() {
-                  if (!event.isInterestedForInteractions ||
-                      pieTouchResponse == null ||
-                      pieTouchResponse.touchedSection == null) {
-                    touchedIndex = -1;
-                    return;
-                  }
-                  touchedIndex = pieTouchResponse
-                      .touchedSection!.touchedSectionIndex;
-                });
-              },
+              // touchCallback: (FlTouchEvent event, pieTouchResponse) {
+              //   setState(() {
+              //     if (!event.isInterestedForInteractions ||
+              //         pieTouchResponse == null ||
+              //         pieTouchResponse.touchedSection == null) {
+              //       touchedIndex = -1;
+              //       return;
+              //     }
+              //     touchedIndex = pieTouchResponse
+              //         .touchedSection!.touchedSectionIndex;
+              //   });
+              // },
             ),
             borderData: FlBorderData(
               show: false,
             ),
             sectionsSpace: 0,
-            centerSpaceRadius: SizeUtils.getSize(context, 8.sp),
-            sections: showingSections(assets: assetCtr.supportedCoin),
+            centerSpaceRadius: SizeUtils.getSize(context, 10.sp),
+            sections: showingSections(assets: assetCtr.supportedCoin, context: context),
           ),
-        );
+        ):const SizedBox();
       },
     );
   }
 
-  List<PieChartSectionData> showingSections({required List<AssetModel> assets}) {
-
+  List<PieChartSectionData>? showingSections({required context,required List<AssetModel> assets}) {
+    if(assets.isEmpty){
+      return null;
+    }
     return List.generate(assets.length, (i) {
       double totalBalance = assets.fold(0, (previousValue, asset) => previousValue + asset.balance!);
 

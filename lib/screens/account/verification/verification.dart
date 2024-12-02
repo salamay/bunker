@@ -86,7 +86,7 @@ class _VerificationState extends State<Verification> {
                   MyText(
                     text: "Verification",
                     color: primary_text_color,
-                    weight: FontWeight.w600,
+                    weight: FontWeight.w400,
                     fontSize: SizeUtils.getSize(context, 4.sp),
                     align: TextAlign.start,
                     maxLines: 1,
@@ -95,7 +95,7 @@ class _VerificationState extends State<Verification> {
                   MyText(
                     text: "Verify your account with KYC to unlock all features",
                     color: primary_text_color,
-                    weight: FontWeight.w400,
+                    weight: FontWeight.w300,
                     fontSize: SizeUtils.getSize(context, 3.sp),
                     align: TextAlign.start,
                     maxLines: 3,

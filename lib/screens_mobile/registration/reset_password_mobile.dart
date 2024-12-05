@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:bunker/components/app_component.dart';
+import 'package:bunker/components/arrow_back/arrow_back.dart';
 import 'package:bunker/screens/admin/controller/admin_controller.dart';
 import 'package:bunker/screens/registration/controller/registration_controller.dart';
 import 'package:flutter/material.dart';
@@ -17,19 +18,16 @@ import '../../components/texts/MyText.dart';
 import '../../routes/AppRoutes.dart';
 import '../../user/controller/user_controller.dart';
 import '../../utils/size_utils.dart';
-import '../home/components/my_icon_button.dart';
-import '../home/components/top_row.dart';
-import '../otp_screen/model/otp_args.dart';
-class ResetPasswordMobile extends StatefulWidget {
-  ResetPasswordMobile({super.key,required this.code,required this.email});
+class ResetPassword extends StatefulWidget {
+  ResetPassword({super.key,required this.code,required this.email});
   String code;
   String email;
 
   @override
-  State<ResetPasswordMobile> createState() => _ResetPasswordMobileState();
+  State<ResetPassword> createState() => _ResetPasswordState();
 }
 
-class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
+class _ResetPasswordState extends State<ResetPassword> {
 
   TextEditingController passwordController=TextEditingController();
   TextEditingController confirmPasswordController=TextEditingController();
@@ -59,11 +57,7 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
             backgroundColor: secondary_color,
             elevation: SizeUtils.getSize(context, 10.sp),
             centerTitle: false,
-            title: const Row(
-              children: [
-                TopRow(),
-              ],
-            )
+            title: ArrowBack()
         ),
         body: Container(
           height: height,
@@ -78,7 +72,7 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
                 builder: (context,rtc,_) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Align(
                         alignment: Alignment.centerLeft,
@@ -355,7 +349,7 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
                   );
                 }
             ),
-          )
+          ),
         ),
       ),
     );

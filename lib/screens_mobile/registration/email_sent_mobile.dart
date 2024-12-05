@@ -8,8 +8,8 @@ import '../../components/texts/MyText.dart';
 import '../../utils/size_utils.dart';
 // import 'dart:html' as html;
 
-class EmailSent extends StatelessWidget {
-  const EmailSent({super.key});
+class EmailSentMobile extends StatelessWidget {
+  const EmailSentMobile({super.key});
 
   @override
   Widget build(BuildContext context) {

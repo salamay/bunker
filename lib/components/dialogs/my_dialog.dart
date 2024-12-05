@@ -41,7 +41,7 @@ class MyDialog{
                         weight: FontWeight.w500,
                         fontSize: SizeUtils.getSize(context, 4.sp),
                         maxLines: 3,
-                        align: TextAlign.start
+                        align: TextAlign.center
                     ),
                   ],
                 ),

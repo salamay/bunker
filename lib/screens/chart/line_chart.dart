@@ -24,21 +24,24 @@ class LineChartSample2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(marketData!=null){
-      int end=marketData!.length;
-      double start=(marketData!.length)*0.85;
-      prices=marketData!.sublist(start.toInt(),end);
-      num firstPrice=marketData!.first.quote!.usd!.price!;
-      num lastPrice=marketData!.last.quote!.usd!.price!;
-      // log("firstPrice: $firstPrice");
-      num difference = lastPrice - firstPrice;
-      double percentage = (difference / firstPrice) * 100;
-      if(!percentage.isNegative){
-        gradientColors=[Colors.green.withOpacity(0.3),Colors.green];
-        areaGradient=[Colors.green.withOpacity(0.3),Colors.green.withOpacity(0.001)];
-    }else{
-        gradientColors=[Colors.red.withOpacity(0.3),Colors.red];
-        areaGradient=[Colors.red.withOpacity(0.3),Colors.red.withOpacity(0.001)];
+      if(marketData!.isNotEmpty){
+        int end=marketData!.length;
+        double start=(marketData!.length)*0.85;
+        prices=marketData!.sublist(start.toInt(),end);
+        num firstPrice=marketData!.first.quote!.usd!.price!;
+        num lastPrice=marketData!.last.quote!.usd!.price!;
+        // log("firstPrice: $firstPrice");
+        num difference = lastPrice - firstPrice;
+        double percentage = (difference / firstPrice) * 100;
+        if(!percentage.isNegative){
+          gradientColors=[Colors.green.withOpacity(0.3),Colors.green];
+          areaGradient=[Colors.green.withOpacity(0.3),Colors.green.withOpacity(0.001)];
+        }else{
+          gradientColors=[Colors.red.withOpacity(0.3),Colors.red];
+          areaGradient=[Colors.red.withOpacity(0.3),Colors.red.withOpacity(0.001)];
+        }
       }
+
     }
     return ClipRRect(
       clipBehavior: Clip.hardEdge,

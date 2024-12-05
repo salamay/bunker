@@ -15,16 +15,13 @@ class TopRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(SizeUtils.getSize(context, 4.sp)),
-              color: secondary_color,
-            ),
-            child: Image.asset(
-              "assets/boorio.png",
-              width: SizeUtils.getSize(context, 20.sp),
-              fit: BoxFit.contain,
-            ),
+          MyText(
+            text: "Secure Ledger",
+            color: primary_color_button,
+            weight: FontWeight.w600,
+            fontSize: SizeUtils.getSize(context, 8.sp),
+            align: TextAlign.center,
+            maxLines: 1,
           ),
           MyText(
             text: "Private wallet",

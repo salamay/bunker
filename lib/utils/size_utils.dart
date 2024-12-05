@@ -9,12 +9,16 @@ class SizeUtils{
      if (screenWidth > 1200) { // Adjust this threshold as needed
       return size /1.5; // Adjust the scaling factor as needed
     } else {
-      return size ;
+      return size*3 ;
     }
   }
 
   static bool isTablet(BuildContext context) {
     var shortestSide = MediaQuery.of(context).size.shortestSide;
     return shortestSide > 600;
+  }
+
+  static bool isMobileView(BuildContext context) {
+    return MediaQuery.of(context).size.width < 600;
   }
 }

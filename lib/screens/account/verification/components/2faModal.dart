@@ -87,7 +87,7 @@ class TwoFaModal extends StatelessWidget {
             weight: FontWeight.w400,
             fontSize: SizeUtils.getSize(context, 3.sp),
             align: TextAlign.start,
-            maxLines: 1,
+            maxLines: 3,
           ),
           SizedBox(height: SizeUtils.getSize(context, 4.sp),),
           profileModel!=null?MyButton(
@@ -102,13 +102,24 @@ class TwoFaModal extends StatelessWidget {
               if(profileModel!.is2FaEnabled==true){
                 update(is2fa: false);
               }else{
-                bool? result=await VerificationUtils.show2FADialog(context: context);
-                log("Result: $result");
-                if(result!=null){
-                  if(result){
-                    update(is2fa: true);
+                if(SizeUtils.isMobileView(context)){
+                  bool? result=await VerificationUtils.show2FADialogMobile(context: context);
+                  log("Result: $result");
+                  if(result!=null){
+                    if(result){
+                      update(is2fa: true);
+                    }
+                  }
+                }else{
+                  bool? result=await VerificationUtils.show2FADialog(context: context);
+                  log("Result: $result");
+                  if(result!=null){
+                    if(result){
+                      update(is2fa: true);
+                    }
                   }
                 }
+
               }
             },
           ):const SizedBox()

@@ -20,14 +20,15 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../components/texts/MyText.dart';
-import '../account/model/profile_model.dart';
-import '../empty/empty_page.dart';
-import '../transaction/controller/transaction_controller.dart';
-import '../transaction/transaction_item.dart';
-import '../wallet/controller/wallet_controller.dart';
+import '../../screens/account/model/profile_model.dart';
+import '../../screens/empty/empty_page.dart';
+import '../../screens/home/components/single_listtile_shimmer.dart';
+import '../../screens/transaction/controller/transaction_controller.dart';
+import '../../screens/transaction/transaction_item.dart';
+import '../../screens/wallet/controller/wallet_controller.dart';
 
-class OverView extends StatelessWidget {
-  OverView({super.key});
+class OverViewMobile extends StatelessWidget {
+  OverViewMobile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +37,10 @@ class OverView extends StatelessWidget {
       height: height,
       padding: EdgeInsets.symmetric(vertical:SizeUtils.getSize(context, 6.sp),horizontal: SizeUtils.getSize(context, 4.sp)),
       child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height:SizeUtils.getSize(context, 8.sp)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -87,133 +88,86 @@ class OverView extends StatelessWidget {
             SizedBox(
               height: SizeUtils.getSize(context, 70.sp),
               width: width,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 10,
-                    child: Consumer<AssetController>(
-                      builder: (context, assetCtr, child) {
-                        return SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Skeletonizer(
-                            ignoreContainers: false,
-                            enabled: assetCtr.assetLoading,
-                            enableSwitchAnimation: true,
-                            effect: ShimmerEffect(
-                                duration: const Duration(milliseconds: 1000),
-                                baseColor: secondary_color.withOpacity(0.6),
-                                highlightColor: action_button_color.withOpacity(0.8)
-                            ),
-                            child: SizedBox(
-                              child: !assetCtr.assetLoading?assetCtr.supportedCoin.isNotEmpty?Row(
-                                children: assetCtr.supportedCoin.sublist(0,3).map((e){
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: AssetOverviewBox(
-                                      asset: e,
-                                      h: SizeUtils.getSize(context, 100.sp),
-                                      w: SizeUtils.getSize(context, 70.sp),
-                                      color: action_button_color.withOpacity(0.3),
-                                    ),
-                                  );
-                                }).toList()
-                              ):EmptyPage(title: "Oops! Nothing is here", subtitle: "Assets are empty"):Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(SizeUtils.getSize(context, cornerRadius)),
-                                ),
-                                height: SizeUtils.getSize(context, 100.sp),
-                                width: SizeUtils.getSize(context, 70.sp),
-                                child: const ListTileShimmer(),
+              child: Consumer<AssetController>(
+                builder: (context, assetCtr, child) {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Skeletonizer(
+                      ignoreContainers: false,
+                      enabled: assetCtr.assetLoading,
+                      enableSwitchAnimation: true,
+                      effect: ShimmerEffect(
+                          duration: const Duration(milliseconds: 1000),
+                          baseColor: secondary_color.withOpacity(0.6),
+                          highlightColor: action_button_color.withOpacity(0.8)
+                      ),
+                      child: SizedBox(
+                        child: !assetCtr.assetLoading?assetCtr.supportedCoin.isNotEmpty?Row(
+                          children: assetCtr.supportedCoin.sublist(0,3).map((e){
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AssetOverviewBox(
+                                asset: e,
+                                h: SizeUtils.getSize(context, 100.sp),
+                                w: SizeUtils.getSize(context, 60.sp),
+                                color: action_button_color.withOpacity(0.3),
                               ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Consumer<AccountSettingController>(
-                        builder: (context, accountCtr, child) {
-                          ProfileModel? profileModel = accountCtr.profileModel;
-                          if(profileModel!=null){
-                            return Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  profileModel.kycEnabled!?"assets/svgs/verification_green.svg":"assets/svgs/verification_orange.svg",
-                                  width: SizeUtils.getSize(context, 50.sp),
-                                  height: SizeUtils.getSize(context, 50.sp),
-                                ),
-                                MyText(
-                                  text: profileModel.kycEnabled!?"KYC verified":"Unverified",
-                                  color: primary_text_color,
-                                  weight: FontWeight.w400,
-                                  fontSize: SizeUtils.getSize(context, 4.sp),
-                                  align: TextAlign.center,
-                                  maxLines: 1,
-                                ),
-                                MyText(
-                                  text: profileModel.kycEnabled!?"You are now a verified user":"You are not yet a verified user",
-                                  color: primary_text_color.withOpacity(0.8),
-                                  weight: FontWeight.w300,
-                                  fontSize: SizeUtils.getSize(context, 3.sp),
-                                  align: TextAlign.center,
-                                  maxLines: 3,
-                                ),
-                              ],
                             );
-                          }else{
-                            return const SizedBox();
-                          }
-                      }
+                          }).toList()
+                        ):EmptyPage(title: "Oops! Nothing is here", subtitle: "Assets are empty"):Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(SizeUtils.getSize(context, cornerRadius)),
+                          ),
+                          height: SizeUtils.getSize(context, 100.sp),
+                          width: SizeUtils.getSize(context, 70.sp),
+                          child: const  SingleListTileShimmer(),
+                        ),
+                      ),
                     ),
-                  )
-                ],
+                  );
+                },
               ),
             ),
             SizedBox(height: SizeUtils.getSize(context, 2.sp),),
-            Consumer<AccountSettingController>(
-                builder: (context, accountCtr, child) {
-                  ProfileModel? profileModel = accountCtr.profileModel;
-                  if(profileModel!=null){
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          profileModel.kycEnabled!?"assets/svgs/verification_green.svg":"assets/svgs/verification_orange.svg",
-                          width: SizeUtils.getSize(context, 50.sp),
-                          height: SizeUtils.getSize(context, 50.sp),
-                        ),
-                        MyText(
-                          text: profileModel.kycEnabled!?"KYC verified":"Unverified",
-                          color: primary_text_color,
-                          weight: FontWeight.w400,
-                          fontSize: SizeUtils.getSize(context, 4.sp),
-                          align: TextAlign.center,
-                          maxLines: 1,
-                        ),
-                        MyText(
-                          text: profileModel.kycEnabled!?"You are now a verified user":"You are not yet a verified user",
-                          color: primary_text_color.withOpacity(0.8),
-                          weight: FontWeight.w300,
-                          fontSize: SizeUtils.getSize(context, 3.sp),
-                          align: TextAlign.center,
-                          maxLines: 3,
-                        ),
-                      ],
-                    );
-                  }else{
-                    return const SizedBox();
+            Align(
+              alignment: Alignment.center,
+              child: Consumer<AccountSettingController>(
+                  builder: (context, accountCtr, child) {
+                    ProfileModel? profileModel = accountCtr.profileModel;
+                    if(profileModel!=null){
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            profileModel.kycEnabled!?"assets/svgs/verification_green.svg":"assets/svgs/verification_orange.svg",
+                            width: SizeUtils.getSize(context, 20.sp),
+                            height: SizeUtils.getSize(context, 20.sp),
+                          ),
+                          MyText(
+                            text: profileModel.kycEnabled!?"KYC verified":"Unverified",
+                            color: primary_text_color,
+                            weight: FontWeight.w400,
+                            fontSize: SizeUtils.getSize(context, 4.sp),
+                            align: TextAlign.center,
+                            maxLines: 1,
+                          ),
+                          MyText(
+                            text: profileModel.kycEnabled!?"You are now a verified user":"You are not yet a verified user",
+                            color: primary_text_color.withOpacity(0.8),
+                            weight: FontWeight.w300,
+                            fontSize: SizeUtils.getSize(context, 3.sp),
+                            align: TextAlign.center,
+                            maxLines: 3,
+                          ),
+                        ],
+                      );
+                    }else{
+                      return const SizedBox();
+                    }
                   }
-                }
+              ),
             ),
             SizedBox(height: SizeUtils.getSize(context, 2.sp),),
             Container(

@@ -56,8 +56,18 @@ class _HomeState extends State<Home> {
     homeController=Provider.of<HomeController>(context,listen: false);
     userController=Provider.of<UserController>(context,listen: false);
     accountSettingController=Provider.of<AccountSettingController>(context,listen: false);
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      getData(context: context);
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) async{
+      UserCredential? credential=userController.userCredential;
+      if(credential!=null){
+        UserCredential? credential=userController.userCredential;
+        await accountSettingController.getProfile(credential: credential!);
+        await assetController.getAssets(credential: credential);
+        time_start=DateTime.fromMillisecondsSinceEpoch(DateTime.now().toUtc().millisecondsSinceEpoch-1000*60*60*24);
+        time_end=DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch,isUtc: true);
+        assetController.getMarketQuotesHistorical(credential,MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
+        await accountSettingController.getAuthHistory(credential: credential);
+        getData(context: context);
+      }
     });
   }
 
@@ -263,7 +273,7 @@ class _HomeState extends State<Home> {
   void getData({required BuildContext context})async{
     getProfile(context: context);
     await getAssets(context: context);
-    // getMarketData(context: context);
+    getMarketData(context: context);
     getAuthHistories(context: context);
   }
   Future<void> getMarketData({required BuildContext context})async{

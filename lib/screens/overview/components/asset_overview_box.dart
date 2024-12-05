@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bunker/supported_assets/model/assets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -28,6 +30,7 @@ class AssetOverviewBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     quotes=asset.quotes??[];
+    log("Quotes: ${asset.symbol} ${quotes.length}");
     assetCtr=Provider.of<AssetController>(context,listen: false);
     return Container(
       padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 3.sp), horizontal: SizeUtils.getSize(context, 4.sp)),
@@ -79,7 +82,7 @@ class AssetOverviewBox extends StatelessWidget {
                   highlightColor: action_button_color.withOpacity(0.8)
               ),
               child: SizedBox(
-                child: !assetCtr.marketDataLoading?quotes.isNotEmpty?LineChartSample2(
+                child: LineChartSample2(
                   marketData: quotes,
                   areaColor: secondary_color.withOpacity(0.1),
                   gradientColors: <Color> [
@@ -87,7 +90,7 @@ class AssetOverviewBox extends StatelessWidget {
                     Colors.green,
                     secondary_color,
                   ],
-                ):const SizedBox():const SingleListTileShimmer(),
+                ),
               ),
             ),
           ),

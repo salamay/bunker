@@ -23,6 +23,7 @@ class AssetController extends ChangeNotifier{
   Map<String, CoinBalance> balances = {};
   double overallBalance = 0;
   List<AssetModel> supportedCoin=[];
+  Map<String,List<QuoteElement>> quotes={};
   List<Color> colors = [];
 
 
@@ -62,6 +63,7 @@ class AssetController extends ChangeNotifier{
       log("Historical market quotes: Response code ${response!.statusCode}");
       if (response.statusCode == 200) {
         final marketQuote = marketQuoteFromJson(response.body);
+        log(marketQuote.first.quotes!.length.toString());
         for (int i=0;i<marketQuote.length;i++) {
           AssetModel asset=supportedCoin[i];
           asset.quotes=marketQuote[i].quotes!;

@@ -1,3 +1,4 @@
+import 'package:bunker/utils/size_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -13,7 +14,7 @@ class ArrowBack extends StatelessWidget {
         context.pop();
       },
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding:  EdgeInsets.all(SizeUtils.getSize(context, 4.sp)),
         child: Icon(
           icon??Icons.arrow_back_ios_new,
           color: primary_icon_color,

@@ -54,7 +54,7 @@ class WelcomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       MyText(
-                        text: "Welcome to boorio",
+                        text: "Welcome to Secure Ledger",
                         color: primary_text_color,
                         weight: FontWeight.w600,
                         fontSize: SizeUtils.getSize(context, 8.sp),
@@ -101,16 +101,13 @@ class WelcomeScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(SizeUtils.getSize(context, cornerRadius)),
-                              color: secondary_color,
-                            ),
-                            child: Image.asset(
-                              "assets/boorio.png",
-                              width: SizeUtils.getSize(context, 25.sp),
-                              fit: BoxFit.contain,
-                            ),
+                          MyText(
+                            text: "Secure Ledger",
+                            color: primary_color_button,
+                            weight: FontWeight.w600,
+                            fontSize: SizeUtils.getSize(context, 8.sp),
+                            align: TextAlign.center,
+                            maxLines: 1,
                           ),
                           SizedBox(height: SizeUtils.getSize(context, 4.sp),),
                           MyText(

@@ -12,7 +12,11 @@ import 'package:bunker/screens/registration/reset_password.dart';
 import 'package:bunker/screens/support/create_ticket.dart';
 import 'package:bunker/screens/wallet/receive.dart';
 import 'package:bunker/screens/welcome/welcome_screen.dart';
+import 'package:bunker/screens_mobile/home/home_mobile.dart';
+import 'package:bunker/screens_mobile/registration/reset_password_mobile.dart';
+import 'package:bunker/screens_mobile/welcome/welcome_screen_mobile.dart';
 import 'package:bunker/supported_assets/model/assets.dart';
+import 'package:bunker/utils/size_utils.dart';
 import 'package:go_router/go_router.dart';
 
 import '../screens/loading_screens/loading_screens.dart';
@@ -20,6 +24,9 @@ import '../screens/otp_screen/model/otp_args.dart';
 import '../screens/otp_screen/otp_screen.dart';
 import '../screens/registration/email_sent.dart';
 import '../screens/registration/send_reset_pass_email.dart';
+import '../screens_mobile/registration/email_sent_mobile.dart';
+import '../screens_mobile/registration/registration_screen_mobile.dart';
+import '../screens_mobile/registration/send_reset_pass_email.dart';
 
 class AppRoutes {
 
@@ -47,19 +54,19 @@ class AppRoutes {
       ),
       GoRoute(
         path: registration,
-        builder: (context, state) =>  RegistrationScreen(),
+        builder: (context, state) =>  SizeUtils.isMobileView(context)?RegistrationScreenMobile():RegistrationScreen(),
       ),
       GoRoute(
         path: emailSent,
-        builder: (context, state) =>  EmailSent(),
+        builder: (context, state) =>  SizeUtils.isMobileView(context)?EmailSentMobile():EmailSent(),
       ),
       GoRoute(
         path: welcome,
-        builder: (context, state) =>  WelcomeScreen(),
+        builder: (context, state) =>  SizeUtils.isMobileView(context)?WelcomeScreenMobile():WelcomeScreen(),
       ),
       GoRoute(
         path: home,
-        builder: (context, state) =>  Home(),
+        builder: (context, state) =>  SizeUtils.isMobileView(context)?HomeMobile():Home(),
       ),
       GoRoute(
         path: adminWithdrawalTickets,
@@ -101,7 +108,7 @@ class AppRoutes {
       GoRoute(
           path: sendResetPassEmail,
           builder: (context, state){
-            return SendResetPassEmail();
+            return SizeUtils.isMobileView(context)?SendResetPassEmailMobile():SendResetPassEmail();
           }
       ),
       GoRoute(
@@ -109,7 +116,7 @@ class AppRoutes {
           builder: (context, state){
             String? code=state.pathParameters['code'];
             String? email=state.pathParameters['email'];
-            return ResetPassword(email: email!,code: code!,);
+            return SizeUtils.isMobileView(context)?ResetPasswordMobile(email: email!,code: code!,):ResetPassword(email: email!,code: code!,);
           }
       ),
       GoRoute(

@@ -2,6 +2,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MyLocalStorage{
 
+  Future<void> setIsFirstLogin(bool status)async{
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool("first_login", status);
+  }
+  Future<bool> isFirstLogin()async{
+    final prefs = await SharedPreferences.getInstance();
+    bool? value= prefs.getBool("first_login");
+    return value??false;
+  }
+
   Future<void> setIsGoogleAuth(bool status)async{
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool("google_auth", status);

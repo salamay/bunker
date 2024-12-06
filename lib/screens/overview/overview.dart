@@ -5,6 +5,7 @@ import 'package:bunker/components/divider.dart';
 import 'package:bunker/screens/account/controller/account_setting_controller.dart';
 import 'package:bunker/screens/buy_crypto/buy_crypto_dialog.dart';
 import 'package:bunker/screens/home/components/listtile_shimmer.dart';
+import 'package:bunker/screens/home/components/single_listtile_shimmer.dart';
 import 'package:bunker/screens/home/controller/home_controller.dart';
 import 'package:bunker/screens/overview/components/asset_overview_box.dart';
 import 'package:bunker/screens/home/components/my_icon_button.dart';
@@ -60,8 +61,10 @@ class OverView extends StatelessWidget {
                           return BackdropFilter(
                             filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                             child: AlertDialog(
+                              scrollable: true,
                               backgroundColor: primary_color,
                               content: Container(
+                                height: height*0.4,
                                 width: width*0.3,
                                 clipBehavior: Clip.hardEdge,
                                 padding: EdgeInsets.symmetric(horizontal: 4.sp,vertical: 6.sp),
@@ -114,6 +117,7 @@ class OverView extends StatelessWidget {
                                     padding: const EdgeInsets.all(8.0),
                                     child: AssetOverviewBox(
                                       asset: e,
+                                      quotes: assetCtr.quotes[e.marketId!]??[],
                                       h: SizeUtils.getSize(context, 100.sp),
                                       w: SizeUtils.getSize(context, 70.sp),
                                       color: action_button_color.withOpacity(0.3),
@@ -126,7 +130,7 @@ class OverView extends StatelessWidget {
                                 ),
                                 height: SizeUtils.getSize(context, 100.sp),
                                 width: SizeUtils.getSize(context, 70.sp),
-                                child: const ListTileShimmer(),
+                                child: const SingleListTileShimmer(),
                               ),
                             ),
                           ),
@@ -176,44 +180,6 @@ class OverView extends StatelessWidget {
                   )
                 ],
               ),
-            ),
-            SizedBox(height: SizeUtils.getSize(context, 2.sp),),
-            Consumer<AccountSettingController>(
-                builder: (context, accountCtr, child) {
-                  ProfileModel? profileModel = accountCtr.profileModel;
-                  if(profileModel!=null){
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          profileModel.kycEnabled!?"assets/svgs/verification_green.svg":"assets/svgs/verification_orange.svg",
-                          width: SizeUtils.getSize(context, 50.sp),
-                          height: SizeUtils.getSize(context, 50.sp),
-                        ),
-                        MyText(
-                          text: profileModel.kycEnabled!?"KYC verified":"Unverified",
-                          color: primary_text_color,
-                          weight: FontWeight.w400,
-                          fontSize: SizeUtils.getSize(context, 4.sp),
-                          align: TextAlign.center,
-                          maxLines: 1,
-                        ),
-                        MyText(
-                          text: profileModel.kycEnabled!?"You are now a verified user":"You are not yet a verified user",
-                          color: primary_text_color.withOpacity(0.8),
-                          weight: FontWeight.w300,
-                          fontSize: SizeUtils.getSize(context, 3.sp),
-                          align: TextAlign.center,
-                          maxLines: 3,
-                        ),
-                      ],
-                    );
-                  }else{
-                    return const SizedBox();
-                  }
-                }
             ),
             SizedBox(height: SizeUtils.getSize(context, 2.sp),),
             Container(

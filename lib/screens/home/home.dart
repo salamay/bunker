@@ -1,20 +1,24 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:ui';
 
 import 'package:bunker/components/app_component.dart';
 import 'package:bunker/routes/AppRoutes.dart';
 import 'package:bunker/screens/account/account_settings.dart';
 import 'package:bunker/screens/account/controller/account_setting_controller.dart';
+import 'package:bunker/screens/account/general_settings.dart';
 import 'package:bunker/screens/account/model/profile_model.dart';
 import 'package:bunker/screens/admin/admin.dart';
 import 'package:bunker/screens/home/components/profile_widget.dart';
 import 'package:bunker/screens/home/components/side_button.dart';
 import 'package:bunker/screens/home/components/top_row.dart';
 import 'package:bunker/screens/home/controller/home_controller.dart';
+import 'package:bunker/screens/home/update_profile.dart';
 import 'package:bunker/screens/overview/overview.dart';
 import 'package:bunker/screens/support/support.dart';
 import 'package:bunker/screens/transaction/transactions.dart';
 import 'package:bunker/screens/wallet/wallet_page.dart';
+import 'package:bunker/screens_mobile/account/general_settings_mobile.dart';
 import 'package:bunker/supported_assets/controller/asset_controller.dart';
 import 'package:bunker/user/controller/user_controller.dart';
 import 'package:bunker/user/model/user_crendential.dart';
@@ -26,6 +30,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../components/texts/MyText.dart';
 import '../../utils/date_utils.dart';
+import '../../utils/my_local_storage.dart';
 import '../../utils/size_utils.dart';
 
 
@@ -61,12 +66,19 @@ class _HomeState extends State<Home> {
       if(credential!=null){
         UserCredential? credential=userController.userCredential;
         await accountSettingController.getProfile(credential: credential!);
+        bool isFirstLogin=await MyLocalStorage().isFirstLogin();
+        log("Is first login: $isFirstLogin");
+        if(!isFirstLogin){
+          showUpdateProfileDialog(context);
+        }
+        await MyLocalStorage().setIsFirstLogin(true);
         await assetController.getAssets(credential: credential);
         time_start=DateTime.fromMillisecondsSinceEpoch(DateTime.now().toUtc().millisecondsSinceEpoch-1000*60*60*24);
         time_end=DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch,isUtc: true);
         assetController.getMarketQuotesHistorical(credential,MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
         await accountSettingController.getAuthHistory(credential: credential);
         getData(context: context);
+
       }
     });
   }
@@ -364,5 +376,33 @@ class _HomeState extends State<Home> {
     }else{
       return const SizedBox();
     }
+  }
+
+  void showUpdateProfileDialog(BuildContext context){
+    showAdaptiveDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context){
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+            child: AlertDialog(
+              backgroundColor: primary_color,
+              scrollable: true,
+              content: Container(
+                clipBehavior: Clip.hardEdge,
+                height: height*0.5,
+                padding: EdgeInsets.symmetric(horizontal: 4.sp,vertical: 6.sp),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(cornerRadius))
+                ),
+                child: SizeUtils.isMobileView(context)?UpdateProfileDialog():SizedBox(
+                  width: width*0.3,
+                    child: UpdateProfileDialog()
+                ),
+              ),
+            ),
+          );
+        }
+    );
   }
 }

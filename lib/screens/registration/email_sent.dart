@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../components/app_component.dart';
 import '../../components/texts/MyText.dart';
 import '../../utils/size_utils.dart';
-// import 'dart:html' as html;
+import 'dart:html' as html;
 
 class EmailSent extends StatelessWidget {
   const EmailSent({super.key});
@@ -23,7 +23,7 @@ class EmailSent extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: (){
-                  // html.window.close();
+                  html.window.close();
                 },
                 icon: Icon(
                   Icons.close,

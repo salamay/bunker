@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:ui';
 
 import 'package:bunker/components/app_component.dart';
 import 'package:bunker/routes/AppRoutes.dart';
@@ -28,7 +29,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../components/texts/MyText.dart';
+import '../../screens/home/update_profile.dart';
 import '../../utils/date_utils.dart';
+import '../../utils/my_local_storage.dart';
 import '../../utils/size_utils.dart';
 import '../wallet/receive_mobile.dart';
 import '../wallet/wallet_page_mobile.dart';
@@ -67,6 +70,12 @@ class _HomeMobileState extends State<HomeMobile> {
       if(credential!=null){
         UserCredential? credential=userController.userCredential;
         await accountSettingController.getProfile(credential: credential!);
+        bool isFirstLogin=await MyLocalStorage().isFirstLogin();
+        log("Is first login: $isFirstLogin");
+        if(!isFirstLogin){
+          showUpdateProfileDialog(context);
+        }
+        await MyLocalStorage().setIsFirstLogin(true);
         await assetController.getAssets(credential: credential);
         time_start=DateTime.fromMillisecondsSinceEpoch(DateTime.now().toUtc().millisecondsSinceEpoch-1000*60*60*24);
         time_end=DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch,isUtc: true);
@@ -389,5 +398,33 @@ class _HomeMobileState extends State<HomeMobile> {
     }else{
       return const SizedBox();
     }
+  }
+
+  void showUpdateProfileDialog(BuildContext context){
+    showAdaptiveDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context){
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+            child: AlertDialog(
+              backgroundColor: primary_color,
+              scrollable: true,
+              content: Container(
+                clipBehavior: Clip.hardEdge,
+                height: height*0.5,
+                padding: EdgeInsets.symmetric(horizontal: 4.sp,vertical: 6.sp),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(cornerRadius))
+                ),
+                child: SizeUtils.isMobileView(context)?UpdateProfileDialog():SizedBox(
+                    width: width*0.8,
+                    child: UpdateProfileDialog()
+                ),
+              ),
+            ),
+          );
+        }
+    );
   }
 }

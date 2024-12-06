@@ -22,19 +22,34 @@ import '../../user/controller/user_controller.dart';
 import '../../utils/size_utils.dart';
 import '../home/components/my_icon_button.dart';
 import '../home/components/top_row.dart';
-class RegistrationScreen extends StatelessWidget {
+class RegistrationScreen extends StatefulWidget {
   RegistrationScreen({super.key});
 
+  @override
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
+}
+
+class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController emailController=TextEditingController();
+
   TextEditingController passwordController=TextEditingController();
+
   TextEditingController confirmPasswordController=TextEditingController();
+
   String? phoneNumber;
+
   String? countryCode;
+
   ValueNotifier<bool> formValidation=ValueNotifier(false);
+
   final _formKey= GlobalKey<FormState>();
+
   late UserController userController;
+
   late AdminController adminController;
+
   ValueNotifier<bool> agreement=ValueNotifier<bool>(false);
+
   ValueNotifier<bool> over18=ValueNotifier<bool>(false);
 
   @override

@@ -17,6 +17,7 @@ class ProfileModel {
   String? lastName;
   dynamic dob;
   String? country;
+  String? postalCode;
   String? state;
   String? city;
   String? address;
@@ -36,6 +37,7 @@ class ProfileModel {
     this.lastName,
     this.dob,
     this.country,
+    this.postalCode,
     this.state,
     this.city,
     this.address,
@@ -56,6 +58,7 @@ class ProfileModel {
     lastName: json["last_name"],
     dob: json["dob"],
     country: json["country"],
+    postalCode: json["postal_code"],
     state: json["state"],
     city: json["city"],
     address: json["address"],
@@ -76,6 +79,7 @@ class ProfileModel {
     "last_name": lastName,
     "dob": dob,
     "country": country,
+    "postal_code": postalCode,
     "state": state,
     "city": city,
     "address": address,

@@ -65,10 +65,11 @@ class AssetController extends ChangeNotifier{
         final marketQuote = marketQuoteFromJson(response.body);
         log(marketQuote.first.quotes!.length.toString());
         for (int i=0;i<marketQuote.length;i++) {
-          AssetModel asset=supportedCoin[i];
-          asset.quotes=marketQuote[i].quotes!;
-          AssetModel newData=asset;
-          supportedCoin[i]=newData;
+          // AssetModel asset=supportedCoin[i];
+          // asset.quotes=marketQuote[i].quotes!;
+          // AssetModel newData=asset;
+          // supportedCoin[i]=newData;
+          quotes[supportedCoin[i].marketId!]=marketQuote[i].quotes!;
           notifyListeners();
         }
       } else {

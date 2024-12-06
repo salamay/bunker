@@ -19,7 +19,7 @@ import '../../chart/line_chart.dart';
 import '../../home/components/listtile_shimmer.dart';
 import '../../home/components/single_listtile_shimmer.dart';
 class AssetOverviewBox extends StatelessWidget {
-  AssetOverviewBox({super.key,required this.asset, required this.h, required this.w, required this.color});
+  AssetOverviewBox({super.key,required this.asset,required this.quotes, required this.h, required this.w, required this.color});
   AssetModel asset;
   double h;
   double w;
@@ -29,9 +29,8 @@ class AssetOverviewBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    quotes=asset.quotes??[];
-    log("Quotes: ${asset.symbol} ${quotes.length}");
     assetCtr=Provider.of<AssetController>(context,listen: false);
+    log("Quotes: ${asset.symbol} ${quotes.length}");
     return Container(
       padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 3.sp), horizontal: SizeUtils.getSize(context, 4.sp)),
       width: w,

@@ -15,14 +15,23 @@ import '../../components/form/MyFormField.dart';
 import '../../components/texts/MyText.dart';
 import '../../utils/size_utils.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
   WelcomeScreen({super.key});
-  final _formKey= GlobalKey<FormState>();
-  TextEditingController emailController=TextEditingController();
-  TextEditingController passwordController=TextEditingController();
-  ValueNotifier<bool> formValidation=ValueNotifier(false);
-  late UserController userController;
 
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  final _formKey= GlobalKey<FormState>();
+
+  TextEditingController emailController=TextEditingController();
+
+  TextEditingController passwordController=TextEditingController();
+
+  ValueNotifier<bool> formValidation=ValueNotifier(false);
+
+  late UserController userController;
 
   @override
   Widget build(BuildContext context) {

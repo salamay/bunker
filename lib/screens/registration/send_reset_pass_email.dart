@@ -17,11 +17,20 @@ import '../../utils/size_utils.dart';
 import '../home/components/my_icon_button.dart';
 import '../home/components/top_row.dart';
 import 'controller/registration_controller.dart';
-class SendResetPassEmail extends StatelessWidget {
+class SendResetPassEmail extends StatefulWidget {
   SendResetPassEmail({super.key});
+
+  @override
+  State<SendResetPassEmail> createState() => _SendResetPassEmailState();
+}
+
+class _SendResetPassEmailState extends State<SendResetPassEmail> {
   ValueNotifier<bool> formValidation=ValueNotifier(false);
+
   final _formKey= GlobalKey<FormState>();
+
   TextEditingController emailController=TextEditingController();
+
   late UserController userController;
 
   @override
@@ -126,6 +135,7 @@ class SendResetPassEmail extends StatelessWidget {
       ),
     );
   }
+
   Future<void> sendLink(BuildContext context)async{
     try{
       String email=emailController.text.trim();

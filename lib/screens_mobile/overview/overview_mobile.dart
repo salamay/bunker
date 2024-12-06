@@ -108,6 +108,7 @@ class OverViewMobile extends StatelessWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: AssetOverviewBox(
                                 asset: e,
+                                quotes: assetCtr.quotes[e.marketId!]??[],
                                 h: SizeUtils.getSize(context, 100.sp),
                                 w: SizeUtils.getSize(context, 60.sp),
                                 color: action_button_color.withOpacity(0.3),

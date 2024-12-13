@@ -6,9 +6,11 @@ class SizeUtils{
 
   static double getSize(BuildContext context, double size) {
     var screenWidth = MediaQuery.of(context).size.width;
-     if (screenWidth > 900) { // Adjust this threshold as needed
+     if (screenWidth > 700) { // Adjust this threshold as needed
       return size /1.5; // Adjust the scaling factor as needed
-    } else {
+    } else if(screenWidth>500&&screenWidth<700){
+      return size*1.6;
+     }else {
       return size*3 ;
     }
   }

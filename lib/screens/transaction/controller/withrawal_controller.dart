@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:bunker/screens/transaction/model/withrawal.dart';
@@ -39,13 +40,20 @@ class WithdrawalController extends ChangeNotifier{
 
   Future<void> createWithdrawalTicket({required UserCredential credential,required double amount,required String walletId})async{
     log("Creating withdrawal ticket");
+    var response;
     try{
-      var response = await my_api.get("${ApiUrls.withdraw}?amount=$amount&walletId=$walletId", {"Content-Type": "application/json","Authorization":"Bearer ${credential.token}"});
+      response = await my_api.get("${ApiUrls.withdraw}?amount=$amount&walletId=$walletId", {"Content-Type": "application/json","Authorization":"Bearer ${credential.token}"});
       log("Creating withdrawal ticket: Response code ${response!.statusCode}");
+      notifyListeners();
+    }catch(e){
+      log(e.toString());
+      notifyListeners();
+    }
+    if(response!=null){
       if(response.statusCode==200){
         final withdrawal=withdrawalFromJson(response.body);
         withdrawalTickets.add(
-          WithdrawalTicket(
+            WithdrawalTicket(
                 id: withdrawal.id,
                 userId: withdrawal.userId,
                 email: withdrawal.email,
@@ -53,15 +61,15 @@ class WithdrawalController extends ChangeNotifier{
                 status: withdrawal.status,
                 walletId: withdrawal.walletId,
                 date: withdrawal.date,
-              walletName: withdrawal.walletName
+                walletName: withdrawal.walletName
             )
         );
+      }else{
+        String message=jsonDecode(response.body)['error'];
+        throw Exception(message);
       }
-      notifyListeners();
-    }catch(e){
-      log(e.toString());
-      notifyListeners();
-      throw Exception("Unable to create withdrawal ticket");
+    }else{
+      throw ("Unable to establish connection");
     }
   }
 }

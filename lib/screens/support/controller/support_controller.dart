@@ -191,6 +191,7 @@ class SupportController extends ChangeNotifier{
       log("Send message: Response code ${response!.statusCode}");
       if(response.statusCode==200){
         final message=TicketMessage.fromJson(jsonDecode(response.body));
+        log(message.toString());
         ticketMessages[ticketId]!.add(message);
       }else{
         throw Exception();

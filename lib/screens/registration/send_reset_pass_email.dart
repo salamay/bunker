@@ -141,6 +141,7 @@ class _SendResetPassEmailState extends State<SendResetPassEmail> {
       String email=emailController.text.trim();
       await userController.passwordChangeOtp(email: email);
       await MyDialog.showDialog(context: context, message: "Password reset link has been sent to your email", icon: Icons.info_outline, iconColor: Colors.green);
+      emailController.clear();
     }catch(e){
       await MyDialog.showDialog(context: context, message: "Unable to send otp", icon: Icons.info_outline, iconColor: Colors.red);
       throw Exception(e);

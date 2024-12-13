@@ -59,29 +59,52 @@ class MyFormField extends StatelessWidget {
         maxLines: maxLines??1,
         obscureText: obscureText,
         style: style??GoogleFonts.roboto(
-          fontSize: SizeUtils.getSize(context, 3.sp),
+          fontSize: SizeUtils.getSize(context, 4.sp),
           color: primary_text_color,
           fontWeight: FontWeight.w300,
         ),
         decoration: inputDecoration??textFieldDecoration.copyWith(
+          errorMaxLines: 1, // Limit the error text to one line
           hintText: hintText,
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          contentPadding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 2.sp),vertical: 0),
+          contentPadding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 2.sp), vertical: 0),
           hintStyle: GoogleFonts.roboto(
               fontWeight: FontWeight.normal,
               color: primary_text_color.withOpacity(0.4),
               fontSize: SizeUtils.getSize(context, 3.sp)
           ),
-          suffixIcon: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              suffixIcon??SizedBox(),
-            ],
-          ),
           errorStyle: GoogleFonts.poppins(
               fontWeight: FontWeight.normal,
               color: Colors.orangeAccent.withOpacity(0.8),
               fontSize: SizeUtils.getSize(context, 2.sp)
+          ),
+          focusedBorder:  OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(SizeUtils.getSize(context, 2.sp))),
+            borderSide: BorderSide(
+              color: primary_color_button,
+              width: 0.2,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(SizeUtils.getSize(context, 2.sp))),
+            borderSide: BorderSide(
+              color: action_button_color,
+              width: 0.2,
+            ),
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(2.sp)),
+            borderSide: BorderSide(
+              color: action_button_color,
+              width: 0.2,
+            ),
+          ),
+          prefixStyle: GoogleFonts.poppins(
+            fontWeight: FontWeight.bold,
+            color: secondary_text_color,
+          ),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(),
           ),
         ),
         keyboardType: textInputType,

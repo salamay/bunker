@@ -35,23 +35,23 @@ class _SendResetPassEmailMobileState extends State<SendResetPassEmailMobile> {
   @override
   Widget build(BuildContext context) {
     userController=Provider.of<UserController>(context,listen: false);
-    return LoaderOverlay(
-      useDefaultLoading: false,
-      overlayWidget: Loading(size: SizeUtils.getSize(context, 10.sp),),
-      overlayOpacity: 0.1,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: primary_color,
-        appBar: AppBar(
-            backgroundColor: secondary_color,
-            elevation: SizeUtils.getSize(context, 10.sp),
-            centerTitle: false,
-            leading: ArrowBack()
-        ),
-        body: Container(
-          height: height,
-          width: width,
-          padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 6.sp),horizontal: SizeUtils.getSize(context, 4.sp)),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: primary_color,
+      appBar: AppBar(
+          backgroundColor: secondary_color,
+          elevation: SizeUtils.getSize(context, 10.sp),
+          centerTitle: false,
+          leading: ArrowBack()
+      ),
+      body: Container(
+        height: height,
+        width: width,
+        padding: EdgeInsets.symmetric(vertical: SizeUtils.getSize(context, 6.sp),horizontal: SizeUtils.getSize(context, 4.sp)),
+        child: LoaderOverlay(
+          useDefaultLoading: false,
+          overlayWidget: Center(child: Loading(size: SizeUtils.getSize(context, 10.sp),)),
+          overlayOpacity: 0.1,
           child: Form(
             key: _formKey,
             onChanged: (){
@@ -113,8 +113,8 @@ class _SendResetPassEmailMobileState extends State<SendResetPassEmailMobile> {
                   );
                 }
             ),
-          )
-        ),
+          ),
+        )
       ),
     );
   }
@@ -126,6 +126,7 @@ class _SendResetPassEmailMobileState extends State<SendResetPassEmailMobile> {
       await userController.passwordChangeOtp(email: email);
       context.loaderOverlay.hide();
       await MyDialog.showDialog(context: context, message: "Password reset link has been sent to your email", icon: Icons.info_outline, iconColor: Colors.green);
+      emailController.clear();
     }catch(e){
       context.loaderOverlay.hide();
       await MyDialog.showDialog(context: context, message: "Unable to send otp", icon: Icons.info_outline, iconColor: Colors.red);

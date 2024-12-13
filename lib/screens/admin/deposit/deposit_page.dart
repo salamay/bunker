@@ -117,24 +117,25 @@ class _DepositPageState extends State<DepositPage> {
                     ),
                   ),
                   SizedBox(width: SizeUtils.getSize(context, 4.sp),),
-                  LoaderOverlay(
-                    useDefaultLoading: true,
-                    overlayWidget: Loading(size: SizeUtils.getSize(context, 10.sp),),
-                    overlayOpacity: 0.1,
-                    child: Container(
-                      height: height,
-                      width: width*0.3,
-                      padding: EdgeInsets.all(SizeUtils.getSize(context, 8.sp)),
-                      decoration: BoxDecoration(
-                        color: action_button_color.withOpacity(0.2),
-                        boxShadow: [
-                          BoxShadow(
-                            color: primary_color,
-                            spreadRadius: 5,
-                          ),
-                        ],
-                      ),
-                      child:Form(
+                  const Spacer(),
+                  Container(
+                    height: height,
+                    width: width*0.3,
+                    padding: EdgeInsets.all(SizeUtils.getSize(context, 8.sp)),
+                    decoration: BoxDecoration(
+                      color: action_button_color.withOpacity(0.2),
+                      boxShadow: [
+                        BoxShadow(
+                          color: primary_color,
+                          spreadRadius: 5,
+                        ),
+                      ],
+                    ),
+                    child:LoaderOverlay(
+                      useDefaultLoading: false,
+                      overlayWidget: Center(child: Loading(size: SizeUtils.getSize(context, 10.sp),)),
+                      overlayOpacity: 0.1,
+                      child: Form(
                         key: _formKey,
                         onChanged: (){
                           if(_formKey.currentState!.validate()){

@@ -211,19 +211,16 @@ class OverView extends StatelessWidget {
                         ),
                         child: SizedBox(
                           width: width,
-                          child: !assetCtr.assetLoading?assetCtr.supportedCoin.isNotEmpty?Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                          child: !assetCtr.assetLoading?assetCtr.supportedCoin.isNotEmpty?Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ClipRRect(
-                                clipBehavior: Clip.hardEdge,
-                                  child: SizedBox(
-                                      width: SizeUtils.getSize(context, 30.sp),
-                                      height: SizeUtils.getSize(context, 30.sp),
-                                      child: PieChartSample2()
-                                  )
-                              ),
-                              SizedBox(width: SizeUtils.getSize(context, 1.sp),),
+                              // SizedBox(
+                              //     width: SizeUtils.getSize(context, 20.sp),
+                              //     height: SizeUtils.getSize(context, 30.sp),
+                              //     child: PieChartSample2()
+                              // ),
+                              SizedBox(width: SizeUtils.getSize(context, 8.sp),),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [

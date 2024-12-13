@@ -14,6 +14,7 @@ import 'package:bunker/screens/home/components/top_row.dart';
 import 'package:bunker/screens/home/controller/home_controller.dart';
 import 'package:bunker/screens/overview/overview.dart';
 import 'package:bunker/screens/support/support.dart';
+import 'package:bunker/screens/transaction/controller/transaction_controller.dart';
 import 'package:bunker/screens/transaction/transactions.dart';
 import 'package:bunker/screens/wallet/wallet_page.dart';
 import 'package:bunker/screens_mobile/account/account_settings_mobile.dart';
@@ -49,6 +50,7 @@ class _HomeMobileState extends State<HomeMobile> {
   late HomeController homeController;
   late UserController userController;
   late AccountSettingController accountSettingController;
+  late TransactionController transactionController;
   late DateTime time_start;
   late DateTime time_end;
   String interval="5m";
@@ -65,8 +67,12 @@ class _HomeMobileState extends State<HomeMobile> {
     homeController=Provider.of<HomeController>(context,listen: false);
     userController=Provider.of<UserController>(context,listen: false);
     accountSettingController=Provider.of<AccountSettingController>(context,listen: false);
+    transactionController=Provider.of<TransactionController>(context,listen: false);
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) async{
-      UserCredential? credential=userController.userCredential;
+      String? token=await MyLocalStorage().getToken();
+      userController.userCredential=UserCredential(token: token!);
+      UserCredential? credential=UserCredential(token: token);
+      log("User credential: $credential");
       if(credential!=null){
         UserCredential? credential=userController.userCredential;
         await accountSettingController.getProfile(credential: credential!);
@@ -80,7 +86,7 @@ class _HomeMobileState extends State<HomeMobile> {
         time_start=DateTime.fromMillisecondsSinceEpoch(DateTime.now().toUtc().millisecondsSinceEpoch-1000*60*60*24);
         time_end=DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch,isUtc: true);
         assetController.getMarketQuotesHistorical(credential,MyDateUtils.dateToSingleFormat(time_start), MyDateUtils.dateToSingleFormatWithTime(time_end,true), interval);
-        await accountSettingController.getAuthHistory(credential: credential);
+        transactionController.getTransactions(credential: credential);
         getData(context: context);
       }
     });
@@ -93,6 +99,8 @@ class _HomeMobileState extends State<HomeMobile> {
     _marketDataTimer.cancel();
     _assetTimer.cancel();
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

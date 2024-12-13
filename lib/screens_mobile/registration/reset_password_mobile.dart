@@ -18,16 +18,16 @@ import '../../components/texts/MyText.dart';
 import '../../routes/AppRoutes.dart';
 import '../../user/controller/user_controller.dart';
 import '../../utils/size_utils.dart';
-class ResetPassword extends StatefulWidget {
-  ResetPassword({super.key,required this.code,required this.email});
+class ResetPasswordMobile extends StatefulWidget {
+  ResetPasswordMobile({super.key,required this.code,required this.email});
   String code;
   String email;
 
   @override
-  State<ResetPassword> createState() => _ResetPasswordState();
+  State<ResetPasswordMobile> createState() => _ResetPasswordMobileState();
 }
 
-class _ResetPasswordState extends State<ResetPassword> {
+class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
 
   TextEditingController passwordController=TextEditingController();
   TextEditingController confirmPasswordController=TextEditingController();

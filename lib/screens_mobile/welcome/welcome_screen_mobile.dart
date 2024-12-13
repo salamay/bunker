@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bunker/components/app_component.dart';
 import 'package:bunker/components/dialogs/my_dialog.dart';
 import 'package:bunker/components/snackbar/show_snack_bar.dart';
@@ -13,6 +15,8 @@ import 'package:provider/provider.dart';
 import '../../components/button/MyButton.dart';
 import '../../components/form/MyFormField.dart';
 import '../../components/texts/MyText.dart';
+import '../../user/model/user_crendential.dart';
+import '../../utils/my_local_storage.dart';
 import '../../utils/size_utils.dart';
 
 class WelcomeScreenMobile extends StatefulWidget {
@@ -217,17 +221,18 @@ class _WelcomeScreenMobileState extends State<WelcomeScreenMobile> {
     );
   }
 
+
   Future<void> signIn(BuildContext context)async{
     try{
       String email=emailController.text.trim();
       String password=passwordController.text.trim();
-
-      await userController.signIn(email: email,password: password);
+      UserCredential credential=await userController.signIn(email: email,password: password);
+      await MyLocalStorage().setToken(credential.token!);
       context.go(AppRoutes.home);
     }catch(e){
+      log(e.toString());
       context.pop();
-      await MyDialog.showDialog(context: context, message: "Unable to sign in", icon: Icons.info_outline, iconColor: Colors.red);
-      throw Exception(e);
+      await MyDialog.showDialog(context: context, message: e.toString().replaceAll("Exception:", ""), icon: Icons.info_outline, iconColor: Colors.red);
     }
   }
 }

@@ -33,6 +33,7 @@ class GeneralSettingsMobile extends StatelessWidget {
   ValueNotifier<String?> cityNotifier=ValueNotifier(null);
   ValueNotifier<bool> formValidation=ValueNotifier(false);
   final TextEditingController addressController=TextEditingController();
+  final TextEditingController postalController=TextEditingController();
 
   late UserController userController;
   @override
@@ -74,6 +75,7 @@ class GeneralSettingsMobile extends StatelessWidget {
                       stateNotifier.value=profile.state??"";
                       cityNotifier.value=profile.city??"";
                       addressController.text=profile.address??"";
+                      postalController.text=profile.postalCode??"";
                     });
                   }
                   return Column(
@@ -239,6 +241,23 @@ class GeneralSettingsMobile extends StatelessWidget {
                         onFieldSubmitted: null,
                         validator: (val)=>val!.isEmpty?"Address":null,
                       ),
+                      SizedBox(height: SizeUtils.getSize(context, 2.sp),),
+                      MyFormField(
+                        controller: postalController,
+                        textAlign: TextAlign.start,
+                        hintText: "Postal code",
+                        enable: true,
+                        textInputType: TextInputType.number,
+                        errorText: "Invalid postal code",
+                        maxLines: 1,
+                        obscureText: false,
+                        onEditingComplete: () {
+
+                        },
+                        onFieldSubmitted: null,
+                        validator: (val)=>val!.isEmpty?"Invalid postal":null,
+                      ),
+                      SizedBox(height: SizeUtils.getSize(context, 4.sp),),
                       SizedBox(height: SizeUtils.getSize(context, 4.sp),),
                       ValueListenableBuilder(
                           valueListenable: formValidation,
@@ -263,10 +282,14 @@ class GeneralSettingsMobile extends StatelessWidget {
                                     String state=stateNotifier.value??"";
                                     String city=cityNotifier.value??"";
                                     String address=addressController.text.trim();
+                                    String postalCode=postalController.text.trim();
+
                                     profile.firstName=firstName;
                                     profile.lastName=lastName;
                                     profile.dob=dob;
                                     profile.country=country;
+                                    profile.postalCode=postalCode;
+
                                     profile.state=state;
                                     profile.city=city;
                                     profile.address=address;

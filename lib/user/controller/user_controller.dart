@@ -14,13 +14,19 @@ class UserController extends ChangeNotifier{
 
   Future<UserCredential> signIn({required String email,required String password})async{
     log("Signing in");
+    var response;
     try{
       var body={
         "email":email,
         "password":password
       };
-      var response = await my_api.post(jsonEncode(body),ApiUrls.signIn, {"Content-Type": "application/json"});
+      response = await my_api.post(jsonEncode(body),ApiUrls.signIn, {"Content-Type": "application/json"});
       log("signIn: Response code ${response!.statusCode}");
+    }catch(e){
+      log(e.toString());
+      throw ("Unable to establish connection");
+    }
+    if(response!=null){
       if(response.statusCode==200){
         final data=jsonDecode(response.body);
         final credential=userCredentialFromJson(response.body);
@@ -29,16 +35,19 @@ class UserController extends ChangeNotifier{
         return credential;
       }else{
         log(response.body);
-        throw Exception("Unable to sign in");
+        String message=jsonDecode(response.body)['error'];
+        throw Exception(message);
       }
-    }catch(e){
-      log(e.toString());
-      throw (e.toString());
+    }else{
+      throw ("Unable to establish connection");
+
     }
+
   }
 
   Future<UserCredential> signUp({required String email,required String password,required String phoneNo,required String countryCode})async{
     log("Registering user");
+    var response;
     try{
       var body={
         "email":email,
@@ -46,8 +55,13 @@ class UserController extends ChangeNotifier{
         "country_code":countryCode,
         "password":password
       };
-      var response = await my_api.post(jsonEncode(body),ApiUrls.signUp, {"Content-Type": "application/json"});
+      response = await my_api.post(jsonEncode(body),ApiUrls.signUp, {"Content-Type": "application/json"});
       log("signIn: Response code ${response!.statusCode}");
+    }catch(e){
+      log(e.toString());
+      throw ("Unable to establish connection");
+    }
+    if(response!=null){
       if(response.statusCode==200){
         final credential=userCredentialFromJson(response.body);
         userCredential=credential;
@@ -55,12 +69,13 @@ class UserController extends ChangeNotifier{
         return credential;
       }else{
         log(response.body);
-        throw Exception("Unable to sign up");
+        String message=jsonDecode(response.body)['error'];
+        throw Exception(message);
       }
-    }catch(e){
-      log(e.toString());
-      throw (e.toString());
+    }else{
+      throw ("Unable to establish connection");
     }
+
   }
 
   Future<void> passwordChangeOtp({required String email})async{

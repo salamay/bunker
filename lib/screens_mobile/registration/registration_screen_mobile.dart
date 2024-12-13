@@ -20,6 +20,8 @@ import '../../components/form/MyFormField.dart';
 import '../../components/texts/MyText.dart';
 import '../../routes/AppRoutes.dart';
 import '../../user/controller/user_controller.dart';
+import '../../user/model/user_crendential.dart';
+import '../../utils/my_local_storage.dart';
 import '../../utils/size_utils.dart';
 
 class RegistrationScreenMobile extends StatefulWidget {
@@ -124,18 +126,22 @@ class _RegistrationScreenMobileState extends State<RegistrationScreenMobile> {
                       ),
                       SizedBox(height: SizeUtils.getSize(context, 2.sp),),
                       IntlPhoneField(
+                        textAlign: TextAlign.start,
+                        textAlignVertical: TextAlignVertical.center,
+                        showDropdownIcon: false,
                         style: GoogleFonts.roboto(
                             fontWeight: FontWeight.normal,
                             color: primary_text_color,
-                            fontSize: SizeUtils.getSize(context, 3.sp)
+                            fontSize: SizeUtils.getSize(context, 4.sp)
                         ),
+                        dropdownIconPosition: IconPosition.trailing,
                         dropdownTextStyle: GoogleFonts.roboto(
                             fontWeight: FontWeight.normal,
                             color: Colors.white60,
-                            fontSize: SizeUtils.getSize(context, 3.sp)
+                            fontSize: SizeUtils.getSize(context, 4.sp)
                         ),
                         pickerDialogStyle: PickerDialogStyle(
-                            width: SizeUtils.isMobileView(context)?null:width*0.3,
+                            width: width*0.3,
                             countryCodeStyle: GoogleFonts.roboto(
                                 fontWeight: FontWeight.normal,
                                 color: Colors.white60,
@@ -155,7 +161,7 @@ class _RegistrationScreenMobileState extends State<RegistrationScreenMobile> {
                               hintStyle: GoogleFonts.roboto(
                                   fontWeight: FontWeight.normal,
                                   color: Colors.black,
-                                  fontSize: SizeUtils.getSize(context, 3.sp)
+                                  fontSize: SizeUtils.getSize(context, 4.sp)
                               ),
                             )
                         ),
@@ -163,12 +169,7 @@ class _RegistrationScreenMobileState extends State<RegistrationScreenMobile> {
                           fillColor: primary_color,
                           filled: true,
                           hoverColor: action_button_color.withOpacity(0.3),
-                          hintStyle: GoogleFonts.roboto(
-                              fontWeight: FontWeight.normal,
-                              color: Colors.white60,
-                              fontSize: SizeUtils.getSize(context, 2.sp)
-                          ),
-                          contentPadding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 2.sp),vertical: SizeUtils.getSize(context, 2.sp)),
+                          contentPadding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 2.sp), vertical: 0),
                           focusedBorder:  OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(SizeUtils.getSize(context, 2.sp))),
                             borderSide: BorderSide(
@@ -183,28 +184,8 @@ class _RegistrationScreenMobileState extends State<RegistrationScreenMobile> {
                               width: 0.2,
                             ),
                           ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.orangeAccent.withOpacity(0.6),
-                              width: 0.1,
-                            ),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(SizeUtils.getSize(context, 2.sp))),
-                            borderSide: BorderSide(
-                              color: action_button_color,
-                              width: 0.2,
-                            ),
-                          ),
-                          errorStyle: GoogleFonts.poppins(
-                              fontWeight: FontWeight.normal,
-                              color: Colors.orangeAccent.withOpacity(0.8),
-                              fontSize: SizeUtils.getSize(context, 2.sp)
-                          ),
-                          prefixStyle: GoogleFonts.poppins(
-                              fontWeight: FontWeight.bold,
-                              color: primary_text_color,
-                              fontSize: SizeUtils.getSize(context, 2.sp)
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(),
                           ),
                         ),
                         initialCountryCode: 'IN',
@@ -240,16 +221,36 @@ class _RegistrationScreenMobileState extends State<RegistrationScreenMobile> {
                       MyFormField(
                         controller: passwordController,
                         textAlign: TextAlign.start,
+                        style: GoogleFonts.roboto(
+                          fontSize: SizeUtils.getSize(context, 4.sp),
+                          color: primary_text_color,
+                          fontWeight: FontWeight.w300,
+                        ),
                         inputDecoration: textFieldDecoration.copyWith(
-                            suffixIcon: IconButton(
-                                onPressed: (){
+                            errorMaxLines: 1,
+                            errorStyle: GoogleFonts.poppins(
+                                fontWeight: FontWeight.normal,
+                                color: Colors.orangeAccent.withOpacity(0.8),
+                                fontSize: SizeUtils.getSize(context, 2.sp)
+                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: SizeUtils.getSize(context, 2.sp), vertical: 0),
+                            hintStyle: GoogleFonts.roboto(
+                                fontWeight: FontWeight.normal,
+                                color: primary_text_color.withOpacity(0.4),
+                                fontSize: SizeUtils.getSize(context, 3.sp)
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(),
+                            ),
+                            suffixIcon: GestureDetector(
+                                onTap: (){
                                   if(rtc.isPassObscured){
                                     rtc.changeObscuredStatus(false);
                                   }else{
                                     rtc.changeObscuredStatus(true);
                                   }
                                 },
-                                icon: Icon(
+                                child: Icon(
                                   rtc.isPassObscured?Icons.visibility:Icons.visibility_off,
                                   color: primary_icon_color,
                                 )
@@ -592,13 +593,14 @@ class _RegistrationScreenMobileState extends State<RegistrationScreenMobile> {
     try{
       String email=emailController.text.trim();
       String password=passwordController.text.trim();
-      await userController.signUp(email: email,password: password,phoneNo: phoneNumber!, countryCode: countryCode!);
+      UserCredential credential=await userController.signUp(email: email,password: password,phoneNo: phoneNumber!, countryCode: countryCode!);
+      await MyLocalStorage().setToken(credential.token!);
       // context.go(AppRoutes.home);
       await MyDialog.showDialog(context: context, message: "An activation link has been sent to your email, click the link to activate your account", icon: Icons.info_outline, iconColor: Colors.green);
       context.go(AppRoutes.emailSent);
     }catch(e){
       context.pop();
-      await MyDialog.showDialog(context: context, message: "Unable to register user", icon: Icons.info_outline, iconColor: Colors.red);
+      await MyDialog.showDialog(context: context, message: e.toString().replaceAll("Exception:", ""), icon: Icons.info_outline, iconColor: Colors.red);
       throw Exception(e);
     }
   }

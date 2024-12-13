@@ -125,7 +125,7 @@ class Send extends StatelessWidget {
                           }catch(e){
                             log(e.toString());
                             context.loaderOverlay.hide();
-                            MyDialog.showDialog(context: context, message: "Unable to withdraw", icon: Icons.info_outline, iconColor: Colors.redAccent);
+                            MyDialog.showDialog(context: context, message: e.toString().replaceAll("Exception:", ""), icon: Icons.info_outline, iconColor: Colors.redAccent);
                           }
                         }
                       },

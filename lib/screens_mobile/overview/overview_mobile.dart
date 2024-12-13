@@ -37,7 +37,6 @@ class OverViewMobile extends StatelessWidget {
       height: height,
       padding: EdgeInsets.symmetric(vertical:SizeUtils.getSize(context, 6.sp),horizontal: SizeUtils.getSize(context, 4.sp)),
       child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:bunker/components/app_component.dart';
 import 'package:bunker/components/dialogs/my_dialog.dart';
 import 'package:bunker/components/snackbar/show_snack_bar.dart';
 import 'package:bunker/routes/AppRoutes.dart';
 import 'package:bunker/user/controller/user_controller.dart';
+import 'package:bunker/user/model/user_crendential.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +16,7 @@ import 'package:provider/provider.dart';
 import '../../components/button/MyButton.dart';
 import '../../components/form/MyFormField.dart';
 import '../../components/texts/MyText.dart';
+import '../../utils/my_local_storage.dart';
 import '../../utils/size_utils.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -179,7 +183,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             textAlign: TextAlign.start,
                             hintText: "Password",
                             enable: true,
-                            textInputType: TextInputType.emailAddress,
+                            textInputType: TextInputType.text,
                             errorText: "Invalid password",
                             maxLines: 1,
                             obscureText: false,
@@ -264,13 +268,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     try{
       String email=emailController.text.trim();
       String password=passwordController.text.trim();
-
-      await userController.signIn(email: email,password: password);
+      UserCredential credential=await userController.signIn(email: email,password: password);
+      await MyLocalStorage().setToken(credential.token!);
       context.go(AppRoutes.home);
     }catch(e){
+      log(e.toString());
       context.pop();
-      await MyDialog.showDialog(context: context, message: "Unable to sign in", icon: Icons.info_outline, iconColor: Colors.red);
-      throw Exception(e);
+      await MyDialog.showDialog(context: context, message: e.toString().replaceAll("Exception:", ""), icon: Icons.info_outline, iconColor: Colors.red);
     }
   }
 }

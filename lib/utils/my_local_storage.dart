@@ -2,6 +2,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MyLocalStorage{
 
+
+  Future<void> setToken(String token)async{
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString("token",token);
+  }
+
+  Future<String?> getToken()async{
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString("token");
+  }
+
   Future<void> setIsFirstLogin(bool status)async{
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool("first_login", status);
